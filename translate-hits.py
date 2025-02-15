@@ -38,10 +38,10 @@ def do_translations(data_dir: str, input_file: str, output_file: str):
             translation = None
             if ("fra" in languages[i]):
                 print(f"document {i} is in french")
-                translation = generate_translation(doc, tokenizer_fr, model_translation_fr)
+                translation = generate_translation(doc, tokenizer_fr, model_fr)
             elif ("nld" in languages[i]):
                 print(f"document {i} is in dutch")
-                translation = generate_translation(doc, tokenizer_nl, model_translation_nl)
+                translation = generate_translation(doc, tokenizer_nl, model_nl)
             else:
                 print(f"document {i} will not be translated")
                 translation = doc
