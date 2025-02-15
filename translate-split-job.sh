@@ -14,7 +14,6 @@ python -m venv venv
 
 source venv/bin/activate
 
-pip install torch --index-url https://download.pytorch.org/whl/cu126
 python -m pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
 
 export PROJECT_DATA_DIR=/project/home/p200769/data
@@ -26,4 +25,18 @@ export CUDA_CACHE_DISABLE=0
 export CUDA_CACHE_PATH=/project/home/p200769/data/cuda_cache
 export CUDA_CACHE_MAXSIZE=4294967296
 
-python translate-hits.py
+python translate-split-hits.py cuda:0 /project/home/p200769/data/hits-fr-0.csv
+pid1=$!
+
+python translate-split-hits.py cuda:1 /project/home/p200769/data/hits-fr-1.csv
+pid2=$!
+
+python translate-split-hits.py cuda:2 /project/home/p200769/data/hits-fr-2.csv
+pid3=$!
+
+python translate-split-hits.py cuda:3 /project/home/p200769/data/hits-fr-3.csv
+pid4=$!
+
+wait $pid1 $pid2 $pid3 $pid4
+
+echo "All scripts have finished."
