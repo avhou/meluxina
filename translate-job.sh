@@ -16,11 +16,11 @@ source venv/bin/activate
 
 python -m pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
 
-export PROJECT_DATA_DIR=/project/home/p2000769/data
+export PROJECT_DATA_DIR=/project/home/p200769/data
 export INPUT_FILE=filtered-hits-all.sqlite
 export OUTPUT_FILE=translated-filtered-hits-all.sqlite
-export HF_HOME=/project/home/p2000769/data/huggingface
-export TRANSFORMERS_CACHE=/project/home/p2000769/data/huggingface
-export HUGGINGFACE_HUB_CACHE=/project/home/p2000769/data/huggingface
+export HF_HOME=/project/home/p200769/data/huggingface
+export TRANSFORMERS_CACHE=/project/home/p200769/data/huggingface
+export HUGGINGFACE_HUB_CACHE=/project/home/p200769/data/huggingface
 
 python translate-hits.py
