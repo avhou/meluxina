@@ -36,7 +36,7 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
         writer_out = csv.writer(f_out)
         # url, content
         lines = list(reader_in)
-        chunk_size = 100
+        chunk_size = 16
         for i in range(0, len(lines), chunk_size):
             chunk = lines[i:i + chunk_size]
             translations = generate_translations([line[1] for line in chunk], tokenizer, model)
