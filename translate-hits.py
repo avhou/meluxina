@@ -3,6 +3,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import os
 import sqlite3
+from transformers import MarianMTModel, MarianTokenizer
 
 def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str :
     inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
@@ -13,21 +14,25 @@ def do_translations(data_dir: str, input_file: str, output_file: str):
     if not os.path.exists(input_file):
         raise ValueError(f"Input file not found: {input_file}")
 
+    print(f"instantiating models")
     tokenizer_nl = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-nl-en")
     model_nl = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-nl-en")
     model_nl.to("cuda")
     tokenizer_fr = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-fr-en")
     model_fr = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-fr-en")
     model_fr.to("cuda")
+    print(f"models instantiated")
 
     with sqlite3.connect(input_file) as input_conn, sqlite3.connect(output_file) as output_conn:
         output_conn.execute("drop table if exists hits_translation;")
         output_conn.execute("create table if not exists hits_translation (url text, content text, content_en, languages text);")
 
+        print(f"reading relevant data")
         result = input_conn.execute("select url, content, languages from hits limit 5;").fetchall()
         urls = [r[0] for r in result]
         documents = [r[1] for r in result]
         languages = [r[2] for r in result]
+        print(f"data was read, start processing")
 
         for i, doc in enumerate(documents):
             translation = None
