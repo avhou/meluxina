@@ -11,13 +11,13 @@ def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMT
     translated = model.generate(**inputs)
     return tokenizer.batch_decode(translated, skip_special_tokens=True)[0]
 
-def do_translations(device: str, model: str, input_file: str, output_file: str):
+def do_translations(device: str, model_name: str, input_file: str, output_file: str):
     if not os.path.exists(input_file):
         raise ValueError(f"Input file not found: {input_file}")
 
     print(f"instantiating model")
-    tokenizer = MarianTokenizer.from_pretrained(model)
-    model = MarianMTModel.from_pretrained(model)
+    tokenizer = MarianTokenizer.from_pretrained(model_name)
+    model = MarianMTModel.from_pretrained(model_name)
     model.to(device)
     print(f"model instantiated")
 
@@ -25,13 +25,11 @@ def do_translations(device: str, model: str, input_file: str, output_file: str):
         reader_in = csv.reader(f_in)
         writer_out = csv.writer(f_out)
         # url, content
-        for i, line in enumerate(reader_in):
-            if i >= 5:
-                break
+        for  line in reader_in:
             translation = generate_translation(line[1], tokenizer, model)
-            print(f"translated: {line[0]} on device {device} with model {model}")
+            print(f"translated: {line[0]} on device {device} with model {model_name}")
             writer_out.writerow([line[0], line[1], translation])
-        print(f"done on device {device} with model {model}")
+        print(f"done on device {device} with model {model_name}")
 
 
 
@@ -40,8 +38,8 @@ if __name__ == "__main__":
         print("Usage: python translate-split-hits.py device model input_file output_file")
 
     device = sys.argv[1]
-    model = sys.argv[2]
+    model_name = sys.argv[2]
     input_file = sys.argv[3]
     output_file = sys.argv[4]
-    print(f"starten met de uitvoering van model {model} op device {device} voor input file {input_file}")
-    do_translations(device, model, input_file, output_file)
+    print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}")
+    do_translations(device, model_name, input_file, output_file)
