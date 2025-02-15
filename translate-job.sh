@@ -16,14 +16,10 @@ source venv/bin/activate
 
 python -m pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
 
-echo "dependencies installed"
-
 export PROJECT_DATA_DIR=/project/home/p200769/data
 export INPUT_FILE=filtered-hits-all.sqlite
 export OUTPUT_FILE=translated-filtered-hits-all.sqlite
 export HF_HOME=/project/home/p200769/data/huggingface
 export HUGGINGFACE_HUB_CACHE=/project/home/p200769/data/huggingface
-
-echo "starting the python script"
 
 python translate-hits.py

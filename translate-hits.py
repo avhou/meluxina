@@ -51,6 +51,7 @@ def do_translations(data_dir: str, input_file: str, output_file: str):
 
 
 if __name__ == "__main__":
+    print(f"starten met de uitvoering")
     data_dir = os.environ["PROJECT_DATA_DIR"]
     input_file = os.environ["INPUT_FILE"]
     output_file = os.environ["OUTPUT_FILE"]
@@ -62,4 +63,5 @@ if __name__ == "__main__":
     if (output_file is None):
         raise ValueError("Output file not set")
 
+    print(f"checks zijn gebeurd")
     do_translations(data_dir, os.path.join(data_dir, input_file), os.path.join(data_dir, output_file))
