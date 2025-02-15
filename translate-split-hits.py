@@ -44,3 +44,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model} op device {device} voor input file {input_file}")
+    do_translations(device, model, input_file, output_file)
