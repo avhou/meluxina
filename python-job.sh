@@ -14,6 +14,6 @@ python -m venv venv
 
 source venv/bin/activate
 
-pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
+python -m pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
 
 python run-models.py
