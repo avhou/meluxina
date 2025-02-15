@@ -30,7 +30,7 @@ def do_translations(data_dir: str, input_file: str, output_file: str):
         output_conn.execute("create table if not exists hits_translation (url text, content text, content_en, languages text);")
 
         print(f"reading relevant data")
-        result = input_conn.execute("select url, content, languages from hits limit 100;").fetchall()
+        result = input_conn.execute("select url, content, languages from hits;").fetchall()
         urls = [r[0] for r in result]
         documents = [r[1] for r in result]
         languages = [r[2] for r in result]
