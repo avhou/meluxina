@@ -7,6 +7,8 @@ from transformers import MarianMTModel, MarianTokenizer
 
 def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str :
     inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
+    # Move inputs to the same device as the model
+    inputs = {key: value.to(model.device) for key, value in inputs.items()}
     translated = model.generate(**inputs)
     return tokenizer.batch_decode(translated, skip_special_tokens=True)[0]
 
