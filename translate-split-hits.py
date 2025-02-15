@@ -4,6 +4,8 @@ import csv
 import os
 from transformers import MarianMTModel, MarianTokenizer
 
+csv.field_size_limit(10 * 1024 * 1024)
+
 def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str :
     inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
     # Move inputs to the same device as the model
