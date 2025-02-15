@@ -60,4 +60,4 @@ if __name__ == "__main__":
     if (output_file is None):
         raise ValueError("Output file not set")
 
-    do_translations(data_dir, input_file, output_file)
+    do_translations(data_dir, os.path.join(data_dir, input_file), os.path.join(data_dir, output_file))
