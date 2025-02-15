@@ -1,3 +1,4 @@
 faiss-gpu-cu12
 sentence-transformers
 sentencepiece
+sqlite3

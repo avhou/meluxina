@@ -37,17 +37,17 @@ for doc in documents_nl:
 
 # Generate embeddings and create FAISS index
 index_file = "/project/home/p200769/faiss_index.bin"
-if os.path.exists(index_file):
-    print("Loading existing FAISS index...")
-    index = faiss.read_index(index_file)
-else:
-    print("Creating new FAISS index...")
-    embeddings = model.encode(chunked_documents, convert_to_numpy=True)
-    dimension = embeddings.shape[1]
-    index = faiss.IndexFlatL2(dimension)
-    index.add(embeddings)
-    faiss.write_index(index, index_file)
-    print("Index saved to disk.")
+# if os.path.exists(index_file):
+#     print("Loading existing FAISS index...")
+#     index = faiss.read_index(index_file)
+# else:
+print("Creating new FAISS index...")
+embeddings = model.encode(chunked_documents, convert_to_numpy=True)
+dimension = embeddings.shape[1]
+index = faiss.IndexFlatL2(dimension)
+index.add(embeddings)
+faiss.write_index(index, index_file)
+print("Index saved to disk.")
 
 # Example query
 query = "How do machines learn from data?"
