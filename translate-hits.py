@@ -48,7 +48,7 @@ def do_translations(data_dir: str, input_file: str, output_file: str):
             output_conn.execute("insert into hits_translation (url, content, content_en, languages) values (?, ?, ?, ?);", (urls[i], doc, translation, languages[i]))
 
 
-if __nam__ == __main__:
+if __name__ == __main__:
     data_dir = os.environ["PROJECT_DATA_DIR"]
     input_file = os.environ["INPUT_FILE"]
     output_file = os.environ["OUTPUT_FILE"]
