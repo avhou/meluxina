@@ -25,18 +25,34 @@ export CUDA_CACHE_DISABLE=0
 export CUDA_CACHE_PATH=/project/home/p200769/data/cuda_cache
 export CUDA_CACHE_MAXSIZE=4294967296
 
-python translate-split-hits.py cuda:0 /project/home/p200769/data/hits-fr-0.csv &
+python translate-split-hits.py cuda:0 Helsinki-NLP/opus-mt-fr-en /project/home/p200769/data/hits-fr-0.csv /project/home/p200769/data/hits-fr-0-translated.csv &
 pid1=$!
 
-python translate-split-hits.py cuda:1 /project/home/p200769/data/hits-fr-1.csv &
+python translate-split-hits.py cuda:1 Helsinki-NLP/opus-mt-fr-en /project/home/p200769/data/hits-fr-1.csv /project/home/p200769/data/hits-fr-1-translated.csv &
 pid2=$!
 
-python translate-split-hits.py cuda:2 /project/home/p200769/data/hits-fr-2.csv &
+python translate-split-hits.py cuda:2 Helsinki-NLP/opus-mt-fr-en /project/home/p200769/data/hits-fr-2.csv /project/home/p200769/data/hits-fr-2-translated.csv &
 pid3=$!
 
-python translate-split-hits.py cuda:3 /project/home/p200769/data/hits-fr-3.csv &
+python translate-split-hits.py cuda:3 Helsinki-NLP/opus-mt-fr-en /project/home/p200769/data/hits-fr-3.csv /project/home/p200769/data/hits-fr-3-translated.csv &
 pid4=$!
 
 wait $pid1 $pid2 $pid3 $pid4
 
-echo "All scripts have finished."
+echo "All FR scripts have finished."
+
+python translate-split-hits.py cuda:0 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-0.csv /project/home/p200769/data/hits-nl-0-translated.csv &
+pid5=$!
+
+python translate-split-hits.py cuda:1 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-1.csv /project/home/p200769/data/hits-nl-1-translated.csv &
+pid6=$!
+
+python translate-split-hits.py cuda:2 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-2.csv /project/home/p200769/data/hits-nl-2-translated.csv &
+pid7=$!
+
+python translate-split-hits.py cuda:3 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-3.csv /project/home/p200769/data/hits-nl-3-translated.csv &
+pid8=$!
+
+wait $pid5 $pid6 $pid7 $pid8
+
+echo "All NL scripts have finished."
