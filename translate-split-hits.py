@@ -1,6 +1,7 @@
 import sys
 import csv
 
+from typing import List
 import os
 from transformers import MarianMTModel, MarianTokenizer
 
@@ -12,6 +13,13 @@ def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMT
     inputs = {key: value.to(model.device) for key, value in inputs.items()}
     translated = model.generate(**inputs)
     return tokenizer.batch_decode(translated, skip_special_tokens=True)[0]
+
+def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: MarianMTModel) -> List[str] :
+    inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
+    inputs = {key: value.to(model.device) for key, value in inputs.items()}
+    translated = model.generate(**inputs)
+    result = tokenizer.batch_decode(translated, skip_special_tokens=True)
+    return result
 
 def do_translations(device: str, model_name: str, input_file: str, output_file: str):
     if not os.path.exists(input_file):
@@ -27,10 +35,14 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
         reader_in = csv.reader(f_in)
         writer_out = csv.writer(f_out)
         # url, content
-        for  line in reader_in:
-            translation = generate_translation(line[1], tokenizer, model)
-            print(f"translated: {line[0]} on device {device} with model {model_name}")
-            writer_out.writerow([line[0], line[1], translation])
+        lines = list(reader_in)
+        chunk_size = 100
+        for i in range(0, len(lines), chunk_size):
+            chunk = lines[i:i + chunk_size]
+            translations = generate_translations([line[1] for line in chunk], tokenizer, model)
+            print(f"translated: {len(translations)} on device {device} with model {model_name}")
+            for line, translation in zip(chunk, translations):
+                writer_out.writerow([line[0], line[1], translation])
         print(f"done on device {device} with model {model_name}")
 
 
