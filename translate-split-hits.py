@@ -1,6 +1,7 @@
 import sys
 import csv
 import itertools
+import re
 
 from typing import List
 import os
