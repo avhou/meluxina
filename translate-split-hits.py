@@ -34,7 +34,7 @@ def chunk_text(text, device: str, max_length=250):
 
         # If sentence is too long, split it by words
         if len(sentence) > max_length:
-            print(f"device {device}: warning, sentence is too long, will split by words", flush=True)
+            print(f"device {device}: warning, sentence is too long, will split by words.  sentence is {sentence}", flush=True)
             words = sentence.split()
             for i in range(0, len(words), max_length):
                 split_sentence = " ".join(words[i:i + max_length]) + "."
