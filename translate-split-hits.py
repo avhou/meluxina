@@ -79,7 +79,7 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
             translated_ids = model.generate(
                 **inputs,
                 max_length=512,            # Ensure output is bounded
-                num_beams=5,               # Balanced between diversity and accuracy
+                num_beams=3,               # Balanced between diversity and accuracy
                 no_repeat_ngram_size=3,    # Prevents repetitive phrases
                 early_stopping=True       # Stops when best translation is found
             )
@@ -128,4 +128,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file)
+    do_translations(device, model_name, input_file, output_file, 16)
