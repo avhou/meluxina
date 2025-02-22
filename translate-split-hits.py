@@ -106,7 +106,7 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
                 **inputs,
                 max_length=max_output_length,
                 do_sample=False,
-                num_beams=3,
+                num_beams=5,
                 no_repeat_ngram_size=3,
                 early_stopping=True,
                 repetition_penalty=2.0,
