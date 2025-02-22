@@ -64,15 +64,35 @@ def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: Ma
 
     return " ".join(translated_chunks)
 
-def do_translations(device: str, model_name: str, input_file: str, output_file: str):
+
+def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel,
+                   batch_size: int = 8) -> str:
+    text_chunks = chunk_text(text)
+
+    translated_chunks = []
+
+    for i in range(0, len(text_chunks), batch_size):
+        batch = text_chunks[i: i + batch_size]
+
+        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512).to(device)
+        with torch.no_grad():
+            translated_ids = model.generate(**inputs)
+
+        translated_texts = tokenizer.batch_decode(translated_ids, skip_special_tokens=True)
+        translated_chunks.extend(translated_texts)
+
+    return " ".join(translated_chunks)
+
+
+def do_translations(device: str, model_name: str, input_file: str, output_file: str, batch_size: int = 8):
     if not os.path.exists(input_file):
         raise ValueError(f"Input file not found: {input_file}")
 
-    print(f"instantiating model")
+    print(f"instantiating model", flush=True)
     tokenizer = MarianTokenizer.from_pretrained(model_name)
     model = MarianMTModel.from_pretrained(model_name)
     model.to(device)
-    print(f"model instantiated")
+    print(f"model instantiated", flush=True)
 
     with open(input_file, "r", encoding="utf-8") as f_in, open(output_file, "w", encoding="utf-8") as f_out:
         reader_in = csv.reader(f_in)
@@ -84,11 +104,12 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
         for line in lines:
             url = line[0]
             content = line[1]
-            translation = translate_text(device, content, tokenizer, model)
-            print(f"device {device} translated {i}/{total_nr_lines} : {url}")
+            translation = translate_text_batch(device, content, tokenizer, model, batch_size)
+            print(f"device {device} translated {i}/{total_nr_lines} : {url}", flush=True)
             writer_out.writerow([url, content, translation])
+            writer_out.flush()
             i = i + 1
-        print(f"done on device {device} with model {model_name}")
+        print(f"done on device {device} with model {model_name}", flush=True)
 
 
 
@@ -100,5 +121,5 @@ if __name__ == "__main__":
     model_name = sys.argv[2]
     input_file = sys.argv[3]
     output_file = sys.argv[4]
-    print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}")
+    print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
     do_translations(device, model_name, input_file, output_file)

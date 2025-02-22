@@ -41,18 +41,18 @@ wait $pid1 $pid2 $pid3 $pid4
 
 echo "All FR scripts have finished."
 
-python translate-split-hits.py cuda:0 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-0.csv /project/home/p200769/data/hits-nl-0-translated.csv &
-pid5=$!
-
-python translate-split-hits.py cuda:1 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-1.csv /project/home/p200769/data/hits-nl-1-translated.csv &
-pid6=$!
-
-python translate-split-hits.py cuda:2 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-2.csv /project/home/p200769/data/hits-nl-2-translated.csv &
-pid7=$!
-
-python translate-split-hits.py cuda:3 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-3.csv /project/home/p200769/data/hits-nl-3-translated.csv &
-pid8=$!
-
-wait $pid5 $pid6 $pid7 $pid8
-
-echo "All NL scripts have finished."
+#python translate-split-hits.py cuda:0 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-0.csv /project/home/p200769/data/hits-nl-0-translated.csv &
+#pid5=$!
+#
+#python translate-split-hits.py cuda:1 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-1.csv /project/home/p200769/data/hits-nl-1-translated.csv &
+#pid6=$!
+#
+#python translate-split-hits.py cuda:2 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-2.csv /project/home/p200769/data/hits-nl-2-translated.csv &
+#pid7=$!
+#
+#python translate-split-hits.py cuda:3 Helsinki-NLP/opus-mt-nl-en /project/home/p200769/data/hits-nl-3.csv /project/home/p200769/data/hits-nl-3-translated.csv &
+#pid8=$!
+#
+#wait $pid5 $pid6 $pid7 $pid8
+#
+#echo "All NL scripts have finished."
