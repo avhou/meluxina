@@ -24,6 +24,13 @@ def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: M
     result = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return result
 
+
+def clean_text(text):
+    text = re.sub(r"[^a-zA-Z0-9.,!?'\s]", "", text)  # Remove weird symbols
+    text = re.sub(r"\s+", " ", text).strip()  # Remove extra spaces
+    return text
+
+
 def chunk_text(text, device: str, max_words=250):
     sentences = re.split(r'\.|\?|!', text)
     chunks = []
@@ -31,7 +38,7 @@ def chunk_text(text, device: str, max_words=250):
     current_length = 0
 
     for sentence in sentences:
-        words = sentence.strip().split()  # Split sentence into words
+        words = clean_text(sentence).strip().split()  # Split sentence into words
         num_words = len(words)
 
         if num_words > max_words:  # If sentence is too long, split further
@@ -74,6 +81,15 @@ def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: Ma
     return " ".join(translated_chunks)
 
 
+def get_max_output_length(inputs, scale_factor=1.3, max_len=512):
+    # Find the longest input sequence in the batch
+    max_input_length = max(len(input_ids) for input_ids in inputs['input_ids'])
+
+    # Calculate the max output length based on a scaling factor
+    max_output_length = min(max_len, int(max_input_length * scale_factor))
+
+    return max_output_length
+
 def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel,
                    batch_size: int = 8) -> str:
     text_chunks = chunk_text(text, device)
@@ -84,13 +100,15 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
         batch = text_chunks[i: i + batch_size]
 
         inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512).to(device)
+        max_output_length = get_max_output_length(inputs)
         with torch.no_grad():
             translated_ids = model.generate(
                 **inputs,
-                max_length=512,            # Ensure output is bounded
-                num_beams=3,               # Balanced between diversity and accuracy
-                no_repeat_ngram_size=3,    # Prevents repetitive phrases
-                early_stopping=True,       # Stops when best translation is found
+                max_length=max_output_length,
+                do_sample=False,
+                num_beams=1,
+                no_repeat_ngram_size=3,
+                early_stopping=True,
                 repetition_penalty=1.2,
                 length_penalty=0.9,
                 pad_token_id=tokenizer.pad_token_id
