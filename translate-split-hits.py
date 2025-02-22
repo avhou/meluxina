@@ -11,21 +11,6 @@ from llama_index import SentenceSplitter
 
 csv.field_size_limit(10 * 1024 * 1024)
 
-def generate_translation(input: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str :
-    inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
-    # Move inputs to the same device as the model
-    inputs = {key: value.to(model.device) for key, value in inputs.items()}
-    translated = model.generate(**inputs)
-    return tokenizer.batch_decode(translated, skip_special_tokens=True)[0]
-
-def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: MarianMTModel) -> List[str] :
-    inputs = tokenizer(input, return_tensors="pt", padding=True, truncation=True)
-    inputs = {key: value.to(model.device) for key, value in inputs.items()}
-    translated = model.generate(**inputs)
-    result = tokenizer.batch_decode(translated, skip_special_tokens=True)
-    return result
-
-
 def clean_text(text):
     text = re.sub(r"[^a-zA-Z0-9.,!?'\s]", "", text)  # Remove weird symbols
     text = re.sub(r"\s+", " ", text).strip()  # Remove extra spaces
@@ -70,20 +55,6 @@ def chunk_text(text, device: str, max_words=250):
         chunks.append(" ".join(current_chunk).strip() + ".")
 
     return chunks
-
-def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str:
-    text_chunks = chunk_text(text, device)
-
-    translated_chunks = []
-    for chunk in text_chunks:
-        inputs = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True, max_length=512).to(device)
-        with torch.no_grad():
-            translated_ids = model.generate(**inputs)
-        translated_text = tokenizer.batch_decode(translated_ids, skip_special_tokens=True)[0]
-        translated_chunks.append(translated_text)
-
-    return " ".join(translated_chunks)
-
 
 def get_max_output_length(inputs, scale_factor=1.3, max_len=512):
     # Find the longest input sequence in the batch
@@ -166,4 +137,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file, 16)
+    do_translations(device, model_name, input_file, output_file, 4)
