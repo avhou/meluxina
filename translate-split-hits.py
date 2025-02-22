@@ -7,6 +7,7 @@ import torch
 from typing import List
 import os
 from transformers import MarianMTModel, MarianTokenizer
+from llama_index import SentenceSplitter
 
 csv.field_size_limit(10 * 1024 * 1024)
 
@@ -32,13 +33,16 @@ def clean_text(text):
 
 
 def chunk_text(text, device: str, max_words=250):
-    sentences = re.split(r'\.|\?|!', text)
+    splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=50)
+    # sentences = re.split(r'\.|\?|!', text)
+    sentences = splitter.split(text)
     chunks = []
     current_chunk = []
     current_length = 0
 
     for sentence in sentences:
-        words = clean_text(sentence).strip().split()  # Split sentence into words
+        # words = clean_text(sentence).strip().split()  # Split sentence into words
+        words = sentence.strip().split()  # Split sentence into words
         num_words = len(words)
 
         if num_words > max_words:  # If sentence is too long, split further
@@ -105,12 +109,14 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
             translated_ids = model.generate(
                 **inputs,
                 max_length=max_output_length,
-                do_sample=False,
+                do_sample=True,
                 num_beams=5,
                 no_repeat_ngram_size=3,
                 early_stopping=True,
                 repetition_penalty=2.0,
                 length_penalty=1.1,
+                temperature=0.1,
+                top_k=25,
                 pad_token_id=tokenizer.pad_token_id
             )
 
@@ -145,6 +151,8 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
             writer_out.writerow([url, content, translation])
             f_out.flush()
             i = i + 1
+            if i > 10:
+                break
         print(f"done on device {device} with model {model_name}", flush=True)
 
 
