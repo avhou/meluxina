@@ -85,7 +85,7 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
             url = line[0]
             content = line[1]
             translation = translate_text(device, content, tokenizer, model)
-            print(f"translated {i}/{total_nr_lines} : {url}")
+            print(f"device {device} translated {i}/{total_nr_lines} : {url}")
             writer_out.writerow([url, content, translation])
             i = i + 1
         print(f"done on device {device} with model {model_name}")
