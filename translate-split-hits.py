@@ -24,7 +24,7 @@ def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: M
     result = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return result
 
-def chunk_text(text, max_length=250):
+def chunk_text(text, max_length=200):
     sentences = re.split(r'\.|\?|!', text)
     chunks = []
     current_chunk = ""
@@ -34,6 +34,7 @@ def chunk_text(text, max_length=250):
 
         # If sentence is too long, split it by words
         if len(sentence) > max_length:
+            print(f"warning, sentence is too long, will split by words", flush=True)
             words = sentence.split()
             for i in range(0, len(words), max_length):
                 split_sentence = " ".join(words[i:i + max_length]) + "."
@@ -128,4 +129,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file, 16)
+    do_translations(device, model_name, input_file, output_file, 32)
