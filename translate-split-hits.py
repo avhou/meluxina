@@ -18,7 +18,7 @@ def clean_text(text):
 
 
 def chunk_text(text, device: str, max_words=250):
-    splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=50)
+    splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=25)
     # sentences = re.split(r'\.|\?|!', text)
     sentences = splitter.split_text(text)
     return sentences
@@ -123,8 +123,6 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
             writer_out.writerow([url, content, translation])
             f_out.flush()
             i = i + 1
-            if i > 10:
-                break
         print(f"done on device {device} with model {model_name}", flush=True)
 
 
@@ -138,4 +136,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file, 1)
+    do_translations(device, model_name, input_file, output_file, 16)
