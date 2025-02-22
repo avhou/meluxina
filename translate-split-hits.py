@@ -77,12 +77,17 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
     with open(input_file, "r", encoding="utf-8") as f_in, open(output_file, "w", encoding="utf-8") as f_out:
         reader_in = csv.reader(f_in)
         writer_out = csv.writer(f_out)
-        for line in itertools.islice(reader_in, 10):
+        lines = list(reader_in)
+        total_nr_lines = len(lines)
+
+        i = 1
+        for line in lines:
             url = line[0]
             content = line[1]
             translation = translate_text(device, content, tokenizer, model)
-            print(f"translated {url}")
+            print(f"translated {i}/{total_nr_lines} : {url}")
             writer_out.writerow([url, content, translation])
+            i = i + 1
         print(f"done on device {device} with model {model_name}")
 
 
