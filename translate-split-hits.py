@@ -2,6 +2,7 @@ import sys
 import csv
 import itertools
 import re
+import torch
 
 from typing import List
 import os
