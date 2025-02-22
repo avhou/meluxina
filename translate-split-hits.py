@@ -24,31 +24,39 @@ def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: M
     result = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return result
 
-def chunk_text(text, device: str, max_length=250):
-    sentences = re.split(r'\.|\?|!|\s\s+', text)
+def chunk_text(text, device: str, max_words=250):
+    sentences = re.split(r'\.|\?|!', text)
     chunks = []
-    current_chunk = ""
+    current_chunk = []
+    current_length = 0
 
     for sentence in sentences:
-        sentence = re.sub(r'\s+', ' ', sentence.strip()).strip()
+        words = sentence.strip().split()  # Split sentence into words
+        num_words = len(words)
 
-        # If sentence is too long, split it by words
-        if len(sentence) > max_length:
-            print(f"device {device}: warning, sentence is too long, will split by words.  sentence is {sentence}", flush=True)
-            words = sentence.split()
-            for i in range(0, len(words), max_length):
-                split_sentence = " ".join(words[i:i + max_length]) + "."
+        if num_words > max_words:  # If sentence is too long, split further
+            print(f"device {device}: warning, sentence is too long, will split further.  sentence is {sentence}", flush=True)
+
+            # eerst flushen van de eventuele huidige chunk
+            if len(current_chunk) > 0:
+                chunks.append(" ".join(current_chunk).strip() + ".")
+                current_chunk = []
+                current_length = 0
+
+            for i in range(0, num_words, max_words):
+                split_sentence = " ".join(words[i:i + max_words]) + "."  # Add period
                 chunks.append(split_sentence.strip())
         else:
-            # Normal chunking logic
-            if len(current_chunk) + len(sentence) < max_length:
-                current_chunk += sentence + " "
+            if current_length + num_words <= max_words:
+                current_chunk.extend(words)
+                current_length += num_words
             else:
-                chunks.append(current_chunk.strip())
-                current_chunk = sentence + " "
+                chunks.append(" ".join(current_chunk).strip() + ".")
+                current_chunk = words
+                current_length = num_words
 
     if current_chunk:
-        chunks.append(current_chunk.strip())
+        chunks.append(" ".join(current_chunk).strip() + ".")
 
     return chunks
 
@@ -129,4 +137,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file, 32)
+    do_translations(device, model_name, input_file, output_file, 16)
