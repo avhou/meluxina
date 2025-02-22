@@ -1,6 +1,6 @@
 #!/bin/bash -l
 ## This file is called `translate-split-job.sh`
-#SBATCH --time=10:00:00
+#SBATCH --time=20:00:00
 #SBATCH --account=p200769
 #SBATCH --partition=gpu
 #SBATCH --qos=default

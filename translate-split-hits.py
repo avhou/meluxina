@@ -7,7 +7,7 @@ import torch
 from typing import List
 import os
 from transformers import MarianMTModel, MarianTokenizer
-from llama_index import SentenceSplitter
+from llama_index.core.node_parser import SentenceSplitter
 
 csv.field_size_limit(10 * 1024 * 1024)
 
@@ -20,41 +20,42 @@ def clean_text(text):
 def chunk_text(text, device: str, max_words=250):
     splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=50)
     # sentences = re.split(r'\.|\?|!', text)
-    sentences = splitter.split(text)
-    chunks = []
-    current_chunk = []
-    current_length = 0
-
-    for sentence in sentences:
-        # words = clean_text(sentence).strip().split()  # Split sentence into words
-        words = sentence.strip().split()  # Split sentence into words
-        num_words = len(words)
-
-        if num_words > max_words:  # If sentence is too long, split further
-            print(f"device {device}: warning, sentence is too long, will split further.  sentence is {sentence}", flush=True)
-
-            # eerst flushen van de eventuele huidige chunk
-            if len(current_chunk) > 0:
-                chunks.append(" ".join(current_chunk).strip() + ".")
-                current_chunk = []
-                current_length = 0
-
-            for i in range(0, num_words, max_words):
-                split_sentence = " ".join(words[i:i + max_words]) + "."  # Add period
-                chunks.append(split_sentence.strip())
-        else:
-            if current_length + num_words <= max_words:
-                current_chunk.extend(words)
-                current_length += num_words
-            else:
-                chunks.append(" ".join(current_chunk).strip() + ".")
-                current_chunk = words
-                current_length = num_words
-
-    if current_chunk:
-        chunks.append(" ".join(current_chunk).strip() + ".")
-
-    return chunks
+    sentences = splitter.split_text(text)
+    return sentences
+    # chunks = []
+    # current_chunk = []
+    # current_length = 0
+    #
+    # for sentence in sentences:
+    #     # words = clean_text(sentence).strip().split()  # Split sentence into words
+    #     words = sentence.strip().split()  # Split sentence into words
+    #     num_words = len(words)
+    #
+    #     if num_words > max_words:  # If sentence is too long, split further
+    #         print(f"device {device}: warning, sentence is too long, will split further.  sentence is {sentence}", flush=True)
+    #
+    #         # eerst flushen van de eventuele huidige chunk
+    #         if len(current_chunk) > 0:
+    #             chunks.append(" ".join(current_chunk).strip() + ".")
+    #             current_chunk = []
+    #             current_length = 0
+    #
+    #         for i in range(0, num_words, max_words):
+    #             split_sentence = " ".join(words[i:i + max_words]) + "."  # Add period
+    #             chunks.append(split_sentence.strip())
+    #     else:
+    #         if current_length + num_words <= max_words:
+    #             current_chunk.extend(words)
+    #             current_length += num_words
+    #         else:
+    #             chunks.append(" ".join(current_chunk).strip() + ".")
+    #             current_chunk = words
+    #             current_length = num_words
+    #
+    # if current_chunk:
+    #     chunks.append(" ".join(current_chunk).strip() + ".")
+    #
+    # return chunks
 
 def get_max_output_length(inputs, scale_factor=1.3, max_len=512):
     # Find the longest input sequence in the batch
@@ -137,4 +138,4 @@ if __name__ == "__main__":
     input_file = sys.argv[3]
     output_file = sys.argv[4]
     print(f"starten met de uitvoering van model {model_name} op device {device} voor input file {input_file}", flush=True)
-    do_translations(device, model_name, input_file, output_file, 4)
+    do_translations(device, model_name, input_file, output_file, 1)
