@@ -76,7 +76,16 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
 
         inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512).to(device)
         with torch.no_grad():
-            translated_ids = model.generate(**inputs)
+            translated_ids = model.generate(
+                **inputs,
+                max_length=512,            # Ensure output is bounded
+                num_beams=5,               # Balanced between diversity and accuracy
+                no_repeat_ngram_size=3,    # Prevents repetitive phrases
+                early_stopping=True,       # Stops when best translation is found
+                temperature=0.3,           # Keeps it deterministic
+                top_k=0,                   # No randomness
+                top_p=0.0                  # No nucleus sampling
+            )
 
         translated_texts = tokenizer.batch_decode(translated_ids, skip_special_tokens=True)
         translated_chunks.extend(translated_texts)
