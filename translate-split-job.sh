@@ -3,7 +3,7 @@
 #SBATCH --time=10:00:00
 #SBATCH --account=p200769
 #SBATCH --partition=gpu
-#SBATCH --qos=dev
+#SBATCH --qos=default
 #SBATCH --nodes=1
 
 module load Python
