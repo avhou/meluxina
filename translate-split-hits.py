@@ -24,8 +24,8 @@ def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: M
     result = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return result
 
-def chunk_text(text, max_length=200):
-    sentences = re.split(r'\.|\?|!', text)
+def chunk_text(text, device: str, max_length=250):
+    sentences = re.split(r'\.|\?|!|\s\s+', text)
     chunks = []
     current_chunk = ""
 
@@ -34,7 +34,7 @@ def chunk_text(text, max_length=200):
 
         # If sentence is too long, split it by words
         if len(sentence) > max_length:
-            print(f"warning, sentence is too long, will split by words", flush=True)
+            print(f"device {device}: warning, sentence is too long, will split by words", flush=True)
             words = sentence.split()
             for i in range(0, len(words), max_length):
                 split_sentence = " ".join(words[i:i + max_length]) + "."
@@ -53,7 +53,7 @@ def chunk_text(text, max_length=200):
     return chunks
 
 def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str:
-    text_chunks = chunk_text(text)
+    text_chunks = chunk_text(text, device)
 
     translated_chunks = []
     for chunk in text_chunks:
