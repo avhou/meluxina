@@ -68,7 +68,7 @@ def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: Ma
 
 def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel,
                    batch_size: int = 8) -> str:
-    text_chunks = chunk_text(text)
+    text_chunks = chunk_text(text, device)
 
     translated_chunks = []
 
