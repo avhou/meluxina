@@ -106,11 +106,11 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
                 **inputs,
                 max_length=max_output_length,
                 do_sample=False,
-                num_beams=1,
+                num_beams=3,
                 no_repeat_ngram_size=3,
                 early_stopping=True,
-                repetition_penalty=1.2,
-                length_penalty=0.9,
+                repetition_penalty=2.0,
+                length_penalty=1.1,
                 pad_token_id=tokenizer.pad_token_id
             )
 
