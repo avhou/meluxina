@@ -1,5 +1,6 @@
 import sys
 import csv
+import itertools
 
 from typing import List
 import os
@@ -21,6 +22,46 @@ def generate_translations(input: List[str], tokenizer: MarianTokenizer, model: M
     result = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return result
 
+def chunk_text(text, max_length=250):
+    sentences = re.split(r'\.|\?|!', text)
+    chunks = []
+    current_chunk = ""
+
+    for sentence in sentences:
+        sentence = re.sub(r'\s+', ' ', sentence.strip()).strip()
+
+        # If sentence is too long, split it by words
+        if len(sentence) > max_length:
+            words = sentence.split()
+            for i in range(0, len(words), max_length):
+                split_sentence = " ".join(words[i:i + max_length]) + "."
+                chunks.append(split_sentence.strip())
+        else:
+            # Normal chunking logic
+            if len(current_chunk) + len(sentence) < max_length:
+                current_chunk += sentence + " "
+            else:
+                chunks.append(current_chunk.strip())
+                current_chunk = sentence + " "
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+
+    return chunks
+
+def translate_text(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel) -> str:
+    text_chunks = chunk_text(text)
+
+    translated_chunks = []
+    for chunk in text_chunks:
+        inputs = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True, max_length=512).to(device)
+        with torch.no_grad():
+            translated_ids = model.generate(**inputs)
+        translated_text = tokenizer.batch_decode(translated_ids, skip_special_tokens=True)[0]
+        translated_chunks.append(translated_text)
+
+    return " ".join(translated_chunks)
+
 def do_translations(device: str, model_name: str, input_file: str, output_file: str):
     if not os.path.exists(input_file):
         raise ValueError(f"Input file not found: {input_file}")
@@ -34,15 +75,12 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
     with open(input_file, "r", encoding="utf-8") as f_in, open(output_file, "w", encoding="utf-8") as f_out:
         reader_in = csv.reader(f_in)
         writer_out = csv.writer(f_out)
-        # url, content
-        lines = list(reader_in)
-        chunk_size = 16
-        for i in range(0, len(lines), chunk_size):
-            chunk = lines[i:i + chunk_size]
-            translations = generate_translations([line[1] for line in chunk], tokenizer, model)
-            print(f"translated: {len(translations)} on device {device} with model {model_name}")
-            for line, translation in zip(chunk, translations):
-                writer_out.writerow([line[0], line[1], translation])
+        for line in itertools.islice(reader_in, 10):
+            url = line[0]
+            content = line[1]
+            translation = translate_text(device, content, tokenizer, model)
+            print(f"translated {url}")
+            writer_out.writerow([url, content, translation])
         print(f"done on device {device} with model {model_name}")
 
 
