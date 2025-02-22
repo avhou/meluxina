@@ -107,7 +107,7 @@ def do_translations(device: str, model_name: str, input_file: str, output_file: 
             translation = translate_text_batch(device, content, tokenizer, model, batch_size)
             print(f"device {device} translated {i}/{total_nr_lines} : {url}", flush=True)
             writer_out.writerow([url, content, translation])
-            writer_out.flush()
+            f_out.flush()
             i = i + 1
         print(f"done on device {device} with model {model_name}", flush=True)
 
