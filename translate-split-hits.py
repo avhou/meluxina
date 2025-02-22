@@ -90,7 +90,10 @@ def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, mod
                 max_length=512,            # Ensure output is bounded
                 num_beams=3,               # Balanced between diversity and accuracy
                 no_repeat_ngram_size=3,    # Prevents repetitive phrases
-                early_stopping=True       # Stops when best translation is found
+                early_stopping=True,       # Stops when best translation is found
+                repetition_penalty=1.2,
+                length_penalty=0.9,
+                pad_token_id=tokenizer.pad_token_id
             )
 
         translated_texts = tokenizer.batch_decode(translated_ids, skip_special_tokens=True)
