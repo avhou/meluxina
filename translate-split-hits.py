@@ -11,51 +11,11 @@ from llama_index.core.node_parser import SentenceSplitter
 
 csv.field_size_limit(10 * 1024 * 1024)
 
-def clean_text(text):
-    text = re.sub(r"[^a-zA-Z0-9.,!?'\s]", "", text)  # Remove weird symbols
-    text = re.sub(r"\s+", " ", text).strip()  # Remove extra spaces
-    return text
 
-
-def chunk_text(text, device: str, max_words=250):
+def chunk_text(text, max_words=250):
     splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=25)
-    # sentences = re.split(r'\.|\?|!', text)
     sentences = splitter.split_text(text)
     return sentences
-    # chunks = []
-    # current_chunk = []
-    # current_length = 0
-    #
-    # for sentence in sentences:
-    #     # words = clean_text(sentence).strip().split()  # Split sentence into words
-    #     words = sentence.strip().split()  # Split sentence into words
-    #     num_words = len(words)
-    #
-    #     if num_words > max_words:  # If sentence is too long, split further
-    #         print(f"device {device}: warning, sentence is too long, will split further.  sentence is {sentence}", flush=True)
-    #
-    #         # eerst flushen van de eventuele huidige chunk
-    #         if len(current_chunk) > 0:
-    #             chunks.append(" ".join(current_chunk).strip() + ".")
-    #             current_chunk = []
-    #             current_length = 0
-    #
-    #         for i in range(0, num_words, max_words):
-    #             split_sentence = " ".join(words[i:i + max_words]) + "."  # Add period
-    #             chunks.append(split_sentence.strip())
-    #     else:
-    #         if current_length + num_words <= max_words:
-    #             current_chunk.extend(words)
-    #             current_length += num_words
-    #         else:
-    #             chunks.append(" ".join(current_chunk).strip() + ".")
-    #             current_chunk = words
-    #             current_length = num_words
-    #
-    # if current_chunk:
-    #     chunks.append(" ".join(current_chunk).strip() + ".")
-    #
-    # return chunks
 
 def get_max_output_length(inputs, scale_factor=1.3, max_len=512):
     # Find the longest input sequence in the batch
@@ -68,7 +28,7 @@ def get_max_output_length(inputs, scale_factor=1.3, max_len=512):
 
 def translate_text_batch(device: str, text: str, tokenizer: MarianTokenizer, model: MarianMTModel,
                    batch_size: int = 8) -> str:
-    text_chunks = chunk_text(text, device)
+    text_chunks = chunk_text(text)
 
     translated_chunks = []
 
