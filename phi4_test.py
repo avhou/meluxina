@@ -1,24 +1,29 @@
 import transformers
 from datetime import datetime
+import sys
 
 start = datetime.now()
 current_time = start.strftime("%H:%M:%S")
 print(f"Starting at {current_time}", flush=True)
 
-pipeline = transformers.pipeline(
-    "text-generation",
-    model="mistralai/Mistral-Small-24B-Instruct-2501",
-    model_kwargs={"torch_dtype": "auto"},
-    device_map="auto",
-)
-
+print("found HUGGINGFACE_HUB_CACHE : {sys.env['HUGGINGFACE_HUB_CACHE']}", flush=True)
+print("found HF_HOME : {sys.env['HF_HOME']}", flush=True)
+print("found HUGGINGFACEHUB_API_TOKEN : {sys.env['HUGGINGFACEHUB_API_TOKEN']}", flush=True)
 
 # pipeline = transformers.pipeline(
 #     "text-generation",
-#     model="microsoft/phi-4",
+#     model="mistralai/Mistral-Small-24B-Instruct-2501",
 #     model_kwargs={"torch_dtype": "auto"},
 #     device_map="auto",
 # )
+
+
+pipeline = transformers.pipeline(
+    "text-generation",
+    model="microsoft/phi-4",
+    model_kwargs={"torch_dtype": "auto"},
+    device_map="auto",
+)
 
 # messages = [
 #     {"role": "system", "content": "You are an expert AI system that specializes in named entity recognition and knowledge graph extraction.  You are designed take in any input text, extract the relevant information, and output a knowledge graph in turtle (TTL) format.  Do not provide any explanation or justification.  Only output TTL knowledge graphs."},
