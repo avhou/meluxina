@@ -81,8 +81,10 @@ Living wages are unnecessary.
 # """},
 # ]
 
-outputs = pipeline(messages, max_new_tokens=512)
-print(outputs[0]["generated_text"][-1], flush=True)
+print(f"start executing the pipeline", flush=True)
+for i in range(0, 10):
+    outputs = pipeline(messages, max_new_tokens=512)
+    print(outputs[0]["generated_text"][-1], flush=True)
 
 
 stop = datetime.now()
