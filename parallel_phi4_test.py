@@ -48,7 +48,12 @@ Unfortunately, De Bleeker does not even take a message here, she simply does not
 Living wages are unnecessary.
 """
 
-messages = [[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt  }] for i in range(10)]
+user_texts = [user_prompt] * 10
+
+messages = [
+    [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_text}]
+    for user_text in user_texts
+]
 
 
 print(f"start executing the pipeline", flush=True)
