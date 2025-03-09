@@ -4,3 +4,4 @@ sentencepiece
 transformers
 sacremoses
 llama_index
+accelerate
