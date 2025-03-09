@@ -6,9 +6,9 @@ start = datetime.now()
 current_time = start.strftime("%H:%M:%S")
 print(f"Starting at {current_time}", flush=True)
 
-print("found HUGGINGFACE_HUB_CACHE : {sys.env['HUGGINGFACE_HUB_CACHE']}", flush=True)
-print("found HF_HOME : {sys.env['HF_HOME']}", flush=True)
-print("found HUGGINGFACEHUB_API_TOKEN : {sys.env['HUGGINGFACEHUB_API_TOKEN']}", flush=True)
+print(f"found HUGGINGFACE_HUB_CACHE : {sys.env['HUGGINGFACE_HUB_CACHE']}", flush=True)
+print(f"found HF_HOME : {sys.env['HF_HOME']}", flush=True)
+print(f"found HUGGINGFACEHUB_API_TOKEN : {sys.env['HUGGINGFACEHUB_API_TOKEN']}", flush=True)
 
 # pipeline = transformers.pipeline(
 #     "text-generation",
