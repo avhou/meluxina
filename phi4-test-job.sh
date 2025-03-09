@@ -23,5 +23,6 @@ export HUGGINGFACE_HUB_CACHE=/project/home/p200769/data/huggingface
 export CUDA_CACHE_DISABLE=0
 export CUDA_CACHE_PATH=/project/home/p200769/data/cuda_cache
 export CUDA_CACHE_MAXSIZE=4294967296
+export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 
 python phi4_test.py
