@@ -1,14 +1,14 @@
 import transformers
 from datetime import datetime
-import sys
+import os
 
 start = datetime.now()
 current_time = start.strftime("%H:%M:%S")
 print(f"Starting at {current_time}", flush=True)
 
-print(f"found HUGGINGFACE_HUB_CACHE : {sys.env['HUGGINGFACE_HUB_CACHE']}", flush=True)
-print(f"found HF_HOME : {sys.env['HF_HOME']}", flush=True)
-print(f"found HUGGINGFACEHUB_API_TOKEN : {sys.env['HUGGINGFACEHUB_API_TOKEN']}", flush=True)
+print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get['HUGGINGFACE_HUB_CACHE']}", flush=True)
+print(f"found HF_HOME : {os.environ.get['HF_HOME']}", flush=True)
+print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get['HUGGINGFACEHUB_API_TOKEN']}", flush=True)
 
 # pipeline = transformers.pipeline(
 #     "text-generation",
