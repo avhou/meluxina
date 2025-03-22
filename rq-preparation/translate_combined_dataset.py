@@ -28,8 +28,8 @@ def translate_combined_datasets(dataset: str):
                 print(f"detected language for {url} is {lang_code} with confidence {confidence}")
                 conn.execute(f"update articles set detected_language = ? where url = ?", (lang_code, url))
                 conn.commit()
-            except:
-                print(f"could not detect language for url {url}")
+            except Exception as e:
+                print(f"could not detect language for url {url}, exception was {e}")
 
 
 if __name__ == "__main__":
