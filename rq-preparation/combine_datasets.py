@@ -1,5 +1,6 @@
 import sys
 import duckdb
+import os.path
 
 
 def combine_datasets(news_outlets: str, tiktok: str, reddit: str, output: str):
@@ -17,6 +18,7 @@ def combine_datasets(news_outlets: str, tiktok: str, reddit: str, output: str):
                        url,
                        STRPTIME(timestamp, '%Y%m%d%H%M%S') as timestamp, 
                        json_object('host', host, 'political_party', political_party) as metadata,
+                       '' as detected_language,
                        content as text, 
                        translated_text, 
                        keywords, 
@@ -29,6 +31,7 @@ def combine_datasets(news_outlets: str, tiktok: str, reddit: str, output: str):
                    url,
                    STRPTIME(create_time, '%Y-%m-%dT%H:%M:%SZ') as timestamp, 
                    json_object('id', id, 'video_duration', video_duration) as metadata,
+                   '' as detected_language,
                    transcription as text, 
                    translated_text, 
                    keywords, 
@@ -41,6 +44,7 @@ def combine_datasets(news_outlets: str, tiktok: str, reddit: str, output: str):
                    url,
                    STRPTIME(created, '%Y-%m-%d %H:%M:%S%z') as timestamp, 
                    json_object('id', id, 'subreddit', subreddit) as metadata,
+                   '' as detected_language,
                    text, 
                    translated_text, 
                    keywords, 
