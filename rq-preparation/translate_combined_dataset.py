@@ -23,6 +23,7 @@ def translate_combined_datasets(dataset: str):
             text = r[1]
             text = re.sub(r'\s+', ' ', text)
             try:
+                print(f"trying to detect language for {text[:100]}")
                 lang_code, confidence = detect_language(text, model)
                 print(f"detected language for {url} is {lang_code} with confidence {confidence}")
                 conn.execute(f"update articles set detected_language = ? where url = ?", (lang_code, url))
