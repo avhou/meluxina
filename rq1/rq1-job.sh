@@ -15,6 +15,7 @@ python -m venv venv
 source venv/bin/activate
 
 pip install torch --index-url https://download.pytorch.org/whl/cu126
+pip install wheel
 pip install flash-attn --no-build-isolation
 python -m pip --cache-dir=/project/home/p200769/data/pip install -r requirements.txt
 
