@@ -170,7 +170,7 @@ Do not give any further explanation or justification. Generate your output in JS
 class RowResult(BaseModel):
     url: str
     invalid: bool
-    invalid_result: Optional[str]
+    result: str
     y: int
     y_hat: int
 
@@ -257,9 +257,9 @@ def process_model(model_input: ModelInput, database: str):
 
                 print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
                 if not check_result_validity(result):
-                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, invalid_result=result))
+                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))
                 else:
-                    row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), invalid_result=None))
+                    row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), result=result))
         row_results[prompt_type] = row_results_for_prompt
 
     return ModelResult(model_input=model_input, row_results=row_results)
