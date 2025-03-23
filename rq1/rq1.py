@@ -181,8 +181,7 @@ class ModelResult(BaseModel):
 def create_model(model_input: ModelInput):
     tokenizer = AutoTokenizer.from_pretrained(
         model_input.model_name,
-        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
-        use_auth_token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
+        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
     )
     # Set pad_token_id explicitly if it's not already set
     if tokenizer.pad_token_id is None:
@@ -193,7 +192,6 @@ def create_model(model_input: ModelInput):
         device_map="auto",
         # Use bfloat16 for very large models if supported by A100
         torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
-        use_auth_token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
         token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
         **model_input.model_params
     )
