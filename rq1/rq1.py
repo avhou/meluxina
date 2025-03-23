@@ -6,6 +6,11 @@ from typing import List, Dict, Literal, Any, Optional
 from pydantic import BaseModel
 import re
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report
+import os
+
+print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
+print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
+print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
 PromptType = Literal["zero-shot", "one-shot", "few-shot"]
 
