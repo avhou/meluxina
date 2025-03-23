@@ -25,4 +25,6 @@ export CUDA_CACHE_PATH=/project/home/p200769/data/cuda_cache
 export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 
+echo which huggingface-cli
+
 python rq1.py /project/home/p200769/data/combined_dataset.sqlite
