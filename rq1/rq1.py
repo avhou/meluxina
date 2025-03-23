@@ -62,8 +62,7 @@ class ModelInput(BaseModel):
 model_inputs = [
     ModelInput(
         model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-        # faster attention on A100
-        model_params={"trust_remote_code": True, "attn_implementation": "flash_attention_2"},
+        model_params={"trust_remote_code": True},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -131,8 +130,7 @@ Do not give any further explanation or justification. Generate your output in JS
     ),
     ModelInput(
         model_name="meta-llama/Llama-3.3-70B-Instruct",
-        # faster attention on A100
-        model_params={"trust_remote_code": True, "attn_implementation": "flash_attention_2"},
+        model_params={"trust_remote_code": True},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
