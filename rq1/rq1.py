@@ -95,7 +95,7 @@ model_inputs = [
 #        }
 #     ),
     ModelInput(
-        model_name="mistralai/Mistral-Large-Instruct-2411",
+        model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
         model_params={},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
