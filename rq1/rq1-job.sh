@@ -1,6 +1,6 @@
 #!/bin/bash -l
 ## This file is called `rq1-job.sh`
-#SBATCH --time=00:15:00
+#SBATCH --time=01:00:00
 #SBATCH --account=p200769
 #SBATCH --partition=gpu
 #SBATCH --qos=dev
