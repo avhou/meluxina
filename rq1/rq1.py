@@ -246,7 +246,6 @@ def process_model(model_input: ModelInput, database: str):
                         attention_mask=inputs["attention_mask"],
                         max_new_tokens=500,
                         temperature=0.1,  # Make output as deterministic as possible
-                        top_k=2,        # Limit the model to choose between the top two options
                         num_return_sequences=1
                     )
                     result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
@@ -296,7 +295,7 @@ def generate_messages(prompt: str, text:str):
             {"role": "system", "content": prompt},
             {"role": "user", "content": text},
         ]
-    return f"{prompt}.  This is the article the user wants to check: {text}.  Your answer to whether this contains disinformation is (choose between yes or no):"
+    return f"{prompt}.  This is the article the user wants to check: {text}.  Your answer to whether this contains disinformation is :"
 
 def sanitize_filename(filename: str) -> str:
     return re.sub(r'[\/:*?"<>|]', '_', filename)
