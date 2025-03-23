@@ -16,7 +16,6 @@ PromptType = Literal["zero-shot", "one-shot", "few-shot"]
 
 class Output(BaseModel):
     contains_disinformation: bool
-    justification: str
 
 class ModelInput(BaseModel):
     model_name: str
@@ -65,20 +64,20 @@ model_inputs = [
         model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
         model_params={},
         prompts={
-            "zero-shot": """You are a research assistant that tries to detect disinformation in articles.
+            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "one-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
 They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
 Dutch citizens feel the refugees receive preferential treatment.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "few-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
@@ -92,27 +91,27 @@ They have difficulty understanding the language and culture of the country they 
 Frustrations can in some cases lead to violence.
 People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
        }
     ),
     ModelInput(
         model_name="mistralai/Mistral-Large-Instruct-2411",
         model_params={},
         prompts={
-            "zero-shot": """You are a research assistant that tries to detect disinformation in articles.
+            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "one-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
 They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
 Dutch citizens feel the refugees receive preferential treatment.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "few-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
@@ -126,27 +125,27 @@ They have difficulty understanding the language and culture of the country they 
 Frustrations can in some cases lead to violence.
 People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
        }
     ),
     ModelInput(
         model_name="meta-llama/Llama-3.3-70B-Instruct",
         model_params={},
         prompts={
-            "zero-shot": """You are a research assistant that tries to detect disinformation in articles.
+            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "one-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
 They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
 Dutch citizens feel the refugees receive preferential treatment.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
-            "few-shot": """You are a research assistant that tries to detect disinformation in articles.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
@@ -160,7 +159,7 @@ They have difficulty understanding the language and culture of the country they 
 Frustrations can in some cases lead to violence.
 People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification.""",
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
        }
     ),
 ]
@@ -232,11 +231,10 @@ def process_model(model_input: ModelInput, database: str):
 
                 result = ''
                 with torch.no_grad():
-                    # zeer korte output, we willen immers enkel yes or no
                     output_ids = llm_model.generate(
                         inputs["input_ids"],
                         attention_mask=inputs["attention_mask"],
-                        max_new_tokens=250,
+                        max_new_tokens=500,
                         temperature=0.1,  # Make output as deterministic as possible
                         top_k=2,        # Limit the model to choose between the top two options
                         num_return_sequences=1
