@@ -60,43 +60,44 @@ class ModelInput(BaseModel):
 # ]
 
 model_inputs = [
-#     ModelInput(
-#         model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-#         model_params={},
-#         prompts={
-#             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-# Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-#             "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-# Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
-# They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
-# Dutch citizens feel the refugees receive preferential treatment.
-# Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-#             "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-# Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
-# They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
-# Dutch citizens feel the refugees receive preferential treatment.
-# Here is a second example of how you can detect disinformation in such articles: war refugees receive a living wage from the government.
-# Since the number of war refugees is getting higher, the costs of the living wage are increasing.
-# Many people feel the cost is too high and the living wages are given too easily.  They have to work to get money, so why don't the refugees?
-# Here is a third example of how you can detect disinformation in such articles: refugees and immigrants often live in difficult circumstances.
-# They have difficulty understanding the language and culture of the country they are staying in.
-# Frustrations can in some cases lead to violence.
-# People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
-# Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-#        }
-#     ),
+    ModelInput(
+        model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+        # faster attention on A100
+        model_params={"trust_remote_code": True, "attn_implementation": "flash_attention_2"},
+        prompts={
+            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
+They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
+Dutch citizens feel the refugees receive preferential treatment.
+Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+            "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
+They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
+Dutch citizens feel the refugees receive preferential treatment.
+Here is a second example of how you can detect disinformation in such articles: war refugees receive a living wage from the government.
+Since the number of war refugees is getting higher, the costs of the living wage are increasing.
+Many people feel the cost is too high and the living wages are given too easily.  They have to work to get money, so why don't the refugees?
+Here is a third example of how you can detect disinformation in such articles: refugees and immigrants often live in difficult circumstances.
+They have difficulty understanding the language and culture of the country they are staying in.
+Frustrations can in some cases lead to violence.
+People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
+Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
+Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+       }
+    ),
     ModelInput(
         model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
-        model_params={},
+        model_params={"trust_remote_code": True},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -130,7 +131,8 @@ Do not give any further explanation or justification. Generate your output in JS
     ),
     ModelInput(
         model_name="meta-llama/Llama-3.3-70B-Instruct",
-        model_params={},
+        # faster attention on A100
+        model_params={"trust_remote_code": True, "attn_implementation": "flash_attention_2"},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -177,7 +179,11 @@ class ModelResult(BaseModel):
     row_results: Dict[PromptType, List[RowResult]]
 
 def create_model(model_input: ModelInput):
-    tokenizer = AutoTokenizer.from_pretrained(model_input.model_name, token=os.environ.get('HUGGINGFACEHUB_API_TOKEN'))
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_input.model_name,
+        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        use_auth_token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
+    )
     # Set pad_token_id explicitly if it's not already set
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
@@ -185,8 +191,11 @@ def create_model(model_input: ModelInput):
     model = AutoModelForCausalLM.from_pretrained(
         model_input.model_name,
         device_map="auto",
-        torch_dtype=torch.float16,
-        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN')
+        # Use bfloat16 for very large models if supported by A100
+        torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
+        use_auth_token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        **model_input.model_params
     )
     return tokenizer, model
 
@@ -255,17 +264,31 @@ def process_model(model_input: ModelInput, database: str):
 
     return ModelResult(model_input=model_input, row_results=row_results)
 
+
+def clean_result(result: str) -> str:
+    cleaned_result = re.sub(r'```json|```', '', result).strip()
+    return cleaned_result.lower()
+
 def check_result_validity(result):
     try:
-        return re.sub(r'\.', '', result).strip().lower() in ['yes', 'no']
-    except (IndexError, KeyError, TypeError):
+        is_literal = re.sub(r'\.', '', result).strip().lower() in ['yes', 'no']
+        output = None
+        output = Output.model_validate_json(clean_result(result))
+        return is_literal or (output is not None)
+    except Exception:
         return False
 
 def get_y_hat(result) -> int:
     try:
-        return 1 if re.sub(r'\.', '', result).strip().lower() == 'yes' else 0
-    except (IndexError, KeyError, TypeError):
-        return False
+        is_literal = re.sub(r'\.', '', result).strip().lower() in ['yes', 'no']
+        if is_literal:
+            return 1 if re.sub(r'\.', '', result).strip().lower() == 'yes' else 0
+
+        output = Output.model_validate_json(clean_result(result))
+        return 1 if output.contains_disinformation else 0
+
+    except Exception:
+        return -1
 
 def generate_messages(prompt: str, text:str):
     # default pipeline kan hier mee om, non default pipeline echter niet
