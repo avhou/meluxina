@@ -7,6 +7,9 @@ from pydantic import BaseModel
 import re
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report
 import os
+from accelerate import infer_auto_device_map
+from transformers import BitsAndBytesConfig
+
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
@@ -96,7 +99,7 @@ model_inputs = [
 #     ),
     ModelInput(
         model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
-        model_params={"trust_remote_code": True, "offload_folder": "offload"},
+        model_params={"trust_remote_code": True, "offload_folder": "offload", "low_cpu_mem_usage": True},
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -187,7 +190,18 @@ def create_model(model_input: ModelInput):
 
     model = AutoModelForCausalLM.from_pretrained(
         model_input.model_name,
-        device_map="balanced_low_0" if "mistral" in model_input.model_name.lower() else "auto",
+        torch_dtype="auto",
+        low_cpu_mem_usage=True,
+        trust_remote_code=True,
+        device_map="meta"
+    )
+
+    device_map = infer_auto_device_map(model, max_memory={0: "40GB", 1: "40GB", 2: "40GB", 3: "40GB"},
+                                       no_split_module_classes=["MistralDecoderLayer"])
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_input.model_name,
+        device_map=device_map,
         # Use bfloat16 for very large models if supported by A100
         torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
         token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
