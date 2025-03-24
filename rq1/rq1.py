@@ -2,14 +2,14 @@ import sqlite3
 import sys
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
-from typing import List, Dict, Literal, Any, Optional
+from typing import List, Dict, Literal, Any, Optional, Callable
 from pydantic import BaseModel
 import re
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report
 import os
 from accelerate import infer_auto_device_map
 from transformers import BitsAndBytesConfig
-
+from datetime import datetime
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
@@ -24,6 +24,8 @@ class ModelInput(BaseModel):
     model_name: str
     model_params: Dict[str, Any]
     prompts: Dict[PromptType, str]
+    prompt_generation: Callable[[str, str], str]
+    model_creation: Callable[[Any], Any]
 
 # model_inputs = [
 #     ModelInput(
@@ -100,12 +102,20 @@ model_inputs = [
     ModelInput(
         model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
         model_params={"trust_remote_code": True, "offload_folder": "offload", "low_cpu_mem_usage": True},
+        prompt_generation=generate_messages_mistral,
+        model_creation=create_model,
         prompts={
-            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+            "zero-shot": f"""### Instruction ###
+You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
 Answer with a simple yes or no, yes if you think the article contains disinformation, no if you think the article does not contain disinformation.
-Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+Do not give any further explanation or justification. 
+
+### Output format ###
+Respond with a valid JSON object, following this schema:
+{Output.model_json_schema()}
+""",
             "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
 (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
@@ -188,6 +198,30 @@ def create_model(model_input: ModelInput):
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
 
+    print(f"""Starting model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_input.model_name,
+        device_map="auto",
+        # Use bfloat16 for very large models if supported by A100
+        torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
+        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        **model_input.model_params
+    )
+    print(f"""Finished model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    return tokenizer, model
+
+def create_model_mistral(model_input: ModelInput):
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_input.model_name,
+        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
+    )
+    # Set pad_token_id explicitly if it's not already set
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
+
+    print(f"""Starting model load in meta mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
     model = AutoModelForCausalLM.from_pretrained(
         model_input.model_name,
         torch_dtype="auto",
@@ -195,9 +229,12 @@ def create_model(model_input: ModelInput):
         trust_remote_code=True,
         device_map="meta"
     )
+    print(f"""Finished model load in meta mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     device_map = infer_auto_device_map(model, max_memory={0: "40GB", 1: "40GB", 2: "40GB", 3: "40GB"},
                                        no_split_module_classes=["MistralDecoderLayer"])
+
+    print(f"""Starting model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     model = AutoModelForCausalLM.from_pretrained(
         model_input.model_name,
@@ -207,6 +244,7 @@ def create_model(model_input: ModelInput):
         token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
         **model_input.model_params
     )
+    print(f"""Finished model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
     return tokenizer, model
 
 
@@ -215,7 +253,7 @@ def process_model(model_input: ModelInput, database: str):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
-    llm_tokenizer, llm_model = create_model(model_input)
+    llm_tokenizer, llm_model = model_input.model_creation(model_input)
     max_tokens = llm_model.config.max_position_embeddings
     print(f"model {model_input.model_name} has max tokens {max_tokens}", flush=True)
     print(f"special tokens map: {llm_tokenizer.special_tokens_map}", flush=True)
@@ -233,7 +271,7 @@ def process_model(model_input: ModelInput, database: str):
 
                 print(f"processing text {text[:100]}", flush=True)
 
-                input_prompt = generate_messages(prompt, text)
+                input_prompt = model_input.prompt_generation(prompt, text)
                 inputs = llm_tokenizer(input_prompt, return_tensors="pt", truncation=True, max_length=max_tokens, padding=True).to(device)
 
                 # Attention mask is automatically handled by the tokenizer, but let's confirm it
@@ -256,7 +294,8 @@ def process_model(model_input: ModelInput, database: str):
                         attention_mask=inputs["attention_mask"],
                         max_new_tokens=500,
                         temperature=0.1,  # Make output as deterministic as possible
-                        num_return_sequences=1
+                        num_return_sequences=1,
+                        do_sample=False,
                     )
                     result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
 
@@ -307,6 +346,14 @@ def generate_messages(prompt: str, text:str):
         ]
     return f"{prompt}.  This is the article the user wants to check: {text}.  Your answer to whether this contains disinformation is :"
 
+def generate_messages_mistral(prompt: str, text:str):
+    return f"""{prompt}
+### Article ###
+{text}
+
+### Your answer ### 
+    """
+
 def sanitize_filename(filename: str) -> str:
     return re.sub(r'[\/:*?"<>|]', '_', filename)
 
@@ -316,7 +363,7 @@ def rq1(database: str):
         model_result = process_model(model, database)
         sanitized_model = sanitize_filename(model.model_name)
         with open(f"rq1_{sanitized_model}.json", "w") as f:
-            f.write(model_result.model_dump_json(indent=2))
+            f.write(model_result.model_dump_json(indent=2, exclude={"prompt_generation", "model_creation"}))
 
         for prompt_type, results in model_result.row_results.items():
             print(f"{prompt_type}: Number of invalid results {len([i for i in results if i.invalid])}", flush=True)
