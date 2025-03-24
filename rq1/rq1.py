@@ -102,8 +102,8 @@ model_inputs = [
     ModelInput(
         model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
         model_params={"trust_remote_code": True, "offload_folder": "offload", "low_cpu_mem_usage": True},
-        prompt_generation=generate_messages_mistral,
-        model_creation=create_model,
+        prompt_generation=lambda prompt, text: generate_messages_mistral(prompt, text),
+        model_creation=lambda input: create_model(input),
         prompts={
             "zero-shot": f"""### Instruction ###
 You are a research assistant that tries to detect disinformation in articles.
