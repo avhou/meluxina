@@ -235,7 +235,6 @@ def create_model_llama(model_input: ModelInput):
         # Use bfloat16 for very large models if supported by A100
         torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
         token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
-        max_memory={i: "40GiB" for i in range(4)},
         **model_input.model_params
     )
 
