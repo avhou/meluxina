@@ -7,8 +7,7 @@ from pydantic import BaseModel, Field
 import re
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report
 import os
-from accelerate import infer_auto_device_map
-from transformers import BitsAndBytesConfig
+from accelerate import infer_auto_device_map, dispatch_model
 from datetime import datetime
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
@@ -68,42 +67,42 @@ class ModelInput(BaseModel):
 # ]
 
 model_inputs = [
-    ModelInput(
-        model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-        model_params={"trust_remote_code": True},
-        prompt_generation=lambda prompt, text: generate_messages(prompt, text),
-        model_creation=lambda input: create_model(input),
-        prompts={
-            "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-            "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
-They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
-Dutch citizens feel the refugees receive preferential treatment.
-Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-            "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
-A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
-(that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
-They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
-Dutch citizens feel the refugees receive preferential treatment.
-Here is a second example of how you can detect disinformation in such articles: war refugees receive a living wage from the government.
-Since the number of war refugees is getting higher, the costs of the living wage are increasing.
-Many people feel the cost is too high and the living wages are given too easily.  They have to work to get money, so why don't the refugees?
-Here is a third example of how you can detect disinformation in such articles: refugees and immigrants often live in difficult circumstances.
-They have difficulty understanding the language and culture of the country they are staying in.
-Frustrations can in some cases lead to violence.
-People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
-Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-       }
-    ),
+#     ModelInput(
+#         model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+#         model_params={"trust_remote_code": True},
+#         prompt_generation=lambda prompt, text: generate_messages(prompt, text),
+#         model_creation=lambda input: create_model(input),
+#         prompts={
+#             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+# Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
+# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+#             "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+# Here is one example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
+# They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
+# Dutch citizens feel the refugees receive preferential treatment.
+# Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
+# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+#             "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
+# A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
+# (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
+# Here is a first example of how you can detect disinformation in such articles: war refugees flee their country and go to the Netherlands.
+# They can immediately stay in the social housing infrastructure, whereas Dutch citizens may have to wait for many years to become eligible for social housing.
+# Dutch citizens feel the refugees receive preferential treatment.
+# Here is a second example of how you can detect disinformation in such articles: war refugees receive a living wage from the government.
+# Since the number of war refugees is getting higher, the costs of the living wage are increasing.
+# Many people feel the cost is too high and the living wages are given too easily.  They have to work to get money, so why don't the refugees?
+# Here is a third example of how you can detect disinformation in such articles: refugees and immigrants often live in difficult circumstances.
+# They have difficulty understanding the language and culture of the country they are staying in.
+# Frustrations can in some cases lead to violence.
+# People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
+# Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
+# Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+#        }
+#     ),
 #     ModelInput(
 #         model_name="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
 #         model_params={"trust_remote_code": True, "offload_folder": "offload", "low_cpu_mem_usage": True},
@@ -150,7 +149,7 @@ Do not give any further explanation or justification. Generate your output in JS
         model_name="meta-llama/Llama-3.3-70B-Instruct",
         model_params={"trust_remote_code": True},
         prompt_generation=lambda prompt, text: generate_messages(prompt, text),
-        model_creation=lambda input: create_model(input),
+        model_creation=lambda input: create_model_llama(input),
         prompts={
             "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -218,6 +217,32 @@ def create_model(model_input: ModelInput):
     print(f"""Finished model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
     return tokenizer, model
 
+
+def create_model_llama(model_input: ModelInput):
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_input.model_name,
+        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
+    )
+    # Set pad_token_id explicitly if it's not already set
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
+
+    print(f"""Starting model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_input.model_name,
+        device_map="balanced_low_0",
+        # Use bfloat16 for very large models if supported by A100
+        torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
+        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        max_memory={i: "40GiB" for i in range(4)},
+        **model_input.model_params
+    )
+
+    print(f"""Finished dispatch model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    return tokenizer, model
+
+
 def create_model_mistral(model_input: ModelInput):
     tokenizer = AutoTokenizer.from_pretrained(
         model_input.model_name,
@@ -284,7 +309,7 @@ def process_model(model_input: ModelInput, database: str):
                     existing_row_results_for_prompt = []
 
         with sqlite3.connect(database) as conn:
-            for row in conn.execute(f"select translated_text, disinformation, url from articles limit 5"):
+            for row in conn.execute(f"select translated_text, disinformation, url from articles limit 2"):
                 text = row[0]
                 text = re.sub(r'\s+', ' ', text)
                 ground_truth = 1 if row[1] == 'y' else 0
