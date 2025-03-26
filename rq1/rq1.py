@@ -325,42 +325,46 @@ def process_model(model_input: ModelInput, database: str):
                 print(f"processing text {text[:100]}", flush=True)
 
                 input_prompt = model_input.prompt_generation(prompt, text)
-                inputs = llm_tokenizer(input_prompt, return_tensors="pt", truncation=True, max_length=max_tokens, padding=True).to(device)
+                try:
+                    inputs = llm_tokenizer(input_prompt, return_tensors="pt", truncation=True, max_length=max_tokens, padding=True).to(device)
 
-                # Attention mask is automatically handled by the tokenizer, but let's confirm it
-                attention_mask = inputs.get("attention_mask", torch.ones(inputs["input_ids"].shape, device=device))
+                    # Attention mask is automatically handled by the tokenizer, but let's confirm it
+                    attention_mask = inputs.get("attention_mask", torch.ones(inputs["input_ids"].shape, device=device))
 
-                # Create attention mask explicitly (if missing)
-                if attention_mask.sum().item() != attention_mask.numel():
-                    padding_length = inputs["input_ids"].shape[-1] - attention_mask.sum().item()
-                    attention_mask[:, -padding_length:] = 0
+                    # Create attention mask explicitly (if missing)
+                    if attention_mask.sum().item() != attention_mask.numel():
+                        padding_length = inputs["input_ids"].shape[-1] - attention_mask.sum().item()
+                        attention_mask[:, -padding_length:] = 0
 
-                inputs = {**inputs, "attention_mask": attention_mask.to(device)}
+                    inputs = {**inputs, "attention_mask": attention_mask.to(device)}
 
-                # Move inputs to device
-                inputs = {key: value.to(device) for key, value in inputs.items()}
+                    # Move inputs to device
+                    inputs = {key: value.to(device) for key, value in inputs.items()}
 
-                result = ''
-                with torch.no_grad():
-                    output_ids = llm_model.generate(
-                        inputs["input_ids"],
-                        attention_mask=inputs["attention_mask"],
-                        max_new_tokens=500,
-                        temperature=0.1,  # Make output as deterministic as possible
-                        num_return_sequences=1,
-                        do_sample=False,
-                    )
-                    result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
+                    result = ''
+                    with torch.no_grad():
+                        output_ids = llm_model.generate(
+                            inputs["input_ids"],
+                            attention_mask=inputs["attention_mask"],
+                            max_new_tokens=500,
+                            temperature=0.1,  # Make output as deterministic as possible
+                            num_return_sequences=1,
+                            do_sample=False,
+                        )
+                        result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
 
-                if result.startswith(input_prompt):
-                    print(f"detected repeated input, skipping", flush=True)
-                    result = result[len(input_prompt):]
+                    if result.startswith(input_prompt):
+                        print(f"detected repeated input, skipping", flush=True)
+                        result = result[len(input_prompt):]
 
-                print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
-                if not check_result_validity(result):
-                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))
-                else:
-                    row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), result=result))
+                    print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
+                    if not check_result_validity(result):
+                        row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))
+                    else:
+                        row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), result=result))
+                except Exception as e:
+                    row_results_for_prompt.append(
+                        RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=f"an error occurred : {e}"))
 
                 with open(progress_file, "w") as f:
                     f.write(ModelResult(model_input=model_input, row_results={prompt_type: row_results_for_prompt}).model_dump_json(indent=2))
