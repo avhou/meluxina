@@ -306,7 +306,8 @@ def process_model(model_input: ModelInput, database: str):
                 try:
                     chat_template = llm_tokenizer.apply_chat_template(input_prompt, tokenize=False)
                     print(f"chat template is {chat_template}", flush=True)
-                    inputs = llm_tokenizer(chat_template, return_tensors="pt", add_generation_prompt=True, truncation=True, max_length=max_tokens, padding=True).to(device)
+                    # inputs = llm_tokenizer(chat_template, return_tensors="pt", add_generation_prompt=True, truncation=True, max_length=max_tokens, padding=True).to(device)
+                    inputs = llm_tokenizer(chat_template, return_tensors="pt", truncation=True, max_length=max_tokens, padding=True).to(device)
 
                     # Attention mask is automatically handled by the tokenizer, but let's confirm it
                     attention_mask = inputs.get("attention_mask", torch.ones(inputs["input_ids"].shape, device=device))
