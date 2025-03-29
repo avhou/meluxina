@@ -81,7 +81,7 @@ def process_model(model_input: ModelInput, database: str):
                 ]
 
                 outputs = pipeline(messages, max_new_tokens=2048)
-                ttl = outputs[0]["generated_text"][-1]
+                ttl = outputs[0]["generated_text"][-1]["content"]
 
                 print(f"processing text to JSON for {text[:100]}", flush=True)
                 {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
@@ -96,7 +96,7 @@ def process_model(model_input: ModelInput, database: str):
                 {"role": "user", "content": text},
 
                 outputs = pipeline(messages, max_new_tokens=2048)
-                json = outputs[0]["generated_text"][-1]
+                json = outputs[0]["generated_text"][-1]["content"]
 
                 row_results.append(RowResult(url=url, valid=True, result_ttl=ttl, result_json=json, y=ground_truth))
 
