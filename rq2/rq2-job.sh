@@ -1,9 +1,9 @@
 #!/bin/bash -l
 ## This file is called `rq1-job.sh`
-#SBATCH --time=01:00:00
+#SBATCH --time=48:00:00
 #SBATCH --account=p200769
 #SBATCH --partition=gpu
-#SBATCH --qos=dev
+#SBATCH --qos=default
 #SBATCH --nodes=1
 
 module load Python
