@@ -101,7 +101,7 @@ def process_model(model_input: ModelInput, database: str):
                 row_results.append(RowResult(url=url, valid=True, result_ttl=ttl, result_json=json, y=ground_truth))
 
             except Exception as e:
-                row_results.append(RowResult(url=url, valid=False, result_ttl="", result_json="", y=ground_truth))
+                row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
 
             sanitized_model = sanitize_filename(model_input.model_name)
             with open(f"rq2_{sanitized_model}.json", "w") as f:
