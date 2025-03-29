@@ -2,12 +2,7 @@ import sqlite3
 import sys
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
-from typing import List, Dict, Literal, Any, Optional, Callable
-from pydantic import BaseModel, Field
-import re
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, classification_report
 import os
-from accelerate import infer_auto_device_map, dispatch_model
 from datetime import datetime
 from models import *
 
@@ -173,10 +168,6 @@ def process_model(model_input: ModelInput, database: str):
 
     return ModelResult(model_input=model_input, row_results=row_results)
 
-
-def clean_result(result: str) -> str:
-    cleaned_result = re.sub(r'```json|```', '', result).strip()
-    return cleaned_result.lower()
 
 def check_result_validity(result):
     return False
