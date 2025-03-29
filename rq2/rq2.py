@@ -60,7 +60,7 @@ def process_model(model_input: ModelInput, database: str):
     row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
-        for row in conn.execute(f"select translated_text, disinformation, url from articles"):
+        for row in conn.execute(f"select translated_text, disinformation, url from articles limit 1"):
             text = row[0]
             text = re.sub(r'\s+', ' ', text)
             ground_truth = 1 if row[1] == 'y' else 0
@@ -84,7 +84,8 @@ def process_model(model_input: ModelInput, database: str):
                 ttl = outputs[0]["generated_text"][-1]["content"]
 
                 print(f"processing text to JSON for {text[:100]}", flush=True)
-                {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
+                messages = [
+                    {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
                     Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships, 
                     and output a knowledge graph.  
                     You will output triples (subject, predicate, object) in JSON format.   
@@ -92,8 +93,9 @@ def process_model(model_input: ModelInput, database: str):
                     Only output the JSON-formatted knowledge graph and do not include any explanations.  
                     Be as succinct as possible and only include the most relevant information.
                     However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                """},
-                {"role": "user", "content": text},
+                    """},
+                    {"role": "user", "content": text},
+                ]
 
                 outputs = pipeline(messages, max_new_tokens=2048)
                 json = outputs[0]["generated_text"][-1]["content"]
