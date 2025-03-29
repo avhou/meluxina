@@ -60,7 +60,7 @@ def process_model(model_input: ModelInput, database: str):
     row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
-        for row in conn.execute(f"select translated_text, disinformation, url from articles limit 1"):
+        for row in conn.execute(f"select translated_text, disinformation, url from articles"):
             text = row[0]
             text = re.sub(r'\s+', ' ', text)
             ground_truth = 1 if row[1] == 'y' else 0
