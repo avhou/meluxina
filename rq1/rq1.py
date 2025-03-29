@@ -286,7 +286,7 @@ def process_model(model_input: ModelInput, database: str):
                     existing_row_results_for_prompt = []
 
         with sqlite3.connect(database) as conn:
-            for row in conn.execute(f"select translated_text, disinformation, url from articles limit 3"):
+            for row in conn.execute(f"select translated_text, disinformation, url from articles"):
                 text = row[0]
                 text = re.sub(r'\s+', ' ', text)
                 ground_truth = 1 if row[1] == 'y' else 0
