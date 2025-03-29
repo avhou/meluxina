@@ -103,6 +103,10 @@ def process_model(model_input: ModelInput, database: str):
             except Exception as e:
                 row_results.append(RowResult(url=url, valid=False, result_ttl="", result_json="", y=ground_truth))
 
+            sanitized_model = sanitize_filename(model_input.model_name)
+            with open(f"rq2_{sanitized_model}.json", "w") as f:
+                f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
+
     return ModelResult(model_input=model_input, row_results=row_results)
 
 
