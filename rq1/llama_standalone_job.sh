@@ -26,6 +26,4 @@ export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-huggingface-cli --version | true
-
 python llama_standalone.py /project/home/p200769/data/combined_dataset.sqlite
