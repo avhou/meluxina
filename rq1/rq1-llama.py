@@ -1,6 +1,6 @@
 import sqlite3
 import sys
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 import os
 from datetime import datetime
@@ -52,27 +52,17 @@ model_inputs = [
 
 
 def create_model_llama(model_input: ModelInput):
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_input.model_name,
-        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
-    )
-    # Set pad_token_id explicitly if it's not already set
-    if tokenizer.pad_token_id is None:
-        tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
-    print(f"""Starting model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_input.model_name,
-        device_map="balanced_low_0",
-        # Use bfloat16 for very large models if supported by A100
-        torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
-        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
-        **model_input.model_params
+    model = pipeline(
+        "text-generation",
+        model=model_input.model_name,
+        model_kwargs={"torch_dtype": torch.bfloat16},
+        device_map="auto",
     )
 
-    print(f"""Finished dispatch model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
-    return tokenizer, model
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    return model
 
 
 def process_model(model_input: ModelInput, database: str):
@@ -80,10 +70,7 @@ def process_model(model_input: ModelInput, database: str):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
-    llm_tokenizer, llm_model = model_input.model_creation(model_input)
-    max_tokens = llm_model.config.max_position_embeddings
-    print(f"model {model_input.model_name} has max tokens {max_tokens}", flush=True)
-    print(f"special tokens map: {llm_tokenizer.special_tokens_map}", flush=True)
+    llm_model = model_input.model_creation(model_input)
 
     sanitized_model = sanitize_filename(model_input.model_name)
     row_results = {}
@@ -122,33 +109,10 @@ def process_model(model_input: ModelInput, database: str):
 
                 input_prompt = model_input.prompt_generation(prompt, text)
                 try:
-                    inputs = llm_tokenizer(input_prompt, return_tensors="pt", truncation=True, max_length=max_tokens,
-                                           padding=True).to(device)
+                    outputs = llm_model(input_prompt, max_new_tokens=1000)
+                    result = outputs[0]["generated_text"][-1]
 
-                    # Attention mask is automatically handled by the tokenizer, but let's confirm it
-                    attention_mask = inputs.get("attention_mask", torch.ones(inputs["input_ids"].shape, device=device))
-
-                    # Create attention mask explicitly (if missing)
-                    if attention_mask.sum().item() != attention_mask.numel():
-                        padding_length = inputs["input_ids"].shape[-1] - attention_mask.sum().item()
-                        attention_mask[:, -padding_length:] = 0
-
-                    inputs = {**inputs, "attention_mask": attention_mask.to(device)}
-
-                    # Move inputs to device
-                    inputs = {key: value.to(device) for key, value in inputs.items()}
-
-                    result = ''
-                    with torch.no_grad():
-                        output_ids = llm_model.generate(
-                            inputs["input_ids"],
-                            attention_mask=inputs["attention_mask"],
-                            max_new_tokens=1000,
-                            temperature=0.1,  # Make output as deterministic as possible
-                            num_return_sequences=1,
-                            do_sample=False,
-                        )
-                        result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
+                    print(f"result of LLM is {result}", flush=True)
 
                     if result.startswith(input_prompt):
                         print(f"detected repeated input, skipping", flush=True)
@@ -176,29 +140,13 @@ def check_result_validity(result):
 def get_y_hat(result) -> int:
     return -1
 
-def generate_messages_array(prompt: str, text:str):
-    # default pipeline kan hier mee om, non default pipeline echter niet
-    data = [
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": text},
-    ]
-    return data
-
 def generate_messages(prompt: str, text:str):
     # default pipeline kan hier mee om, non default pipeline echter niet
     data = [
         {"role": "system", "content": prompt},
         {"role": "user", "content": text},
     ]
-    return f"{prompt}.  This is the article the user wants to check: {text}.  Your answer to whether this contains disinformation is :"
-
-def generate_messages_mistral(prompt: str, text:str):
-    return f"""{prompt}
-### Article ###
-{text}
-
-### Your answer ### 
-    """
+    return data
 
 def rq1(database: str):
     for model in model_inputs:
