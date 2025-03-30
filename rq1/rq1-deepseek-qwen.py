@@ -1,10 +1,11 @@
 import sqlite3
 import sys
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 import os
 from datetime import datetime
 from models import *
+import json
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
@@ -46,32 +47,24 @@ Frustrations can in some cases lead to violence.
 People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
 Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
 Do not give any further explanation or justification. Keep your reasoning output to a minimum.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-       }
+        }
     )
 ]
 
 
 def create_model(model_input: ModelInput):
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_input.model_name,
-        token=os.environ.get('HUGGINGFACEHUB_API_TOKEN')
-    )
-    # Set pad_token_id explicitly if it's not already set
-    if tokenizer.pad_token_id is None:
-        tokenizer.pad_token_id = tokenizer.eos_token_id  # Set EOS token as pad token
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
-    print(f"""Starting model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_input.model_name,
-        device_map="auto",
-        # Use bfloat16 for very large models if supported by A100
-        torch_dtype=torch.bfloat16 if "70B" in model_input.model_name else torch.float16,
+    model = pipeline(
+        "text-generation",
+        model=model_input.model_name,
+        model_kwargs={"torch_dtype": torch.bfloat16},
         token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
-        **model_input.model_params
+        device_map="auto",
     )
-    print(f"""Finished model load in normal mode at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
-    return tokenizer, model
+
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    return model
 
 
 def process_model(model_input: ModelInput, database: str):
@@ -79,10 +72,7 @@ def process_model(model_input: ModelInput, database: str):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
-    llm_tokenizer, llm_model = model_input.model_creation(model_input)
-    max_tokens = llm_model.config.max_position_embeddings
-    print(f"model {model_input.model_name} has max tokens {max_tokens}", flush=True)
-    print(f"special tokens map: {llm_tokenizer.special_tokens_map}", flush=True)
+    llm_model = model_input.model_creation(model_input)
 
     sanitized_model = sanitize_filename(model_input.model_name)
     row_results = {}
@@ -121,43 +111,15 @@ def process_model(model_input: ModelInput, database: str):
 
                 input_prompt = model_input.prompt_generation(prompt, text)
                 try:
-                    inputs = llm_tokenizer(input_prompt, return_tensors="pt", truncation=True, max_length=max_tokens,
-                                           padding=True).to(device)
+                    outputs = llm_model(input_prompt, max_new_tokens=1000)
+                    result = outputs[0]["generated_text"][-1]
 
-                    # Attention mask is automatically handled by the tokenizer, but let's confirm it
-                    attention_mask = inputs.get("attention_mask", torch.ones(inputs["input_ids"].shape, device=device))
-
-                    # Create attention mask explicitly (if missing)
-                    if attention_mask.sum().item() != attention_mask.numel():
-                        padding_length = inputs["input_ids"].shape[-1] - attention_mask.sum().item()
-                        attention_mask[:, -padding_length:] = 0
-
-                    inputs = {**inputs, "attention_mask": attention_mask.to(device)}
-
-                    # Move inputs to device
-                    inputs = {key: value.to(device) for key, value in inputs.items()}
-
-                    result = ''
-                    with torch.no_grad():
-                        output_ids = llm_model.generate(
-                            inputs["input_ids"],
-                            attention_mask=inputs["attention_mask"],
-                            max_new_tokens=1000,
-                            temperature=0.1,  # Make output as deterministic as possible
-                            num_return_sequences=1,
-                            do_sample=False,
-                        )
-                        result = llm_tokenizer.decode(output_ids[0], skip_special_tokens=True)
-
-                    if result.startswith(input_prompt):
-                        print(f"detected repeated input, skipping", flush=True)
-                        result = result[len(input_prompt):]
-
-                    print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
-                    if not check_result_validity(result):
-                        row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))
-                    else:
-                        row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), result=result))
+                    print(f"result of LLM is {result}, ground truth is {ground_truth}, raw ground truth is {row[1]}", flush=True)
+                    try:
+                        string_representation = json.dumps(result)
+                    except:
+                        string_representation = str(result)
+                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=string_representation))
                 except Exception as e:
                     row_results_for_prompt.append(
                         RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=f"an error occurred : {e}"))
@@ -175,29 +137,13 @@ def check_result_validity(result):
 def get_y_hat(result) -> int:
     return -1
 
-def generate_messages_array(prompt: str, text:str):
-    # default pipeline kan hier mee om, non default pipeline echter niet
-    data = [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": text},
-        ]
-    return data
-
 def generate_messages(prompt: str, text:str):
     # default pipeline kan hier mee om, non default pipeline echter niet
     data = [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": text},
-        ]
-    return f"{prompt}.  This is the article the user wants to check: {text}.  Your answer to whether this contains disinformation is :"
-
-def generate_messages_mistral(prompt: str, text:str):
-    return f"""{prompt}
-### Article ###
-{text}
-
-### Your answer ### 
-    """
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": text},
+    ]
+    return data
 
 def rq1(database: str):
     for model in model_inputs:

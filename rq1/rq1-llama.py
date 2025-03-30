@@ -17,7 +17,7 @@ model_inputs = [
             model_name="meta-llama/Llama-3.3-70B-Instruct",
             model_params={"trust_remote_code": True},
             prompt_generation=lambda prompt, text: generate_messages(prompt, text),
-            model_creation=lambda input: create_model_llama(input),
+            model_creation=lambda input: create_model(input),
             prompts={
                 "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
@@ -52,13 +52,14 @@ model_inputs = [
 ]
 
 
-def create_model_llama(model_input: ModelInput):
+def create_model(model_input: ModelInput):
     print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     model = pipeline(
         "text-generation",
         model=model_input.model_name,
         model_kwargs={"torch_dtype": torch.bfloat16},
+        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
         device_map="auto",
     )
 
