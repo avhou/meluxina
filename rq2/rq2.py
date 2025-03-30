@@ -1,6 +1,7 @@
 import transformers
 from models import *
 
+from datetime import datetime
 import sqlite3
 import sys
 import torch
@@ -32,12 +33,16 @@ def process_model(model_input: ModelInput, database: str):
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
     pipeline = transformers.pipeline(
         "text-generation",
         model=model_input.model_name,
         model_kwargs={"torch_dtype": "auto"},
         device_map="auto",
     )
+
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
@@ -102,6 +107,7 @@ def rq2(database: str):
         sanitized_model = sanitize_filename(model.model_name)
         with open(f"rq2_{sanitized_model}.json", "w") as f:
             f.write(model_result.model_dump_json(indent=2))
+    print(f"Done.")
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
