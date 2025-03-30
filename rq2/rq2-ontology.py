@@ -1,35 +1,32 @@
 import transformers
 from models import *
 
-import sqlite3
+from datetime import datetime
 import sys
 import torch
 import os
-import re
 
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
 print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
-model_inputs = [
-    ModelInput(
-        model_name="microsoft/phi-4",
-        model_params={},
-    )
-]
 
 def generate_ontology(prefix: str, is_json: bool) -> str:
 
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
     pipeline = transformers.pipeline(
         "text-generation",
-        model="microsoft/phi-4",
+        model="meta-llama/Llama-3.3-70B-Instruct",
         model_kwargs={"torch_dtype": "auto"},
         device_map="auto",
     )
+
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     try:
         print(f"processing ontology for prefix {prefix}", flush=True)
