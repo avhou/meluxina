@@ -28,7 +28,7 @@ def process_results(input_file: str):
 
             # voorlopig enkel met de valids verder gaan
             valid_indices = [index for index in range(len(y_hats)) if y_hats[index] != -1]
-            print(f"prompt_type {prompt_type} has {len(valid_indices)} valid results")
+            print(f"prompt_type {prompt_type} has {len(valid_indices)} valid results and {len(ys) - len(valid_indices)} invalid results")
 
             valid_model_result = ModelResult(model_input=model_result.model_input, row_results={prompt_type: [row_results[i] for i in valid_indices]})
             with open(f"rq1_{sanitized_name}_{prompt_type}_valid.json", "w") as f:
@@ -75,12 +75,18 @@ def process_results(input_file: str):
 
 
 
+def remove_markdown(text: str) -> str:
+    return (text
+            .replace('```turtle', '')
+            .replace('```json', '')
+            .replace('```', ''))
 
 def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
     try:
-        last_line = result.splitlines()[-1].replace("'", '"')
-        print(f"last_line is {last_line}")
-        output = Output.model_validate_json(last_line)
+        last_line = result.splitlines()[-1]
+        parsed_result = json.loads(last_line)
+        parsed_content = json.loads(remove_markdown(parsed_result["content"]))
+        output = Output.model_validate(parsed_content)
         if output is not None:
             return 1 if output.contains_disinformation else 0
         else:
