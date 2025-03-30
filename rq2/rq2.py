@@ -14,10 +14,6 @@ print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOK
 
 model_inputs = [
     ModelInput(
-        model_name="microsoft/phi-4",
-        model_params={},
-    ),
-    ModelInput(
         model_name="meta-llama/Llama-3.3-70B-Instruct",
         model_params={},
     ),
@@ -25,6 +21,10 @@ model_inputs = [
         model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
         model_params={},
     ),
+    # ModelInput(
+    #     model_name="microsoft/phi-4",
+    #     model_params={},
+    # ),
 ]
 
 def process_model(model_input: ModelInput, database: str):
