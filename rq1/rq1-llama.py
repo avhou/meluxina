@@ -112,12 +112,6 @@ def process_model(model_input: ModelInput, database: str):
                     outputs = llm_model(input_prompt, max_new_tokens=1000)
                     result = outputs[0]["generated_text"][-1]
 
-                    print(f"result of LLM is {result}", flush=True)
-
-                    if result.startswith(input_prompt):
-                        print(f"detected repeated input, skipping", flush=True)
-                        result = result[len(input_prompt):]
-
                     print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
                     if not check_result_validity(result):
                         row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))

@@ -78,7 +78,7 @@ def process_results(input_file: str):
 
 def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
     try:
-        last_line = result.splitlines()[-1]
+        last_line = result.splitlines()[-1].replace("'", '"')
         print(f"last_line is {last_line}")
         output = Output.model_validate_json(last_line)
         if output is not None:
