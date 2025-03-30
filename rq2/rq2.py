@@ -1,36 +1,11 @@
 import transformers
-from pydantic import BaseModel
-from typing import List, Dict, Any
+from models import *
 
 import sqlite3
 import sys
 import torch
 import os
 import re
-
-class Triple(BaseModel):
-    subject: str
-    predicate: str
-    object: str
-
-
-class Output(BaseModel):
-    triples: List[Triple]
-
-class ModelInput(BaseModel):
-    model_name: str
-    model_params: Dict[str, Any]
-
-class RowResult(BaseModel):
-    url: str
-    valid: bool
-    result_ttl: str
-    result_json: str
-    y: int
-
-class ModelResult(BaseModel):
-    model_input: ModelInput
-    row_results: List[RowResult]
 
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
@@ -43,7 +18,6 @@ model_inputs = [
         model_params={},
     )
 ]
-
 
 def process_model(model_input: ModelInput, database: str):
 
@@ -112,8 +86,6 @@ def process_model(model_input: ModelInput, database: str):
     return ModelResult(model_input=model_input, row_results=row_results)
 
 
-def sanitize_filename(filename: str) -> str:
-    return re.sub(r'[\/:*?"<>|]', '_', filename)
 
 def rq2(database: str):
     for model in model_inputs:

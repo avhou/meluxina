@@ -1,129 +1,124 @@
-import transformers
-from pydantic import BaseModel
-from typing import List, Dict, Any
+from models import *
+from typing import Callable
+import json
+import rdflib
+import pydot
 
-import sqlite3
 import sys
-import torch
-import os
-import re
-
-class Triple(BaseModel):
-    subject: str
-    predicate: str
-    object: str
 
 
-class Output(BaseModel):
-    triples: List[Triple]
+def remove_markdown(text: str) -> str:
+    return (text
+            .replace('```turtle', '')
+            .replace('```json', '')
+            .replace('```', ''))
 
-class ModelInput(BaseModel):
-    model_name: str
-    model_params: Dict[str, Any]
-
-class RowResult(BaseModel):
-    url: str
-    valid: bool
-    result_ttl: str
-    result_json: str
-    y: int
-
-class ModelResult(BaseModel):
-    model_input: ModelInput
-    row_results: List[RowResult]
-
-
-print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
-print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
-print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
-
-model_inputs = [
-    ModelInput(
-        model_name="microsoft/phi-4",
-        model_params={},
-    )
-]
-
-
-def process_model(model_input: ModelInput, database: str):
-
-    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
-    print(f"using device {device}", flush=True)
-
-    pipeline = transformers.pipeline(
-        "text-generation",
-        model="microsoft/phi-4",
-        model_kwargs={"torch_dtype": "auto"},
-        device_map="auto",
-    )
-
-    row_results = []
-    print(f"processing model {model_input.model_name}", flush=True)
-    with sqlite3.connect(database) as conn:
-        for row in conn.execute(f"select translated_text, disinformation, url from articles"):
-            text = row[0]
-            text = re.sub(r'\s+', ' ', text)
-            ground_truth = 1 if row[1] == 'y' else 0
-            url = row[2]
-
-
+def combine_jsons(result: ModelResult, predicate: Callable[[RowResult], bool]) -> Output:
+    triples = []
+    for row in result.row_results:
+        if predicate(row):
+            cleaned = remove_markdown(row.result_json)
             try:
-                print(f"processing text to TTL for {text[:100]}", flush=True)
-                messages = [
-                    {"role": "system", "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
-                    Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships, 
-                    and output a knowledge graph in Turtle (TTL) format composed by RDF triples (subject, predicate, object). 
-                    Only output the TTL-formatted knowledge graph and do not include any explanations.  
-                    Be as succinct as possible and only include the most relevant information.
-                    However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
-                    {"role": "user", "content": text},
-                ]
-
-                outputs = pipeline(messages, max_new_tokens=2048)
-                ttl = outputs[0]["generated_text"][-1]["content"]
-
-                print(f"processing text to JSON for {text[:100]}", flush=True)
-                messages = [
-                    {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
-                    Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships, 
-                    and output a knowledge graph.  
-                    You will output triples (subject, predicate, object) in JSON format.   
-                    The output should conform to this JSON schema : {Output.model_json_schema()}.  
-                    Only output the JSON-formatted knowledge graph and do not include any explanations.  
-                    Be as succinct as possible and only include the most relevant information.
-                    However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
-                    {"role": "user", "content": text},
-                ]
-
-                outputs = pipeline(messages, max_new_tokens=2048)
-                json = outputs[0]["generated_text"][-1]["content"]
-
-                row_results.append(RowResult(url=url, valid=True, result_ttl=ttl, result_json=json, y=ground_truth))
-
+                data = json.loads(cleaned)
+                if "triples" in data:
+                    for triple in data["triples"]:
+                        try:
+                            row_result = Triple.model_validate_json(json.dumps(triple))
+                        except:
+                            row_result = None
+                        if row_result is not None:
+                            triples.append(row_result)
+                        else:
+                            print(f"skipping invalid triple for {row.url}")
+                else:
+                    print(f"no triples found for {row.url}")
             except Exception as e:
-                row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
+                print(f"could not parse json for {row.url}: {e}")
+    return Output(triples=triples)
 
-            sanitized_model = sanitize_filename(model_input.model_name)
-            with open(f"rq2_{sanitized_model}.json", "w") as f:
-                f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
+def combine_rdfs(result: ModelResult, predicate: Callable[[RowResult], bool]) -> rdflib.Graph:
+    graph = rdflib.Graph()
+    triples = []
+    for row in result.row_results:
+        if predicate(row):
+            cleaned = remove_markdown(row.result_ttl)
+            try:
+                local_graph = rdflib.Graph()
+                local_graph.parse(data=cleaned, format="ttl")
+                for triple in local_graph:
+                    graph.add(triple)
+            except Exception as e:
+                print(f"could not parse ttl for {row.url}: {e}")
+    return graph
 
-    return ModelResult(model_input=model_input, row_results=row_results)
+def rdf_to_dot(graph: rdflib.Graph) -> str:
+    dot = pydot.Dot(graph_type='digraph')
+    for s, p, o in graph:
+        s_node = pydot.Node(str(s))
+        o_node = pydot.Node(str(o))
+        dot.add_node(s_node)
+        dot.add_node(o_node)
+        dot.add_edge(pydot.Edge(s_node, o_node, label=str(p)))
+    return dot.to_string()
 
 
-def sanitize_filename(filename: str) -> str:
-    return re.sub(r'[\/:*?"<>|]', '_', filename)
+def visualize_rdf(graph: rdflib.Graph, output_file: str):
+    dot_str = rdf_to_dot(graph)
+    with open(output_file, 'w') as f:
+        f.write(dot_str)
+    (graph,) = pydot.graph_from_dot_file(output_file)
+    graph.set_layout('circo')
+    graph.write_svg(output_file)
 
-def rq2(database: str):
-    for model in model_inputs:
-        print(f"processing model {model.model_name}", flush=True)
-        model_result = process_model(model, database)
-        sanitized_model = sanitize_filename(model.model_name)
-        with open(f"rq2_{sanitized_model}.json", "w") as f:
-            f.write(model_result.model_dump_json(indent=2))
+def rq2_results(input_file: str):
+    print(f"processing input {input_file}")
+
+    with open(input_file, "r") as f:
+        content = f.read()
+        model_result = ModelResult.model_validate_json(content)
+
+        if model_result is None:
+            raise ValueError(f"Could not parse input file {input_file}")
+
+        # te bekijken :
+        # - gecombineerde ttl / json voor alles met disinfomation
+        # - gecombineerde ttl / json voor alles zonder disinfomation
+        # - gecombineerde ttl voor alle documenten (hier zijn we dan wel de metadata kwijt)
+
+        disinformation_combined_ttl = f"{sanitize_filename(model_result.model_input.model_name)}_disinformation_combined.ttl"
+        disinformation_combined_ttl_svg = f"{sanitize_filename(model_result.model_input.model_name)}_disinformation_combined.svg"
+        disinformation_combined_json = f"{sanitize_filename(model_result.model_input.model_name)}_disinformation_combined.json"
+        no_disinformation_combined_ttl = f"{sanitize_filename(model_result.model_input.model_name)}_no_disinformation_combined.ttl"
+        no_disinformation_combined_ttl_svg = f"{sanitize_filename(model_result.model_input.model_name)}_no_disinformation_combined.svg"
+        no_disinformation_combined_json = f"{sanitize_filename(model_result.model_input.model_name)}_no_disinformation_combined.json"
+        all_combined_ttl = f"{sanitize_filename(model_result.model_input.model_name)}_all_combined.ttl"
+        all_combined_ttl_svg = f"{sanitize_filename(model_result.model_input.model_name)}_all_combined.svg"
+        all_combined_json = f"{sanitize_filename(model_result.model_input.model_name)}_all_combined.json"
+
+        print(f"processing jsons")
+
+        with open(disinformation_combined_json, "w") as f:
+            f.write(combine_jsons(model_result, lambda x: x.y == 1).model_dump_json(indent=2))
+        with open(no_disinformation_combined_json, "w") as f:
+            f.write(combine_jsons(model_result, lambda x: x.y == 0).model_dump_json(indent=2))
+        with open(all_combined_json, "w") as f:
+            f.write(combine_jsons(model_result, lambda x: True).model_dump_json(indent=2))
+
+        print(f"processing rdfs")
+        with open(disinformation_combined_ttl, "w") as f:
+            g = combine_rdfs(model_result, lambda x: x.y == 1 and 'reddit' not in x.url)
+            f.write(g.serialize(format="ttl"))
+            visualize_rdf(g, disinformation_combined_ttl_svg)
+        with open(no_disinformation_combined_ttl, "w") as f:
+            g = combine_rdfs(model_result, lambda x: x.y == 0 and 'reddit' not in x.url)
+            f.write(g.serialize(format="ttl"))
+            visualize_rdf(g, no_disinformation_combined_ttl_svg)
+        with open(all_combined_ttl, "w") as f:
+            g = combine_rdfs(model_result, lambda x: 'reddit' not in x.url)
+            f.write(g.serialize(format="ttl"))
+            visualize_rdf(g, all_combined_ttl_svg)
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
-        raise RuntimeError("usage : rq2.py <combined-db.sqlite>")
-    rq2(sys.argv[1])
+        raise RuntimeError("usage : rq2_results.py <combined-db.sqlite>")
+    rq2_results(sys.argv[1])
