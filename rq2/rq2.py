@@ -16,7 +16,15 @@ model_inputs = [
     ModelInput(
         model_name="microsoft/phi-4",
         model_params={},
-    )
+    ),
+    ModelInput(
+        model_name="meta-llama/Llama-3.3-70B-Instruct",
+        model_params={},
+    ),
+    ModelInput(
+        model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+        model_params={},
+    ),
 ]
 
 def process_model(model_input: ModelInput, database: str):
@@ -26,7 +34,7 @@ def process_model(model_input: ModelInput, database: str):
 
     pipeline = transformers.pipeline(
         "text-generation",
-        model="microsoft/phi-4",
+        model=model_input.model_name,
         model_kwargs={"torch_dtype": "auto"},
         device_map="auto",
     )
