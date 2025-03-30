@@ -58,7 +58,7 @@ def process_results(input_file: str):
             print(f"{prompt_type}: F1-score: {f1:.2f}", flush=True)
 
             # More detailed report
-            # print("{prompt_type}: Classification Report:\n", classification_report(ys, y_hats, labels=[0, 1], zero_division="warn"), flush=True)
+            print(f"\n{model_result.model_input.model_name}-{prompt_type}\n", classification_report(ys, y_hats, labels=[0, 1], zero_division="warn"), flush=True)
 
             model_stats.append(ModelStats(
                 model_name=f"{model_result.model_input.model_name} - {prompt_type}",
