@@ -5,7 +5,7 @@ from models import *
 import re
 
 
-def process_results(input_file: str):
+def process_results(input_file: str) -> (str, List[ModelStats]):
     print(f"processing input {input_file}")
     with open(input_file, "r") as f:
         content = f.read()
@@ -67,11 +67,7 @@ def process_results(input_file: str):
                 recall=f"{recall:.2f}",
                 f1=f"{f1:.2f}")
             )
-        with open(f"rq1_{sanitized_name}_results.md", "w") as f:
-            f.write(f"| Model | Accuracy | Precision | Recall | F1-score |\n")
-            f.write(f"|:--|--:|--:|--:|--:|\n")
-            for stat in model_stats:
-                f.write(f"|{stat.model_name}|{stat.accuracy}|{stat.precision}|{stat.recall}|{stat.f1}|\n")
+        return f"rq1_{sanitized_name}_results.md", model_stats
 
 
 
@@ -109,4 +105,9 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         raise RuntimeError("usage : rq1-results-deepseek.py <deepseek-results.sqlite>")
-    process_results(sys.argv[1])
+    (file, model_stats) = process_results(sys.argv[1])
+    with open(file, "w") as f:
+        f.write(f"| Model | Accuracy | Precision | Recall | F1-score |\n")
+        f.write(f"|:--|--:|--:|--:|--:|\n")
+        for stat in model_stats:
+            f.write(f"|{stat.model_name}|{stat.accuracy}|{stat.precision}|{stat.recall}|{stat.f1}|\n")
