@@ -5,6 +5,7 @@ import torch
 import os
 from datetime import datetime
 from models import *
+import json
 
 print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
@@ -112,11 +113,12 @@ def process_model(model_input: ModelInput, database: str):
                     outputs = llm_model(input_prompt, max_new_tokens=1000)
                     result = outputs[0]["generated_text"][-1]
 
-                    print(f"result of LLM is {result}, ground truth is {row[1]}", flush=True)
-                    if not check_result_validity(result):
-                        row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=result))
-                    else:
-                        row_results_for_prompt.append(RowResult(url=url, invalid=False, y=ground_truth, y_hat=get_y_hat(result), result=result))
+                    print(f"result of LLM is {result}, ground truth is {ground_truth}, raw ground truth is {row[1]}", flush=True)
+                    try:
+                        string_representation = json.dumps(result)
+                    except:
+                        string_representation = str(result)
+                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=string_representation))
                 except Exception as e:
                     row_results_for_prompt.append(
                         RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=f"an error occurred : {e}"))
