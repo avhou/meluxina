@@ -8,6 +8,8 @@ class Triple(BaseModel):
     predicate: str
     object: str
 
+def triple_comparator(triple: Triple) -> tuple:
+    return (triple.subject, triple.predicate, triple.object)
 
 class Output(BaseModel):
     triples: List[Triple]
@@ -29,3 +31,10 @@ class ModelResult(BaseModel):
 
 def sanitize_filename(filename: str) -> str:
     return re.sub(r'[\/:*?"<>|]', '_', filename)
+
+
+def remove_markdown(text: str) -> str:
+    return (text
+            .replace('```turtle', '')
+            .replace('```json', '')
+            .replace('```', ''))
