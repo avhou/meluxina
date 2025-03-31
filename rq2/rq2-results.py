@@ -7,11 +7,6 @@ import pydot
 import sys
 
 
-def remove_markdown(text: str) -> str:
-    return (text
-            .replace('```turtle', '')
-            .replace('```json', '')
-            .replace('```', ''))
 
 def combine_jsons(result: ModelResult, predicate: Callable[[RowResult], bool]) -> Output:
     triples = []
@@ -34,7 +29,7 @@ def combine_jsons(result: ModelResult, predicate: Callable[[RowResult], bool]) -
                     print(f"no triples found for {row.url}")
             except Exception as e:
                 print(f"could not parse json for {row.url}: {e}")
-    return Output(triples=triples)
+    return Output(triples=sorted(triples, key=triple_comparator))
 
 def combine_rdfs(result: ModelResult, predicate: Callable[[RowResult], bool]) -> rdflib.Graph:
     graph = rdflib.Graph()
