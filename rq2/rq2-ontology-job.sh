@@ -27,5 +27,9 @@ export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 python rq2-ontology.py /project/home/p200769/data/microsoft_phi-4_disinformation_combined.json
-python rq2-ontology.py /project/home/p200769/data/microsoft_phi-4_disinformation_combined.ttl
+python rq2-ontology.py /project/home/p200769/data/microsoft_phi-4_no_disinformation_combined.json
+python rq2-ontology.py /project/home/p200769/data/microsoft_phi-4_all_combined.json
+python rq2-ontology.py /project/home/p200769/data/meta-llama_Llama-3.3-70B-Instruct_disinformation_combined.json
+python rq2-ontology.py /project/home/p200769/data/meta-llama_Llama-3.3-70B-Instruct_no_disinformation_combined.json
+python rq2-ontology.py /project/home/p200769/data/meta-llama_Llama-3.3-70B-Instruct_all_combined.json
 

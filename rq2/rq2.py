@@ -13,13 +13,17 @@ print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}"
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
 print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
+# deepseek is hier bijzonder slecht in.  blijft hangen op eerste ttl vraag
+# daarom uit de lijst gehaald
+
+# ModelInput(
+#     model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+#     model_params={},
+# ),
+
 model_inputs = [
     ModelInput(
         model_name="meta-llama/Llama-3.3-70B-Instruct",
-        model_params={},
-    ),
-    ModelInput(
-        model_name="deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
         model_params={},
     ),
     # ModelInput(
