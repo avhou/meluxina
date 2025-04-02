@@ -23,7 +23,7 @@ def create_pipeline():
 
     pipeline = transformers.pipeline(
         "text-generation",
-        model="meta-llama/Llama-3.3-70B-Instruct",
+        model="microsoft/phi-4",
         model_kwargs={"torch_dtype": "auto"},
         device_map="auto",
     )
