@@ -31,10 +31,10 @@ def rq2_join_ontology(input_folder: str, prefix: str):
     with open(f"{prefix}.ttl", "w") as f:
         f.write(graph.serialize(format="ttl"))
 
-    # visualize_rdf(graph, f"meta-llama_Llama-3.3-70B-Instruct_disinformation_combined_ontology.svg", "twopi")
-    visualize_rdf(graph, f"{prefix}.svg", "fdp")
     with open(f"{prefix}.dot", "w") as f:
         f.write(rdf_to_dot(graph))
+    # visualize_rdf(graph, f"meta-llama_Llama-3.3-70B-Instruct_disinformation_combined_ontology.svg", "twopi")
+    visualize_rdf(graph, f"{prefix}.svg", "fdp")
 
     print(f"done")
 

@@ -4,6 +4,9 @@ import pydot
 def rdf_to_dot(graph: rdflib.Graph) -> str:
     dot = pydot.Dot(graph_type='digraph')
     for s, p, o in graph:
+        if str(s).strip() == '' or str(o).strip() == '' or str(p).strip() == '':
+            print(f"skippen ongeldige data '{s}' -> '{p}' -> '{o}'")
+            continue
         s_node = pydot.Node(str(s))
         o_node = pydot.Node(str(o))
         dot.add_node(s_node)
