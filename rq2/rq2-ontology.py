@@ -43,6 +43,7 @@ def generate_json_ontology(text: str, pipeline) -> str:
             Therefore, it may contain duplicate entitities under a different name or URI, but with the same meaning.
             It is your task to analyse the knowledge graph, merge similar or identical entities, simplify the knowledge graph as much as possible, renaming very similar concepts to keep only one singe concept,  and output an ontology as a new knowledge graph in JSON format.
             The input triples are sorted by subject first, predicate second and object third, so it will be easy to spot identical subjects (and predicates).
+            Try to minimize the number of triples in the output ontology, while keeping the most relevant information.
             The output should conform to this JSON schema : {Output.model_json_schema()}.  
             Only output the JSON-formatted ontology and do not include any explanations.
             Be as succinct as possible and only include the most relevant information.
@@ -50,7 +51,7 @@ def generate_json_ontology(text: str, pipeline) -> str:
             {"role": "user", "content": text},
         ]
 
-        outputs = pipeline(messages, max_new_tokens=2048)
+        outputs = pipeline(messages, max_new_tokens=4096)
         return outputs[0]["generated_text"][-1]["content"]
 
     except Exception as e:
