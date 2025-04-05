@@ -59,25 +59,26 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
 
 
             try:
-                print(f"processing text to TTL for {text[:100]}", flush=True)
-                messages = [
-                    {"role": "system", "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
-                    You will receive two inputs: an article text and an ontology describing the most important concepts and relations of the domain we study.
-                    For ease, the ontology will be summarized in subject ~ predicate ~ object triples.  
-                    Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
-                    Your task is to analyse the article text, identify and extract the relevant entities and their attributes and relationships from the article text, relate them as much as possible to the ontology, 
-                    and output a knowledge graph in Turtle (TTL) format composed by RDF triples (subject, predicate, object). 
-                    Only output the TTL-formatted knowledge graph and do not include any explanations.  
-                    Do not output the condensed triple format, but the full Turtle format.
-                    Be as succinct as possible and only include the most relevant information.
-                    Try to minimize the number of triples in the output, while keeping the most relevant information.
-                    Make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
-                    {"role": "user", "content": f"This is the ontology:\n{condensed_ontology}\nThis is the article text: {text}"},
-                ]
-
-                outputs = pipeline(messages, max_new_tokens=4096)
-                ttl = outputs[0]["generated_text"][-1]["content"]
+                # print(f"processing text to TTL for {text[:100]}", flush=True)
+                # messages = [
+                #     {"role": "system", "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction.
+                #     You will receive two inputs: an article text and an ontology describing the most important concepts and relations of the domain we study.
+                #     For ease, the ontology will be summarized in subject ~ predicate ~ object triples.
+                #     Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
+                #     Your task is to analyse the article text, identify and extract the relevant entities and their attributes and relationships from the article text, relate them as much as possible to the ontology,
+                #     and output a knowledge graph in Turtle (TTL) format composed by RDF triples (subject, predicate, object).
+                #     Only output the TTL-formatted knowledge graph and do not include any explanations.
+                #     Do not output the condensed triple format, but the full Turtle format.
+                #     Be as succinct as possible and only include the most relevant information.
+                #     Try to minimize the number of triples in the output, while keeping the most relevant information.
+                #     Make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
+                #     """},
+                #     {"role": "user", "content": f"This is the ontology:\n{condensed_ontology}\nThis is the article text: {text}"},
+                # ]
+                #
+                # outputs = pipeline(messages, max_new_tokens=4096)
+                # ttl = outputs[0]["generated_text"][-1]["content"]
+                ttl = ''
 
                 print(f"processing text to JSON for {text[:100]}", flush=True)
                 messages = [
@@ -85,8 +86,9 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
                     You will receive two inputs: an article text and an ontology describing the most important concepts and relations of the domain we study.
                     The ontology will be summarized in subject ~ predicate ~ object triples.  
                     Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
-                    Your task is to analyse the article text, identify and extract the relevant entities and their attributes and relationships from the article text, relate them as much as possible to the ontology, 
-                    and output a knowledge graph.
+                    Your task is to analyse the article text, identify and extract the relevant entities and their attributes and relationships from the article text, and output a knowledge graph.
+                    You may refer to the ontology and relate the entities you extract from the article to that ontology, if possible.  
+                    However, the main goal is to extract relevant info from the article text, and the ontology is only there to help you.
                     You will output triples (subject, predicate, object) in JSON format.   
                     The output should conform to this JSON schema : {Output.model_json_schema()}.  
                     Only output the JSON-formatted knowledge graph and do not include any explanations.  
