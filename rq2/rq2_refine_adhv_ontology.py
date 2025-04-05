@@ -49,6 +49,20 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
     print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     row_results = []
+    existing_row_results = []
+
+    sanitized_model = sanitize_filename(model_input.model_name)
+    progress_file = f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json"
+
+    if os.path.exists(progress_file):
+        with open(progress_file, "r") as f:
+            try:
+                content = f.read()
+                model_result = ModelResult.model_validate_json(content)
+                existing_row_results = model_result.row_results
+            except Exception as e:
+                print(f"could not parse existing file {progress_file}, error {e}", flush=True)
+                existing_row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
         for row in conn.execute(f"select translated_text, disinformation, url from articles"):
@@ -57,6 +71,14 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
             ground_truth = 1 if row[1] == 'y' else 0
             url = row[2]
 
+            existing_row_for_url = next((x for x in existing_row_results if x.url == url), None)
+            if existing_row_for_url is not None:
+                print(f"skipping url {url} as it is already processed", flush=True)
+                row_results.append(existing_row_for_url)
+                with open(progress_file, "w") as f:
+                    f.write(ModelResult(model_input=model_input,
+                                        row_results=row_results).model_dump_json(indent=2))
+                continue
 
             try:
                 # print(f"processing text to TTL for {text[:100]}", flush=True)
@@ -107,8 +129,7 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
             except Exception as e:
                 row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
 
-            sanitized_model = sanitize_filename(model_input.model_name)
-            with open(f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json", "w") as f:
+            with open(progress_file, "w") as f:
                 f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
 
     return ModelResult(model_input=model_input, row_results=row_results)
