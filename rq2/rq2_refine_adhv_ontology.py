@@ -119,7 +119,7 @@ def rq2_refine(database: str, condensed_ontology: str):
             print(f"processing model {model.model_name}", flush=True)
             model_result = process_model(model, database, condensed_ontology)
             sanitized_model = sanitize_filename(model.model_name)
-            with open(f"rq2_{sanitized_model}.json", "w") as f:
+            with open(f"rq2_refined_{sanitized_model}.json", "w") as f:
                 f.write(model_result.model_dump_json(indent=2))
     print(f"Done.")
 
