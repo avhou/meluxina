@@ -32,7 +32,7 @@ model_inputs = [
     # ),
 ]
 
-def process_model(model_input: ModelInput, database: str, condensed_ontology: str):
+def process_model(model_input: ModelInput, database: str, condensed_ontology: str, triple_generation_model: str):
 
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
@@ -108,7 +108,7 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
                 row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
 
             sanitized_model = sanitize_filename(model_input.model_name)
-            with open(f"rq2_refined_{sanitized_model}.json", "w") as f:
+            with open(f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json", "w") as f:
                 f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
 
     return ModelResult(model_input=model_input, row_results=row_results)
@@ -116,13 +116,14 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
 
 
 def rq2_refine(database: str, condensed_ontology: str):
+    triple_generation_model = os.path.splitext(os.path.basename(condensed_ontology))[0]
     with open(condensed_ontology, "r") as f:
         condensed_ontology = f.read()
         for model in model_inputs:
             print(f"processing model {model.model_name}", flush=True)
-            model_result = process_model(model, database, condensed_ontology)
+            model_result = process_model(model, database, condensed_ontology, triple_generation_model)
             sanitized_model = sanitize_filename(model.model_name)
-            with open(f"rq2_refined_{sanitized_model}.json", "w") as f:
+            with open(f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json", "w") as f:
                 f.write(model_result.model_dump_json(indent=2))
     print(f"Done.")
 
