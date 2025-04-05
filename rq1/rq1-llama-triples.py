@@ -22,15 +22,15 @@ model_inputs = [
                 "zero-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
     (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-    The article will be summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
-    Each triple will be separated by a newline character, and subjects, predicates and objects will be separated by a tilde character.
+    The article is summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
+    Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
     Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
     Do not give any further explanation or justification. Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
                 "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
     (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-    The article will be summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
-    Each triple will be separated by a newline character, and subjects, predicates and objects will be separated by a tilde character.
+    The article is summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
+    Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
     Here is one example of how you can detect disinformation in such articles: 
     war refugees ~ flee to ~ the Netherlands
     war refugees ~ get immediate access to ~ social housing infrastructure
@@ -42,8 +42,8 @@ model_inputs = [
                 "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
     (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
-    The article will be summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
-    Each triple will be separated by a newline character, and subjects, predicates and objects will be separated by a tilde character.
+    The article is summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
+    Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
     Here is a first example of how you can detect disinformation in such articles:
     war refugees ~ flee to ~ the Netherlands
     war refugees ~ get immediate access to ~ social housing infrastructure
