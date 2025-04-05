@@ -62,5 +62,15 @@ class Triple(BaseModel):
     predicate: Optional[str] = Field(default=None)
     object: Optional[str] = Field(default=None)
 
+    def __str__(self):
+        if self.subject is None or self.object is None:
+            return ''
+        if self.predicate is None:
+            return f'{self.subject} ~ is ~ {self.object}'
+        return f'{self.subject} ~ {self.predicate} ~ {self.object}'
+
+    def __repr__(self):
+        return str(self)
+
 class TripleOutput(BaseModel):
     triples: List[Triple]
