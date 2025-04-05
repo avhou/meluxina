@@ -1,12 +1,22 @@
-from pydantic import BaseModel
-from typing import List, Dict, Any
+from pydantic import BaseModel, Field
+from typing import List, Dict, Any, Optional
 import re
 
 
 class Triple(BaseModel):
-    subject: str
-    predicate: str
-    object: str
+    subject: Optional[str] = Field(default=None)
+    predicate: Optional[str] = Field(default=None)
+    object: Optional[str] = Field(default=None)
+
+    def __str__(self):
+        if self.subject is None or self.object is None:
+            return ''
+        if self.predicate is None:
+            return f'{self.subject} ~ is ~ {self.object}'
+        return f'{self.subject} ~ {self.predicate} ~ {self.object}'
+
+    def __repr__(self):
+        return str(self)
 
 def triple_comparator(triple: Triple) -> tuple:
     return (triple.subject, triple.predicate, triple.object)
