@@ -34,3 +34,33 @@ class ModelStats(BaseModel):
     precision: str
     recall: str
     f1: str
+
+
+class TripleModelInput(BaseModel):
+    model_name: str
+    model_params: Dict[str, Any]
+
+class TripleRowResult(BaseModel):
+    url: str
+    valid: bool
+    result_ttl: str
+    result_json: str
+    y: int
+
+class TripleModelResult(BaseModel):
+    model_input: TripleModelInput
+    row_results: List[TripleRowResult]
+
+def remove_markdown(text: str) -> str:
+    return (text
+            .replace('```turtle', '')
+            .replace('```json', '')
+            .replace('```', ''))
+
+class Triple(BaseModel):
+    subject: Optional[str] = Field(default=None)
+    predicate: Optional[str] = Field(default=None)
+    object: Optional[str] = Field(default=None)
+
+class TripleOutput(BaseModel):
+    triples: List[Triple]
