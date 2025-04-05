@@ -45,3 +45,5 @@ if __name__ == "__main__":
         raise RuntimeError("usage : rq2.py <input-folder>")
     rq2_join_ontology(sys.argv[1], "meta-llama_Llama-3.3-70B-Instruct_disinformation_combined_ontology")
     rq2_join_ontology(sys.argv[1], "microsoft_phi-4_disinformation_combined_ontology")
+    rq2_join_ontology(sys.argv[1], "meta-llama_Llama-3.3-70B-Instruct_all_combined_ontology")
+    rq2_join_ontology(sys.argv[1], "microsoft_phi-4_all_combined_ontology")
