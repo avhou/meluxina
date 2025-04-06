@@ -144,7 +144,7 @@ def process_model(
 
         with sqlite3.connect(database) as conn:
             for row in conn.execute(
-                f"select translated_text, disinformation, url from articles limit 1"
+                f"select translated_text, disinformation, url from articles"
             ):
                 text = row[0]
                 text = re.sub(r"\s+", " ", text)
@@ -231,27 +231,6 @@ def generate_messages(prompt: str, text: str):
         {"role": "user", "content": text},
     ]
     return data
-
-
-def read_triple_map(triple_file: str) -> (str, Dict[str, List[Triple]]):
-    print(f"reading triple file {triple_file}")
-    with open(triple_file, "r") as f:
-        triple_generation_model = os.path.splitext(os.path.basename(triple_file))[0]
-        content = f.read()
-        triple_model = TripleModelResult.model_validate_json(content)
-        print(
-            f"read {len(triple_model.row_results)} triples from {triple_file}, triple_generation_model is {triple_generation_model}",
-            flush=True,
-        )
-        triple_map: Dict[str, List[Triple]] = {}
-        for row in triple_model.row_results:
-            try:
-                triples = remove_markdown(row.result_json)
-                triple_output = TripleOutput.model_validate_json(triples)
-                triple_map[row.url] = triple_output.triples
-            except Exception as e:
-                print(f"could not parse url {row.url} with error {e}", flush=True)
-        return (triple_generation_model, triple_map)
 
 
 def rq1(database: str, triple_file: str, fallback_triple_file: Optional[str] = None):
