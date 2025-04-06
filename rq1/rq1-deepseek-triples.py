@@ -31,7 +31,7 @@ model_inputs = [
     The article is summarized in subject ~ predicate ~ object triples.  You will not have access to the original article, only to the triples.
     Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
     Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  There is no need to output your reasoning for each triple.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
             "one-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
     (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
@@ -44,7 +44,7 @@ model_inputs = [
     Dutch citizens ~ must wait ~ many years
     war refugees ~ get ~ preferential treatment
     Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  There is no need to output your reasoning for each triple.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
             "few-shot": f"""You are a research assistant that tries to detect disinformation in articles.
     A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation
     (that is, intentionally fabricated or false information shared with the aim of deceiving, manipulating opinions, promoting specific agendas, or reinforcing prejudices).
@@ -71,7 +71,7 @@ model_inputs = [
     frustration ~ can lead to ~ violence
     all war refugees ~ lead to ~ violence
     Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
-    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
+    Do not give any further explanation or justification. Keep your reasoning output to a minimum.  There is no need to output your reasoning for each triple.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
         },
     ),
 ]
