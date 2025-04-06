@@ -142,7 +142,7 @@ def process_model(
 
         with sqlite3.connect(database) as conn:
             for row in conn.execute(
-                f"select translated_text, disinformation, url from articles limit 1"
+                f"select translated_text, disinformation, url from articles"
             ):
                 text = row[0]
                 text = re.sub(r"\s+", " ", text)
