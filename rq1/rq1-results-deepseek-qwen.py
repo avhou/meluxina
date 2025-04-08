@@ -104,10 +104,16 @@ def process_results(
 
 def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
     try:
-        if "```json" not in result:
-            lines = result.splitlines()
-            last_line = lines[-1].replace("'", '"')
-            output = Output.model_validate_json(last_line)
+        result = json.loads(result)["content"]
+        result = result.replace("\n", "")
+        result = result.replace("'", '"')
+    except Exception as e:
+        pass
+    try:
+        matches = re.findall(r"(?:```json)?\s*(\{.*?\})\s*(?:```)?", result, re.DOTALL)
+        if matches:
+            match = matches[-1].strip()
+            output = Output.model_validate_json(match)
             if output is not None:
                 return 1 if output.contains_disinformation else 0
             else:
@@ -116,20 +122,8 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
                 )
                 return -1
         else:
-            matches = re.findall(r"```json\s*(\{.*?\})\s*```", result, re.DOTALL)
-            if matches:
-                match = matches[-1].strip()
-                output = Output.model_validate_json(match)
-                if output is not None:
-                    return 1 if output.contains_disinformation else 0
-                else:
-                    print(
-                        f"match found but not valid json for prompt_type {prompt_type} and index {index}"
-                    )
-                    return -1
-            else:
-                print(f"no match found for prompt_type {prompt_type} and index {index}")
-                return -1
+            print(f"no match found for prompt_type {prompt_type} and index {index}")
+            return -1
     except Exception as e:
         print(f"exception for prompt_type {prompt_type} and index {index}: {e}")
         return -1

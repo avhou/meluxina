@@ -94,6 +94,7 @@ def process_results(
                     f1=f"{f1:.2f}",
                 )
             )
+
         result_file_name = (
             f"rq1_{sanitized_name}_results.md"
             if suffix is None
@@ -104,7 +105,12 @@ def process_results(
 
 def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
     try:
-        matches = re.findall(r"```json\s*(\{.*?\})\s*```", result, re.DOTALL)
+        result = json.loads(result)["content"]
+        result = result.replace("\n", "")
+    except Exception as e:
+        pass
+    try:
+        matches = re.findall(r"```json\s*(\{.*?\})\s*(?:```)?", result, re.DOTALL)
         if matches:
             match = matches[-1].strip()
             output = Output.model_validate_json(match)
