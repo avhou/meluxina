@@ -7,6 +7,7 @@ import transformers
 import torch
 from datetime import datetime
 from models import Output
+import re
 
 
 class ArticleChunk(BaseModel):
@@ -88,7 +89,8 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
         )
 
         bestaat = conn.execute(
-            f"select exists(select 1 from chunked_articles where url={chunk.article_url} and chunk_number={chunk.chunk_number})"
+            "select exists(select 1 from chunked_articles where url=? and chunk_number=?)",
+            (chunk.article_url, chunk.chunk_number),
         ).fetchone()[0]
 
         if bestaat == 1:
@@ -114,23 +116,25 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
 
             outputs = pipeline(messages, max_new_tokens=1024)
             json = outputs[0]["generated_text"][-1]["content"]
-            json = f"{json}".replace("\\s+", " ")
+            json = f"{json}".replace("\n", " ").replace("\r", " ")
+            json = re.sub("\\s+", " ", json)
             conn.execute(
                 "insert into chunked_articles(url, chunk_number, chunk_text, chunk_triples) values (?, ?, ?, ?)",
                 (chunk.article_url, chunk.chunk_number, chunk.chunk_text, json),
             )
+            conn.commit()
             print(
                 f"{datetime.now().strftime('%H:%M:%S')}: {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url} generated output {json}"
             )
 
-    with sqlite3.connect("output_database") as conn:
+    with sqlite3.connect(output_database) as conn:
         conn.execute(
             "create table if not exists chunked_articles(url text, chunk_number int, chunk_text text, chunk_triples text)"
         )
         process_chunks_of_articles(
             input_database,
             lambda chunk: process_chunk(chunk, conn),
-            max_words=10,
+            max_words=250,
             overlap=0,
         )
 
