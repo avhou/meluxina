@@ -113,7 +113,6 @@ def extract_rdf_store(chunk_db: str):
 
     print(f"found {len(all_triples)} valid triples")
     metadata_flat_list = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
-    print(f"first metadata : {metadata_flat_list[0]}")
 
     kg = KG()
     add_triples_to_kg(kg, all_triples)
@@ -124,12 +123,14 @@ def extract_rdf_store(chunk_db: str):
     embeddings = np.array(embeddings)
 
     print(f"vector size is {embedder._model.vector_size}")
+    print(f"embedding shape is {embeddings.shape}")
     normalized_embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
 
     index = faiss.IndexFlatIP(embedder._model.vector_size)
     index.add(normalized_embeddings)
 
     query_vector = np.array([embeddings[0]])  # shape: (1, vector_size)
+    print(f"query vector shape is {query_vector.shape}")
     query_vector = query_vector / np.linalg.norm(query_vector)
 
     # Search
