@@ -4,4 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "aiohttp>=3.11.16",
+    "gensim>=4.3.3",
+    "nest-asyncio>=1.6.0",
+    "pyrdf2vec>=0.2.3",
+    "rdflib>=7.1.4",
+    "requests>=2.32.3",
+]
