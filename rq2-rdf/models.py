@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 
 class Triple(BaseModel):
@@ -10,3 +10,11 @@ class Triple(BaseModel):
 
 class Output(BaseModel):
     triples: List[Triple]
+
+
+class SubjectMetadata(BaseModel):
+    subject: str
+    index: int
+    url: str
+    chunk_number: int
+    triple: Tuple[str, str, str]
