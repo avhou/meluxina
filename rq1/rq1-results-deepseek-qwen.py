@@ -113,6 +113,8 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
         matches = re.findall(r"(?:```json)?\s*(\{.*?\})\s*(?:```)?", result, re.DOTALL)
         if matches:
             match = matches[-1].strip()
+            match = match.replace("\n", "")
+            match = match.replace("'", '"')
             output = Output.model_validate_json(match)
             if output is not None:
                 return 1 if output.contains_disinformation else 0

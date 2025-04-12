@@ -27,4 +27,4 @@ export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 python rq1-deepseek-triples.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/results/rq2_meta-llama_Llama-3.3-70B-Instruct.json
-python rq1-deepseek-triples.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/results/rq2_refined_meta-llama_Llama-3.3-70B-Instruct_generated_by_condensed_llama_ontology.json /project/home/p200769/meluxina/rq2/results/rq2_meta-llama_Llama-3.3-70B-Instruct.json
+#python rq1-deepseek-triples.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/results/rq2_refined_meta-llama_Llama-3.3-70B-Instruct_generated_by_condensed_llama_ontology.json /project/home/p200769/meluxina/rq2/results/rq2_meta-llama_Llama-3.3-70B-Instruct.json
