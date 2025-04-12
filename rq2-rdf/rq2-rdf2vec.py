@@ -8,22 +8,22 @@ from pyrdf2vec.samplers import PageRankSampler
 from pyrdf2vec.graphs import KG, Vertex
 
 triples = [
-    [Literal("Alice"), Literal("knows"), Literal("Bob")],
-    [Literal("Alice"), Literal("knows"), Literal("Dean")],
-    [Literal("Dean"), Literal("loves"), Literal("Alice")],
+    ["Alice", "knows", "Bob"],
+    ["Alice", "knows", "Dean"],
+    ["Dean", "loves", "Alice"],
 ]
-# url = "http://pyRDF2Vec"
+
 kg = KG()
 
-for row in triples:
-    subj = Vertex(str(row[0]))
-    obj = Vertex(str(row[2]))
-    pred = Vertex(str(row[1]), predicate=True, vprev=subj, vnext=obj)
+for s, p, o in triples:
+    subj = Vertex(s)
+    obj = Vertex(o)
+    pred = Vertex(p, predicate=True, vprev=subj, vnext=obj)
     kg.add_walk(subj, pred, obj)
 
 
-unique_subjects = list({str(s) for s, _, _ in triples})
-unique_objects = list({str(o) for _, _, o in triples})
+unique_subjects = list({s for s, _, _ in triples})
+unique_objects = list({o for _, _, o in triples})
 unique_subjects_and_objects = list(set(unique_subjects + unique_objects))
 # we willen in principe kunnen queryen op de subjects
 entities = unique_subjects
