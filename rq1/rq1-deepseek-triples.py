@@ -171,7 +171,7 @@ def process_model(
                     prompt, "\n".join([f"{t}" for t in triples_for_url])
                 )
                 try:
-                    outputs = llm_model(input_prompt, max_new_tokens=2500)
+                    outputs = llm_model(input_prompt, max_new_tokens=3500)
                     result = outputs[0]["generated_text"][-1]
 
                     print(

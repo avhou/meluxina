@@ -111,6 +111,8 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
         pass
     try:
         matches = re.findall(r"```json\s*(\{.*?\})\s*(?:```)?", result, re.DOTALL)
+        if not matches:
+            matches = re.findall(r"</think>\s*(.*)$", result, re.DOTALL)
         if matches:
             match = matches[-1].strip()
             output = Output.model_validate_json(match)
@@ -123,6 +125,7 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
                 return -1
         else:
             print(f"no match found for prompt_type {prompt_type} and index {index}")
+            print(f"result: {result}")
             return -1
     except Exception as e:
         print(f"exception for prompt_type {prompt_type} and index {index}: {e}")
