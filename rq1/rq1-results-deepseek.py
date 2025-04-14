@@ -125,7 +125,6 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
                 return -1
         else:
             print(f"no match found for prompt_type {prompt_type} and index {index}")
-            print(f"result: {result}")
             return -1
     except Exception as e:
         print(f"exception for prompt_type {prompt_type} and index {index}: {e}")
