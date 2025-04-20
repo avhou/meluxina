@@ -3,6 +3,7 @@ from typing import Callable
 from rdf_utils import *
 import json
 import rdflib
+from rdflib import Literal
 
 import sys
 
@@ -22,7 +23,7 @@ def combine_jsons(result: ModelResult, predicate: Callable[[RowResult], bool]) -
                         except:
                             row_result = None
                         if row_result is not None:
-                            triples.append(row_result)
+                            triples.append(row_result.normalize())
                         else:
                             print(f"skipping invalid triple for {row.url}")
                 else:
@@ -40,8 +41,8 @@ def combine_rdfs(result: ModelResult, predicate: Callable[[RowResult], bool]) ->
             try:
                 local_graph = rdflib.Graph()
                 local_graph.parse(data=cleaned, format="ttl")
-                for triple in local_graph:
-                    graph.add(triple)
+                for (s, p, o) in local_graph:
+                    graph.add((Literal(str(s).strip().lower()), Literal(str(p).strip().lower()), Literal(str(o).strip().lower())))
             except Exception as e:
                 print(f"could not parse ttl for {row.url}: {e}")
     return graph

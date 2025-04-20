@@ -18,15 +18,24 @@ class Triple(BaseModel):
     def __repr__(self):
         return str(self)
 
+    def normalize(self):
+        return Triple(subject=self.subject.strip().lower() if self.subject is not None else None,
+                      predicate=self.predicate.strip().lower() if self.predicate is not None else None,
+                      object=self.object.strip().lower() if self.object is not None else None)
+
+
 def triple_comparator(triple: Triple) -> tuple:
     return (triple.subject, triple.predicate, triple.object)
+
 
 class Output(BaseModel):
     triples: List[Triple]
 
+
 class ModelInput(BaseModel):
     model_name: str
     model_params: Dict[str, Any]
+
 
 class RowResult(BaseModel):
     url: str
@@ -35,9 +44,11 @@ class RowResult(BaseModel):
     result_json: str
     y: int
 
+
 class ModelResult(BaseModel):
     model_input: ModelInput
     row_results: List[RowResult]
+
 
 def sanitize_filename(filename: str) -> str:
     return re.sub(r'[\/:*?"<>|]', '_', filename)
