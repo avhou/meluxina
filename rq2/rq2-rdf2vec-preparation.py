@@ -109,6 +109,7 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
                 Only output the JSON-formatted knowledge graph and do not include any explanations.  
                 Be as succinct as possible and only include the most relevant information, while maintaining coherence in the knowledge graph.
                 Make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
+                If you are unable to extract any triples, e.g. due to very short input texts, just return the output in the correct format with an empty triples array.
                 """,
                 },
                 {"role": "user", "content": chunk.chunk_text},
