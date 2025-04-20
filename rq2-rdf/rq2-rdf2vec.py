@@ -16,7 +16,7 @@ from collections import defaultdict
 
 
 def normalize(value: str) -> str:
-    return unidecode(value.lower())
+    return unidecode(value.strip().lower())
 
 
 def train_model(kg: KG, entities: List[str]):
@@ -112,13 +112,13 @@ def extract_rdf_store(chunk_db: str):
                 )
 
     print(f"found {len(all_triples)} valid triples")
-    metadata_flat_list = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
+    metadata_flat_list: List[List[SubjectMetadata]] = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
 
     kg = KG()
     add_triples_to_kg(kg, all_triples)
 
     embeddings, embedder = train_model(kg, unique_subjects)
-    for entity, embedding in islice(zip(unique_subjects, embeddings), 10):
+    for entity, embedding in zip(unique_subjects, embeddings):
         print(f"entiteit {entity} heeft embedding {embedding[:4]}")
     embeddings = np.array(embeddings)
 

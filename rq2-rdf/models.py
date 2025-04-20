@@ -7,6 +7,11 @@ class Triple(BaseModel):
     predicate: Optional[str] = Field(default=None)
     object: Optional[str] = Field(default=None)
 
+    def normalize(self):
+        return Triple(subject=self.subject.strip().lower() if self.subject is not None else None,
+                      predicate=self.predicate.strip().lower() if self.predicate is not None else None,
+                      object=self.object.strip().lower() if self.object is not None else None)
+
 
 class Output(BaseModel):
     triples: List[Triple]
