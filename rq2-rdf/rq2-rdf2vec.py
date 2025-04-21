@@ -22,7 +22,8 @@ def normalize(value: str) -> str:
 
 def train_model(kg: KG, entities: List[str]):
     # max hop depth 4, geen limiet op nr of walks
-    walker = RandomWalker(4, None, PageRankSampler(), random_state=1234)
+    # walker = RandomWalker(4, None, PageRankSampler(), random_state=1234)
+    walker = RandomWalker(4, 100, PageRankSampler(), random_state=1234)
     embedder = Word2Vec(epochs=10, workers=1)
     transformer = RDF2VecTransformer(embedder, walkers=[walker], verbose=1)
 
@@ -126,12 +127,21 @@ def extract_rdf_store(chunk_db: str):
     metadata_flat_list: List[List[SubjectMetadata]] = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
     write_metadata_to_json(metadata_flat_list, "metadata-rdf2vec.json")
 
+    del unique_triples
+    del seen_triples
+    del seen_entities
+    del metadata_flat_list
+
+    print("adding triples to kg")
     kg = KG()
     add_triples_to_kg(kg, all_triples)
+    print("done adding triples to kg")
 
+    print("training model")
     embeddings, embedder = train_model(kg, unique_subjects)
-    for entity, embedding in zip(unique_subjects, embeddings):
-        print(f"entiteit {entity} heeft embedding {embedding[:4]}")
+    print("done training model")
+    # for entity, embedding in zip(unique_subjects, embeddings):
+    #     print(f"entiteit {entity} heeft embedding {embedding[:4]}")
     embeddings = np.array(embeddings)
 
     print(f"vector size is {embedder._model.vector_size}")
@@ -142,18 +152,18 @@ def extract_rdf_store(chunk_db: str):
     index.add(normalized_embeddings)
     faiss.write_index(index, "index-rdf2vec.bin")
 
-    query_vector = np.array([embeddings[0]])  # shape: (1, vector_size)
-    print(f"query vector shape is {query_vector.shape}")
-    query_vector = query_vector / np.linalg.norm(query_vector)
-
-    # Search
-    D, I = index.search(query_vector, k=3)  # D: distances, I: indices
-
-    # Results
-    for idx, score in zip(I[0], D[0]):
-        print(f"Entity ID: {idx}")
-        print(f"Metadata: {metadata_flat_list[idx]}")
-        print(f"Score: {score:.4f}")
+    # query_vector = np.array([embeddings[0]])  # shape: (1, vector_size)
+    # print(f"query vector shape is {query_vector.shape}")
+    # query_vector = query_vector / np.linalg.norm(query_vector)
+    #
+    # # Search
+    # D, I = index.search(query_vector, k=3)  # D: distances, I: indices
+    #
+    # # Results
+    # for idx, score in zip(I[0], D[0]):
+    #     print(f"Entity ID: {idx}")
+    #     print(f"Metadata: {metadata_flat_list[idx]}")
+    #     print(f"Score: {score:.4f}")
 
 
 if __name__ == "__main__":

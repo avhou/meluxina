@@ -132,6 +132,38 @@ def get_embeddings_for_triples(triples: List[Triple], tokenizer, model):
 
     return embeddings
 
+def get_embeddings_for_subject(subjects: List[str], tokenizer, model):
+    embeddings = []
+
+    for i, subject in enumerate(subjects):
+        # Create textual representation of the triple
+        print(f"embedding for subject ({i + 1}/{len(subjects)}): {subject}")
+
+        # Tokenize the text
+        inputs = tokenizer(subject, return_tensors="pt", padding=True, truncation=True)
+
+        # Get the encoder's hidden states from the model
+        with torch.no_grad():  # Disable gradient computation
+            outputs = model(
+                input_ids=inputs["input_ids"],
+                attention_mask=inputs["attention_mask"],
+                output_hidden_states=True,
+                return_dict=True
+            )
+
+        # Access the encoder's hidden states
+        encoder_hidden_states = outputs.encoder_hidden_states  # Tuple of all encoder layers
+
+        # Get the last layer's hidden state
+        last_hidden_state = encoder_hidden_states[-1]  # [batch_size, seq_len, hidden_dim]
+
+        # Compute the mean pooling of the last hidden state
+        embedding = last_hidden_state.mean(dim=1).squeeze().cpu().numpy()
+
+        embeddings.append(embedding)
+
+    return embeddings
+
 # # Example triples
 # triples = [
 #     {"subject": "Wil Roode", "predicate": "stated", "object": "refugees"},
@@ -233,7 +265,7 @@ def extract_rebel_store(chunk_db: str):
                     f"error when parsing triples for url {url}, chunk_number {chunk_number} : {e}"
                 )
 
-    print(f"found {len(all_triples)} valid triples")
+    print(f"found {len(all_triples)} valid triples, and {len(unique_subjects)} unique subjects")
     metadata_flat_list: List[List[SubjectMetadata]] = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
     write_metadata_to_json(metadata_flat_list, "metadata-rebel.json")
 
@@ -246,7 +278,8 @@ def extract_rebel_store(chunk_db: str):
         "num_return_sequences": 1,
     }
 
-    embeddings = get_embeddings_for_triples(all_triples, tokenizer, model)
+    # embeddings = get_embeddings_for_triples(all_triples, tokenizer, model)
+    embeddings = get_embeddings_for_subject(unique_subjects, tokenizer, model)
     embeddings = np.array(embeddings)
 
     print(f"embedding shape is {embeddings.shape}")
