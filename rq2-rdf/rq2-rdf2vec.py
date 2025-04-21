@@ -12,6 +12,7 @@ from itertools import islice
 import numpy as np
 import faiss
 from collections import defaultdict
+import json
 
 
 
@@ -52,6 +53,16 @@ def group_metadata_by_index(metadata_list: List[SubjectMetadata]) -> List[List[S
     result = [grouped_metadata[i] for i in range(max_index + 1)]
 
     return result
+
+
+def write_metadata_to_json(metadata: List[List[SubjectMetadata]], output_file: str):
+    # Convert the nested list of SubjectMetadata to a JSON-compatible structure
+    json_data = [[item.model_dump() for item in sublist] for sublist in metadata]
+
+    # Write the JSON data to a file
+    with open(output_file, "w") as f:
+        json.dump(json_data, f, indent=2)
+
 
 def extract_rdf_store(chunk_db: str):
     print(f"processing chunk db {chunk_db}")
@@ -113,6 +124,7 @@ def extract_rdf_store(chunk_db: str):
 
     print(f"found {len(all_triples)} valid triples")
     metadata_flat_list: List[List[SubjectMetadata]] = group_metadata_by_index([metadata for metadata_list in subject_to_metadata_mapping.values() for metadata in metadata_list])
+    write_metadata_to_json(metadata_flat_list, "metadata-rdf2vec.json")
 
     kg = KG()
     add_triples_to_kg(kg, all_triples)
@@ -128,6 +140,7 @@ def extract_rdf_store(chunk_db: str):
 
     index = faiss.IndexFlatIP(embedder._model.vector_size)
     index.add(normalized_embeddings)
+    faiss.write_index(index, "index-rdf2vec.bin")
 
     query_vector = np.array([embeddings[0]])  # shape: (1, vector_size)
     print(f"query vector shape is {query_vector.shape}")
