@@ -292,5 +292,5 @@ def extract_rebel_store(chunk_db: str):
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
-        raise RuntimeError("usage : rq2-rebel.py <chunk-db.sqlite>")
+        raise RuntimeError("usage : rq2-rebel-subjects-only.py <chunk-db.sqlite>")
     extract_rebel_store(sys.argv[1])
