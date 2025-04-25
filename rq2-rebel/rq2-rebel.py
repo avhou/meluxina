@@ -10,7 +10,7 @@ import torch
 from sklearn.model_selection import train_test_split
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-from models import Output, Sample, Triple, TripleMetRowId
+from models import Output, Sample, Triple, TripleMetRowId, Metadata, MetadataList
 
 SAMPLE_FILE = "sample-rebel.json"
 METADATA_FILE = "metadata-rebel.json"
@@ -87,33 +87,52 @@ def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
     print(str(sample))
 
     all_triples: List[TripleMetRowId] = []
+    metadata: List[Metadata] = []
     with sqlite3.connect(chunk_db) as chunk_db_conn, sqlite3.connect(ground_truth_db) as ground_truth_db_conn:
         for row_id in islice(sample.training, 50_000_000 if max_chunks is None else max_chunks):
-            ground_truth_url = ground_truth_db_conn.execute(f"select url from articles where rowid = ?", (row_id,)).fetchone()[0]
+            ground_truth_url, ground_truth_disinformation = ground_truth_db_conn.execute(
+                "select url, disinformation from articles where rowid = ?", (row_id,)
+            ).fetchone()
+
+            print(f"processing url {ground_truth_url} with disinformation {ground_truth_disinformation}")
 
             for row in chunk_db_conn.execute(
-                f"select url, chunk_number, chunk_triples, rowid from chunked_articles where url = ? order by url, chunk_number", (ground_truth_url,)
+                "select url, chunk_number, chunk_triples, rowid from chunked_articles where url = ? order by url, chunk_number", (ground_truth_url,)
             ):
                 url = row[0]
                 chunk_number = row[1]
                 chunk_triples = row[2].replace("```json", "").replace("```", "")
                 row_id = row[3]
+                print(f"processing chunk {chunk_number} for url {url}, row_id {row_id}")
 
                 try:
                     output = Output.model_validate_json(chunk_triples)
                     valid_triples: List[Triple] = [
                         triple for triple in output.triples if triple.subject is not None and triple.object is not None and triple.predicate is not None
                     ]
-                    for triple in valid_triples:
+                    for i, triple in enumerate(valid_triples):
                         triple = triple.normalize()
                         all_triples.append(TripleMetRowId(triple=triple, row_id=row_id))
+                        metadata.append(
+                            Metadata(
+                                ground_truth_url=ground_truth_url,
+                                ground_truth_disinformation=ground_truth_disinformation,
+                                chunked_db_row_id=row_id,
+                                triple=i + 1,
+                            )
+                        )
                 except Exception as e:
                     print(f"error when parsing triples for url {url}, chunk_number {chunk_number} : {e}")
 
     print(f"found {len(all_triples)} valid triples")
-    mapping_embedding_index_to_row_id: List[int] = [t.row_id for t in all_triples]
+    metadata_list = MetadataList(metadata=metadata)
+
+    # metadata file is dus een mapping van de embedding index naar de metadata.
+    # deze metadata bevat o.a. row id in de chunked articles database
+    # als we dus een query doen op dichtbijzijnde vectoren, dan kunnen we deze mapping gebruiken om, gegeven de index
+    # van de embedding, de row_id in de chunked articles database te krijgen, en aan de hand daarvan de text van die chunk te gaan ophalen
     with open(METADATA_FILE, "w") as f:
-        json.dump(mapping_embedding_index_to_row_id, f)
+        f.write(metadata_list.model_dump_json())
 
     tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
     model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large")
@@ -127,6 +146,10 @@ def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
     index = faiss.IndexFlatIP(1024)
     index.add(normalized_embeddings)
     faiss.write_index(index, "index-rebel.bin")
+
+
+def generate_prompts(ground_truth_db: str, chunk_db: str):
+    pass
 
 
 if __name__ == "__main__":
@@ -147,6 +170,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--generate-index", action="store_true", help="Flag to generate the index")
     parser.add_argument("--generate-sample", action="store_true", help="Flag to generate the sample")
+    parser.add_argument("--generate-prompts", action="store_true", help="Flag to generate the prompts")
     args = parser.parse_args()
 
     if args.generate_sample:
@@ -156,5 +180,9 @@ if __name__ == "__main__":
     if args.generate_index:
         print(f"generating index for {args.input_db} and input count {args.input_count}")
         generate_index(args.ground_truth_db, args.input_db, args.input_count)
+
+    if args.generate_prompts:
+        print(f"generating prompts for {args.input_db}")
+        generate_prompts(args.ground_truth_db, args.input_db)
 
     print("done")

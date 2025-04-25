@@ -40,3 +40,14 @@ class Sample(BaseModel):
 
     def __str__(self) -> str:
         return f"Sample, {len(self.training)} training, {len(self.test)} test"
+
+
+class Metadata(BaseModel):
+    ground_truth_url: str
+    ground_truth_disinformation: str
+    chunked_db_row_id: int
+    triple: int
+
+
+class MetadataList(BaseModel):
+    metadata: List[Metadata]
