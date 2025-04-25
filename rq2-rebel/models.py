@@ -14,6 +14,10 @@ class Triple(BaseModel):
                       object=unidecode(self.object.strip().lower()) if self.object is not None else None)
 
 
+class TripleMetRowId(BaseModel):
+    triple: Triple
+    row_id: int
+
 class Output(BaseModel):
     triples: List[Triple]
 
