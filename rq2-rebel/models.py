@@ -1,6 +1,9 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Union
 from unidecode import unidecode
+
+
+Groupings = Union["article", "chunk", "triple"]
 
 
 class Triple(BaseModel):
@@ -69,8 +72,42 @@ class PromptTemplate(BaseModel):
     metadata: List[Metadata]
     scores: List[float]
 
+    def get_context(self, grouping: Groupings):
+        if grouping == "article":
+            return "\n".join([f"Related article text:\n{m.ground_truth_translated_text}" for m in self.metadata])
+        elif grouping == "chunk":
+            return "\n".join([f"Related paragraph text:\n{m.chunk_text}" for m in self.metadata])
+        elif grouping == "triple":
+            return "\n".join([f"Related RDF triple text:\n{m.triple_text}" for m in self.metadata])
+        else:
+            raise ValueError(f"Unknown grouping: {grouping}")
+
 
 class PromptTemplates(BaseModel):
     templates_article: List[PromptTemplate]
     templates_chunk: List[PromptTemplate]
     templates_triple: List[PromptTemplate]
+
+    def get_templates(self, grouping: Groupings) -> List[PromptTemplate]:
+        if grouping == "article":
+            return self.templates_article
+        elif grouping == "chunk":
+            return self.templates_chunk
+        elif grouping == "triple":
+            return self.templates_triple
+        else:
+            raise ValueError(f"Unknown grouping: {grouping}")
+
+
+class ClassificationOutput(BaseModel):
+    contains_disinformation: bool
+
+
+class ModelResult(BaseModel):
+    url: str
+    result: str
+    y: int
+
+
+class ModelResults(BaseModel):
+    results: List[ModelResult]

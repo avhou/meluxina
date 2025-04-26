@@ -1,5 +1,4 @@
 import argparse
-import json
 import sqlite3
 from typing import List, Tuple, Union
 from itertools import islice
@@ -10,7 +9,7 @@ import torch
 from sklearn.model_selection import train_test_split
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-from models import Output, Sample, Triple, TripleMetRowId, Metadata, MetadataList, SearchResult, PromptTemplate, PromptTemplates
+from models import Output, Sample, Triple, TripleMetRowId, Metadata, MetadataList, SearchResult, PromptTemplate, PromptTemplates, Groupings
 
 SAMPLE_FILE = "sample-rebel.json"
 METADATA_FILE = "metadata-rebel.json"
@@ -161,9 +160,8 @@ def get_metadata() -> MetadataList:
         return metadata
 
 
-def get_top_search_results(
-    results: List[SearchResult], metadata: List[Metadata], group_by: Union["article_url", "chunk_row_id", "triple_id"], top_n: int
-) -> Tuple[List[float], List[Metadata]]:
+def get_top_search_results(results: List[SearchResult], metadata: List[Metadata], group_by: Groupings, top_n: int) -> Tuple[List[float], List[Metadata]]:
+    print(f"\nlooking for top {top_n} results grouped by {group_by}\n")
     score_position_pairs = [
         (score, position)
         for result in results
@@ -177,9 +175,9 @@ def get_top_search_results(
     top_positions = []
 
     def get_grouping_criterium(metadata: Metadata):
-        if group_by == "article_url":
+        if group_by == "article":
             return metadata.ground_truth_url
-        if group_by == "chunk_row_id":
+        if group_by == "chunk":
             return metadata.chunked_db_row_id
         return metadata.triple
 
@@ -218,7 +216,6 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
     prompt_templates_triple: List[PromptTemplate] = []
     with sqlite3.connect(chunk_db) as chunk_db_conn, sqlite3.connect(ground_truth_db) as ground_truth_db_conn:
         for row_id in sample.test:
-            # voorlopig houden we de resultaten per article bij
             search_results: List[SearchResult] = []
 
             # tuple syntax!
@@ -245,7 +242,7 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
             query_vector = query_vector / np.linalg.norm(query_vector)
 
             # hier krijgen we distances en indices terug voor alle triples
-            distances, indices = index.search(query_vector, k=top_k)  # D: distances, I: indices
+            distances, indices = index.search(query_vector, k=top_k)
             print(f"shape of distances is {distances.shape}, shape of indices is {indices.shape}")
 
             for idxs, scores in zip(indices, distances):
@@ -253,9 +250,7 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
                     SearchResult(url=test_url, training_nearest_embedding_positions=list(idxs), training_nearest_embedding_scores=list(scores))
                 )
 
-            for group_by, prompt_templates in zip(
-                ["article_url", "chunk_row_id", "triple_id"], [prompt_templates_article, prompt_templates_chunk, prompt_templates_triple]
-            ):
+            for group_by, prompt_templates in zip(["article", "chunk", "triple"], [prompt_templates_article, prompt_templates_chunk, prompt_templates_triple]):
                 top_scores, top_metadata = get_top_search_results(search_results, metadata.metadata, group_by, top_texts)
                 print(f"top search scores grouped by {group_by} are {top_scores}")
 
