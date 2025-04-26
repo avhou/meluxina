@@ -26,8 +26,7 @@ def create_model(model_name: str, model_params: dict):
     model = pipeline(
         "text-generation",
         model=model_name,
-        # model_kwargs={"torch_dtype": torch.bfloat16, "trust_remote_code": True},
-        model_kwargs={"torch_dtype": torch.bfloat16},
+        model_kwargs={"torch_dtype": torch.bfloat16, "trust_remote_code": True},
         token=os.environ.get("HUGGINGFACEHUB_API_TOKEN"),
         device_map="auto",
     )
