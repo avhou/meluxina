@@ -1,7 +1,7 @@
 import argparse
 import json
 import sqlite3
-from typing import List
+from typing import List, Tuple, Union
 from itertools import islice
 
 import faiss
@@ -10,14 +10,21 @@ import torch
 from sklearn.model_selection import train_test_split
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-from models import Output, Sample, Triple, TripleMetRowId, Metadata, MetadataList
+from models import Output, Sample, Triple, TripleMetRowId, Metadata, MetadataList, SearchResult, PromptTemplate, PromptTemplates
 
 SAMPLE_FILE = "sample-rebel.json"
 METADATA_FILE = "metadata-rebel.json"
+PROMPTS_FILE = "prompts-rebel.json"
 INDEX_FILE = "index-rebel.json"
 
 
-def generate_sample(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
+def get_valid_triples(text: str) -> List[Triple]:
+    text = text.replace("```json", "").replace("```", "")
+    output = Output.model_validate_json(text)
+    return [triple.normalize() for triple in output.triples if triple.subject is not None and triple.object is not None and triple.predicate is not None]
+
+
+def generate_sample(ground_truth_db: str, chunk_db: str, max_chunks: int | None = None):
     limit = "" if max_chunks is None else f" limit {max_chunks}"
     with sqlite3.connect(ground_truth_db) as conn:
         rows = [
@@ -40,12 +47,17 @@ def generate_sample(ground_truth_db: str, chunk_db: str, max_chunks: int = None)
 
 
 # Function to extract vector embeddings for triples
-def get_embeddings_for_triples(triples: List[TripleMetRowId], tokenizer, model):
+def get_embeddings_for_triples_met_rowid(triples: List[TripleMetRowId], tokenizer, model):
+    return get_embeddings_for_triples([t.triple for t in triples], tokenizer, model)
+
+
+# Function to extract vector embeddings for triples
+def get_embeddings_for_triples(triples: List[Triple], tokenizer, model):
     embeddings = []
 
     for i, triple in enumerate(triples):
         # Create textual representation of the triple
-        text = f"{triple.triple.subject} {triple.triple.predicate} {triple.triple.object}"
+        text = f"{triple.subject} {triple.predicate} {triple.object}"
         print(f"embedding for text {i + 1}/{len(triples)}: {text}")
 
         # Tokenize the text
@@ -80,7 +92,7 @@ def read_sample() -> Sample:
         return sample
 
 
-def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
+def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int | None = None):
     print(f"processing chunk db {chunk_db}")
 
     sample = read_sample()
@@ -90,35 +102,30 @@ def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
     metadata: List[Metadata] = []
     with sqlite3.connect(chunk_db) as chunk_db_conn, sqlite3.connect(ground_truth_db) as ground_truth_db_conn:
         for row_id in islice(sample.training, 50_000_000 if max_chunks is None else max_chunks):
-            ground_truth_url, ground_truth_disinformation = ground_truth_db_conn.execute(
-                "select url, disinformation from articles where rowid = ?", (row_id,)
+            ground_truth_url, ground_truth_disinformation, ground_truth_translated_text = ground_truth_db_conn.execute(
+                "select url, disinformation, translated_text from articles where rowid = ?", (row_id,)
             ).fetchone()
 
             print(f"processing url {ground_truth_url} with disinformation {ground_truth_disinformation}")
 
-            for row in chunk_db_conn.execute(
-                "select url, chunk_number, chunk_triples, rowid from chunked_articles where url = ? order by url, chunk_number", (ground_truth_url,)
+            for url, chunk_number, chunk_triples, chunk_text, row_id in chunk_db_conn.execute(
+                "select url, chunk_number, chunk_triples, chunk_text, rowid from chunked_articles where url = ? order by url, chunk_number", (ground_truth_url,)
             ):
-                url = row[0]
-                chunk_number = row[1]
-                chunk_triples = row[2].replace("```json", "").replace("```", "")
-                row_id = row[3]
                 print(f"processing chunk {chunk_number} for url {url}, row_id {row_id}")
 
                 try:
-                    output = Output.model_validate_json(chunk_triples)
-                    valid_triples: List[Triple] = [
-                        triple for triple in output.triples if triple.subject is not None and triple.object is not None and triple.predicate is not None
-                    ]
+                    valid_triples = get_valid_triples(chunk_triples)
                     for i, triple in enumerate(valid_triples):
-                        triple = triple.normalize()
                         all_triples.append(TripleMetRowId(triple=triple, row_id=row_id))
                         metadata.append(
                             Metadata(
                                 ground_truth_url=ground_truth_url,
                                 ground_truth_disinformation=ground_truth_disinformation,
+                                ground_truth_translated_text=ground_truth_translated_text,
                                 chunked_db_row_id=row_id,
+                                chunk_text=chunk_text,
                                 triple=i + 1,
+                                triple_text=f"{triple.subject} {triple.predicate} {triple.object}",
                             )
                         )
                 except Exception as e:
@@ -137,7 +144,7 @@ def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
     tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
     model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large")
 
-    embeddings = get_embeddings_for_triples(all_triples, tokenizer, model)
+    embeddings = get_embeddings_for_triples_met_rowid(all_triples, tokenizer, model)
     embeddings = np.array(embeddings)
 
     print(f"embedding shape is {embeddings.shape}")
@@ -148,8 +155,123 @@ def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int = None):
     faiss.write_index(index, "index-rebel.bin")
 
 
-def generate_prompts(ground_truth_db: str, chunk_db: str):
-    pass
+def get_metadata() -> MetadataList:
+    with open(METADATA_FILE, "r") as f:
+        metadata = MetadataList.model_validate_json(f.read())
+        return metadata
+
+
+def get_top_search_results(
+    results: List[SearchResult], metadata: List[Metadata], group_by: Union["article_url", "chunk_row_id", "triple_id"], top_n: int
+) -> Tuple[List[float], List[Metadata]]:
+    score_position_pairs = [
+        (score, position)
+        for result in results
+        for position, score in zip(result.training_nearest_embedding_positions, result.training_nearest_embedding_scores)
+    ]
+    score_position_pairs = sorted(score_position_pairs, key=lambda x: x[0], reverse=True)
+
+    # Use a set to track distinct grouping cirteria.  we kunnen op eender wat groeperen.  op article url, op chunk url, op triple
+    distinct_grouping_criterium = set()
+    top_scores = []
+    top_positions = []
+
+    def get_grouping_criterium(metadata: Metadata):
+        if group_by == "article_url":
+            return metadata.ground_truth_url
+        if group_by == "chunk_row_id":
+            return metadata.chunked_db_row_id
+        return metadata.triple
+
+    for score, position in score_position_pairs:
+        print(f"position {position} - score {score}")
+        metadata_for_position = metadata[position]
+        grouping_criterium = get_grouping_criterium(metadata_for_position)
+        if grouping_criterium not in distinct_grouping_criterium:
+            print(f"adding distinct criterium {grouping_criterium}")
+            distinct_grouping_criterium.add(grouping_criterium)
+            top_scores.append(score)
+            top_positions.append(position)
+        if len(top_positions) == top_n:
+            break
+
+    return (top_scores, [metadata[position] for position in top_positions])
+
+
+def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_texts: int = 5):
+    print(f"prompts generation top-k {top_k}, top-texts {top_texts}")
+    sample = read_sample()
+    print(str(sample))
+
+    index = faiss.read_index("index-rebel.bin")
+    print("index was read from disk")
+
+    metadata = get_metadata()
+    print("metadata was read from disk")
+
+    tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
+    model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large")
+    print("model was instantiated")
+
+    prompt_templates_article: List[PromptTemplate] = []
+    prompt_templates_chunk: List[PromptTemplate] = []
+    prompt_templates_triple: List[PromptTemplate] = []
+    with sqlite3.connect(chunk_db) as chunk_db_conn, sqlite3.connect(ground_truth_db) as ground_truth_db_conn:
+        for row_id in sample.test:
+            # voorlopig houden we de resultaten per article bij
+            search_results: List[SearchResult] = []
+
+            # tuple syntax!
+            (test_url, test_ground_truth, test_translated_text) = ground_truth_db_conn.execute(
+                "select url, disinformation, translated_text from articles where rowid = ?", (row_id,)
+            ).fetchone()
+
+            print(f"processing test url {test_url}")
+
+            triples_of_article: List[Triple] = []
+            for url, chunk_number, chunk_triples, row_id in chunk_db_conn.execute(
+                "select url, chunk_number, chunk_triples, rowid from chunked_articles where url = ? order by url, chunk_number", (test_url,)
+            ):
+                print(f"processing chunk {chunk_number} for url {url}, row_id {row_id}")
+
+                try:
+                    triples_of_article.extend(get_valid_triples(chunk_triples))
+
+                except Exception as e:
+                    print(f"error for url {url}, chunk_number {chunk_number} : {e}")
+
+            query_vector = np.array(get_embeddings_for_triples(triples_of_article, tokenizer, model))
+            print(f"shape of query vector is {query_vector.shape}")
+            query_vector = query_vector / np.linalg.norm(query_vector)
+
+            # hier krijgen we distances en indices terug voor alle triples
+            distances, indices = index.search(query_vector, k=top_k)  # D: distances, I: indices
+            print(f"shape of distances is {distances.shape}, shape of indices is {indices.shape}")
+
+            for idxs, scores in zip(indices, distances):
+                search_results.append(
+                    SearchResult(url=test_url, training_nearest_embedding_positions=list(idxs), training_nearest_embedding_scores=list(scores))
+                )
+
+            for group_by, prompt_templates in zip(
+                ["article_url", "chunk_row_id", "triple_id"], [prompt_templates_article, prompt_templates_chunk, prompt_templates_triple]
+            ):
+                top_scores, top_metadata = get_top_search_results(search_results, metadata.metadata, group_by, top_texts)
+                print(f"top search scores grouped by {group_by} are {top_scores}")
+
+                prompt_templates.append(
+                    PromptTemplate(
+                        url=test_url, article_text=test_translated_text, ground_truth_disinformation=test_ground_truth, metadata=top_metadata, scores=top_scores
+                    )
+                )
+            break
+
+        with open(PROMPTS_FILE, "w") as f:
+            f.write(
+                PromptTemplates(
+                    templates_article=prompt_templates_article, templates_chunk=prompt_templates_chunk, templates_triple=prompt_templates_triple
+                ).model_dump_json()
+            )
 
 
 if __name__ == "__main__":
@@ -168,6 +290,20 @@ if __name__ == "__main__":
         required=False,
         help="The number of input chunks to process",
     )
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=5,
+        required=False,
+        help="The top K most similar vectors that will be searched",
+    )
+    parser.add_argument(
+        "--top-texts",
+        type=int,
+        default=5,
+        required=False,
+        help="The top K texts that will be injected in the LLM",
+    )
     parser.add_argument("--generate-index", action="store_true", help="Flag to generate the index")
     parser.add_argument("--generate-sample", action="store_true", help="Flag to generate the sample")
     parser.add_argument("--generate-prompts", action="store_true", help="Flag to generate the prompts")
@@ -183,6 +319,6 @@ if __name__ == "__main__":
 
     if args.generate_prompts:
         print(f"generating prompts for {args.input_db}")
-        generate_prompts(args.ground_truth_db, args.input_db)
+        generate_prompts(args.ground_truth_db, args.input_db, args.top_k, args.top_texts)
 
     print("done")

@@ -45,9 +45,32 @@ class Sample(BaseModel):
 class Metadata(BaseModel):
     ground_truth_url: str
     ground_truth_disinformation: str
+    ground_truth_translated_text: str
     chunked_db_row_id: int
+    chunk_text: str
     triple: int
+    triple_text: str
 
 
 class MetadataList(BaseModel):
     metadata: List[Metadata]
+
+
+class SearchResult(BaseModel):
+    url: str
+    training_nearest_embedding_positions: List[int]
+    training_nearest_embedding_scores: List[float]
+
+
+class PromptTemplate(BaseModel):
+    url: str
+    article_text: str
+    ground_truth_disinformation: str
+    metadata: List[Metadata]
+    scores: List[float]
+
+
+class PromptTemplates(BaseModel):
+    templates_article: List[PromptTemplate]
+    templates_chunk: List[PromptTemplate]
+    templates_triple: List[PromptTemplate]
