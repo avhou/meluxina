@@ -30,13 +30,13 @@ def process_chunks_of_articles(
     chunker = SentenceSplitter(chunk_size=max_words, chunk_overlap=overlap)
     with sqlite3.connect(input_database) as conn:
         article_number_total = conn.execute(
-            "select count(url) from articles"
+            "select count(url) from articles_reddit"
         ).fetchone()[0]
         article_number = 0
         for row in (
-            conn.execute("select url, translated_text from articles")
+            conn.execute("select url, translated_text from articles_reddit")
             if use_translated_text
-            else conn.execute("select url, text from articles")
+            else conn.execute("select url, text from articles_reddit")
         ):
             url = row[0]
             text = row[1]
