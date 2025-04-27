@@ -42,12 +42,12 @@ def generate_messages(prompt: str, text: str):
     return data
 
 
-def generate_prompt(prompt_template: PromptTemplate, group_by: Groupings, instructions: str) -> str:
+def generate_prompt(prompt_template: PromptTemplate, group_by: Groupings, instructions: str, max_words_context: int) -> str:
     return f"""
 [Context]
 You are provided with the following context to assist you in your task:
 --- 
-{prompt_template.get_context(group_by)}
+{prompt_template.get_context(group_by, max_words_context)}
 ---
 
 [Instructions]
@@ -70,7 +70,7 @@ def write_results(file: str, results: ModelResults):
         return f.write(results.model_dump_json(indent=2))
 
 
-def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable[[], any], short_model_name: str, instructions: str):
+def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable[[], any], short_model_name: str, instructions: str, max_words: int = 5000):
     print(f"processing prompts file {prompts}, group_by {group_by}", flush=True)
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
@@ -99,10 +99,12 @@ def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable
             write_results(progress_file(group_by, short_model_name), ModelResults(results=row_results))
             continue
 
+        # give context and article equal number of words for now
         messages = generate_messages(
-            generate_prompt(prompt_template, group_by, instructions),
-            prompt_template.article_text,
+            generate_prompt(prompt_template, group_by, instructions, int(max_words / 2)),
+            prompt_template.get_article_text(int(max_words / 2)),
         )
+        print(messages, flush=True)
         try:
             outputs = model(messages, max_new_tokens=2500)
             result = outputs[0]["generated_text"][-1]

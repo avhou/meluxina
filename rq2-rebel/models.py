@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List, Tuple, Union
 from unidecode import unidecode
+from llama_index.core.node_parser import SentenceSplitter
 
 
 Groupings = Union["article", "chunk", "triple"]
@@ -72,15 +73,23 @@ class PromptTemplate(BaseModel):
     metadata: List[Metadata]
     scores: List[float]
 
-    def get_context(self, grouping: Groupings):
+    def get_context(self, grouping: Groupings, max_words: int = 2500):
+        size_per_metadata = int(max_words / len(self.metadata))
+        print(f"get context for {grouping} with {len(self.metadata)} metadata, max_words {max_words} and size_per_metadata {size_per_metadata}", flush=True)
+        splitter = SentenceSplitter(chunk_size=size_per_metadata, chunk_overlap=0)
         if grouping == "article":
-            return "\n".join([f"Related article text:\n{m.ground_truth_translated_text}" for m in self.metadata])
+            return "\n".join([f"Related article text:\n{next(iter(splitter.split_text(m.ground_truth_translated_text)))}" for m in self.metadata])
         elif grouping == "chunk":
-            return "\n".join([f"Related paragraph text:\n{m.chunk_text}" for m in self.metadata])
+            return "\n".join([f"Related paragraph text:\n{next(iter(splitter.split_text(m.chunk_text)))}" for m in self.metadata])
         elif grouping == "triple":
-            return "\n".join([f"Related RDF triple text:\n{m.triple_text}" for m in self.metadata])
+            return "\n".join([f"Related RDF triple text:\n{next(iter(splitter.split_text(m.triple_text)))}" for m in self.metadata])
         else:
             raise ValueError(f"Unknown grouping: {grouping}")
+
+    def get_article_text(self, max_words: int = 2500) -> str:
+        splitter = SentenceSplitter(chunk_size=max_words, chunk_overlap=0)
+        print(f"get article_text with max_words {max_words}", flush=True)
+        return next(iter(splitter.split_text(self.article_text)))
 
 
 class PromptTemplates(BaseModel):
