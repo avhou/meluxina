@@ -74,6 +74,9 @@ class PromptTemplate(BaseModel):
     scores: List[float]
 
     def get_context(self, grouping: Groupings, max_words: int = 2500):
+        if len(self.metadata) == 0:
+            return "No additional context is available"
+
         size_per_metadata = int(max_words / len(self.metadata))
         print(f"get context for {grouping} with {len(self.metadata)} metadata, max_words {max_words} and size_per_metadata {size_per_metadata}", flush=True)
         splitter = SentenceSplitter(chunk_size=size_per_metadata, chunk_overlap=0)
