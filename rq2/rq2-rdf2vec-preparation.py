@@ -26,7 +26,7 @@ def process_chunks_of_articles(
     overlap: int = 0,
     use_translated_text: bool = True,
 ):
-    print(f"processing input database {input_database}")
+    print(f"processing input database {input_database}", flush=True)
     chunker = SentenceSplitter(chunk_size=max_words, chunk_overlap=overlap)
     with sqlite3.connect(input_database) as conn:
         article_number_total = conn.execute(
@@ -85,7 +85,8 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
 
     def process_chunk(chunk: ArticleChunk, conn):
         print(
-            f"{datetime.now().strftime('%H:%M:%S')}: start processing chunk {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url}"
+            f"{datetime.now().strftime('%H:%M:%S')}: start processing chunk {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url}",
+            flush=True,
         )
 
         bestaat = conn.execute(
@@ -95,7 +96,8 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
 
         if bestaat == 1:
             print(
-                f"{datetime.now().strftime('%H:%M:%S')}: skip chunk {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url}, already done"
+                f"{datetime.now().strftime('%H:%M:%S')}: skip chunk {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url}, already done",
+                flush=True,
             )
         else:
             messages = [
@@ -125,7 +127,8 @@ def rq2_rdf2vec_preparation(input_database: str, output_database: str):
             )
             conn.commit()
             print(
-                f"{datetime.now().strftime('%H:%M:%S')}: {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url} generated output {json}"
+                f"{datetime.now().strftime('%H:%M:%S')}: {chunk.chunk_number}/{chunk.chunk_number_total}, article {chunk.article_number}/{chunk.article_number_total}, url {chunk.article_url} generated output {json}",
+                flush=True,
             )
 
     with sqlite3.connect(output_database) as conn:
