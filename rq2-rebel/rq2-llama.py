@@ -36,6 +36,7 @@ The only relevant output is your final classification.
 Generate your output in JSON format.  
 The output should conform to this JSON schema : {ClassificationOutput.model_json_schema()}.
 """,
+        max_words=10_000,
     )
 
     print("done", flush=True)
