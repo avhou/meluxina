@@ -86,7 +86,6 @@ def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable
             generate_prompt(prompt_template, group_by, instructions),
             prompt_template.article_text,
         )
-        print(messages, flush=True)
         try:
             outputs = model(messages, max_new_tokens=2500)
             result = outputs[0]["generated_text"][-1]
