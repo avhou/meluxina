@@ -1,6 +1,5 @@
 import json
 import os
-import sqlite3
 from datetime import datetime
 import argparse
 
@@ -15,9 +14,15 @@ print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
 print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
 MODEL_NAME = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
-OUTPUT_FILE = "rq2-results-deepseek.json"
-PROGRESS_FILE = "rq2-results-progress-deepseek.json"
 MODEL_PARAMS = {}
+
+
+def output_file(group_by: Groupings) -> str:
+    return f"rq2-results-group-by-{group_by}-deepseek.json"
+
+
+def progress_file(group_by: Groupings) -> str:
+    return f"rq2-progress-group-by-{group_by}-deepseek.json"
 
 
 def create_model(model_name: str, model_params: dict):
@@ -92,11 +97,11 @@ def process_prompts(prompts: str, group_by: Groupings):
 
     row_results: List[ModelResult] = []
     existing_row_results: List[ModelResult] = []
-    if os.path.exists(PROGRESS_FILE):
+    if os.path.exists(progress_file(group_by)):
         try:
-            existing_row_results = read_results(PROGRESS_FILE).results
+            existing_row_results = read_results(progress_file(group_by)).results
         except Exception as e:
-            print(f"could not parse existing file {PROGRESS_FILE}, error {e}", flush=True)
+            print(f"could not parse existing file {progress_file(group_by)}, error {e}", flush=True)
             existing_row_results = []
 
     for i, prompt_template in enumerate(prompt_templates):
@@ -108,7 +113,7 @@ def process_prompts(prompts: str, group_by: Groupings):
         if existing_row_for_url is not None:
             print(f"skipping url {prompt_template.url} as it is already processed", flush=True)
             row_results.append(existing_row_for_url)
-            write_results(PROGRESS_FILE, ModelResults(results=row_results))
+            write_results(progress_file(group_by), ModelResults(results=row_results))
             continue
 
         messages = generate_messages(
@@ -128,8 +133,8 @@ def process_prompts(prompts: str, group_by: Groupings):
         except Exception as e:
             row_results.append(ModelResult(url=prompt_template.url, result=f"an error occurrred {e}", y=y))
 
-        write_results(PROGRESS_FILE, ModelResults(results=row_results))
-    write_results(OUTPUT_FILE, ModelResults(results=row_results))
+        write_results(progress_file(group_by), ModelResults(results=row_results))
+    write_results(output_file(group_by), ModelResults(results=row_results))
 
 
 if __name__ == "__main__":
