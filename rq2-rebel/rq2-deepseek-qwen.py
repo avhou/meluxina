@@ -8,7 +8,7 @@ print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}"
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
 print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
-MODEL_NAME = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+MODEL_NAME = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
 MODEL_PARAMS = {}
 
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         args.prompts,
         args.group_by,
         model_generator,
-        "deepseek",
+        "deepseek-qwen",
         f"""
 Follow these instructions carefully.
 A user will submit articles related to immigration (in the broad sense) to you, and you have to determine whether the article contains disinformation

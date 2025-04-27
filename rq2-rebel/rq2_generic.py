@@ -6,6 +6,23 @@ import torch
 from typing import List, Callable
 
 from models import Groupings, PromptTemplates, PromptTemplate, ModelResults, ModelResult
+from transformers import pipeline
+from datetime import datetime
+
+
+def create_model(model_name: str, model_params: dict):
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+
+    model = pipeline(
+        "text-generation",
+        model=model_name,
+        model_kwargs={"torch_dtype": torch.bfloat16},
+        token=os.environ.get("HUGGINGFACEHUB_API_TOKEN"),
+        device_map="auto",
+    )
+
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    return model
 
 
 def output_file(group_by: Groupings, model: str) -> str:
