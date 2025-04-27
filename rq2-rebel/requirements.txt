@@ -6,3 +6,4 @@ llama_index
 accelerate
 scikit-learn
 pydantic
+unidecode
