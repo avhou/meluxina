@@ -3,5 +3,6 @@
   "venv": ".venv", // the name of the env (not the full path)
   "typeCheckingMode": "basic", // lighter type checks
   "useLibraryCodeForTypes": true,
-  "exclude": ["**/__pycache__", "**/.mypy_cache", "**/node_modules"]
+  "exclude": ["**/__pycache__", "**/.mypy_cache", "**/node_modules"],
+  "extraPaths": ["./"]
 }
