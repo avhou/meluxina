@@ -1,6 +1,6 @@
 import argparse
 import sqlite3
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Dict
 from itertools import islice
 
 import faiss
@@ -160,7 +160,10 @@ def get_metadata() -> MetadataList:
         return metadata
 
 
-def get_top_search_results(results: List[SearchResult], metadata: List[Metadata], group_by: Groupings, top_n: int) -> Tuple[List[float], List[Metadata]]:
+def get_top_search_results(
+    results: List[SearchResult], metadata: List[Metadata], group_by: Groupings, take: Dict[Groupings, int]
+) -> Tuple[List[float], List[Metadata]]:
+    top_n = take[group_by]
     print(f"\nlooking for top {top_n} results grouped by {group_by}\n")
     score_position_pairs = [
         (score, position)
@@ -196,8 +199,8 @@ def get_top_search_results(results: List[SearchResult], metadata: List[Metadata]
     return (top_scores, [metadata[position] for position in top_positions])
 
 
-def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_texts: int = 5):
-    print(f"prompts generation top-k {top_k}, top-texts {top_texts}")
+def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, take: Dict[Groupings, int] = {"article": 5, "chunk": 5, "triple": 25}):
+    print(f"prompts generation top-k {top_k}, top mappings {take}")
     sample = read_sample()
     print(str(sample))
 
@@ -241,9 +244,13 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
             print(f"shape of query vector is {query_vector.shape}")
             query_vector = query_vector / np.linalg.norm(query_vector)
 
-            # hier krijgen we distances en indices terug voor alle triples
-            distances, indices = index.search(query_vector, k=top_k)
-            print(f"shape of distances is {distances.shape}, shape of indices is {indices.shape}")
+            distances = []
+            indices = []
+
+            if len(triples_of_article) > 0:
+                # hier krijgen we distances en indices terug voor alle triples
+                distances, indices = index.search(query_vector, k=top_k)
+                print(f"shape of distances is {distances.shape}, shape of indices is {indices.shape}")
 
             for idxs, scores in zip(indices, distances):
                 search_results.append(
@@ -251,7 +258,7 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
                 )
 
             for group_by, prompt_templates in zip(["article", "chunk", "triple"], [prompt_templates_article, prompt_templates_chunk, prompt_templates_triple]):
-                top_scores, top_metadata = get_top_search_results(search_results, metadata.metadata, group_by, top_texts)
+                top_scores, top_metadata = get_top_search_results(search_results, metadata.metadata, group_by, take)
                 print(f"top search scores grouped by {group_by} are {top_scores}")
 
                 prompt_templates.append(
@@ -259,7 +266,6 @@ def generate_prompts(ground_truth_db: str, chunk_db: str, top_k: int = 5, top_te
                         url=test_url, article_text=test_translated_text, ground_truth_disinformation=test_ground_truth, metadata=top_metadata, scores=top_scores
                     )
                 )
-            break
 
         with open(PROMPTS_FILE, "w") as f:
             f.write(
@@ -293,11 +299,25 @@ if __name__ == "__main__":
         help="The top K most similar vectors that will be searched",
     )
     parser.add_argument(
-        "--top-texts",
+        "--top-articles",
         type=int,
         default=5,
         required=False,
-        help="The top K texts that will be injected in the LLM",
+        help="The top K articles that will be injected in the LLM",
+    )
+    parser.add_argument(
+        "--top-chunks",
+        type=int,
+        default=5,
+        required=False,
+        help="The top K chunks that will be injected in the LLM",
+    )
+    parser.add_argument(
+        "--top-triples",
+        type=int,
+        default=25,
+        required=False,
+        help="The top K triples that will be injected in the LLM",
     )
     parser.add_argument("--generate-index", action="store_true", help="Flag to generate the index")
     parser.add_argument("--generate-sample", action="store_true", help="Flag to generate the sample")
@@ -314,6 +334,6 @@ if __name__ == "__main__":
 
     if args.generate_prompts:
         print(f"generating prompts for {args.input_db}")
-        generate_prompts(args.ground_truth_db, args.input_db, args.top_k, args.top_texts)
+        generate_prompts(args.ground_truth_db, args.input_db, args.top_k, {"article": args.top_articles, "chunk": args.top_chunks, "triple": args.top_triples})
 
     print("done")
