@@ -182,7 +182,7 @@ def get_top_search_results(
             return metadata.ground_truth_url
         if group_by == "chunk":
             return metadata.chunked_db_row_id
-        return metadata.triple
+        return f"{str(metadata.chunked_db_row_id).zfill(5)}{str(metadata.triple).zfill(5)}"
 
     for score, position in score_position_pairs:
         print(f"position {position} - score {score}")
