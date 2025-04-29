@@ -1,0 +1,2329 @@
+{
+  "results": [
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1h2hru7/meer_dan_helft_van_alle_bijstandsgerechtigden_is/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-21",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-38",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g45lr7/voorzitter_ec_von_der_leyen_omarmt_idee/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-48",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-28",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dh4ky3/het_heeft_een_halve_eeuw_geduurd_maar_de_pvda/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://m.hbvl.be/cnt/dmf20220823_93317598",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-55",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dh4ky3/het_heeft_een_halve_eeuw_geduurd_maar_de_pvda/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://leiden.partijvoordedieren.nl/nieuws/opvang-vluchtelingen-oekra%C3%AFne",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@represent.jezelf/video/7266823846982847777",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-28",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-28",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/1fd83f8/sending_busloads_of_migrants_to_brussels_is/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium4/comments/1gpl77h/het_aantal_plaatsen_waar_je_nog_veilig_kan/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"I don't have the capability to directly access external links, including the one you've provided. However, I can guide you on how to proceed if you'd like to assess the content of the image for disinformation related to immigration.\\n\\n1. **Describe the Content**: If you can describe the content of the image (e.g., what it depicts, any text it includes), I can offer a more tailored approach to evaluating it for disinformation.\\n\\n2. **Transcribe Text**: If the image contains text, transcribing it and sharing the text with me could allow for a more direct assessment.\\n\\n3. **Contextual Information**: Providing more context about where the image is from, who created it, and its intended purpose can also be helpful in determining if it contains disinformation.\\n\\nWithout direct access to the content or more information about it, I must rely on you to provide the necessary details to make an assessment.\\n\\nGiven the constraints, my response based on the information provided (which is none regarding the content of the image) would have to default to an inability to classify. However, following your instructions for format but acknowledging the lack of information to make a judgment:\\n\\n```json\\n{\\n  \\\"contains_disinformation\\\": false\\n}\\n```\"}",
+      "y": 0
+    },
+    {
+      "url": "https://mobile-beta.demorgen.be/meningen/laten-we-ook-met-al-die-andere-vluchtelingen-solidair-zijn~b04e75cd/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/11oksvb/in_dak_van_allée_du_kaai_worden_gaatjes_geboord/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/11oksvb/in_dak_van_allée_du_kaai_worden_gaatjes_geboord/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@stoeremannenpraat/video/7409206053528702241",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-41",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/x4npmz/premie_voor_burgemeesters_2000_tot_3500_euro_per/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-35",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://gouda.vvd.nl/nieuws/48639/vvd-gouda-steunt-statement-vluchtelingen-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/yygdu5/belgiums_asylum_system_creaks_at_the_seams_as/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dpxdpn/beperken_van_massaemigratie_en_mislukte/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-43",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://amstelveen.sp.nl/sites/amstelveen.sp.nl/files/attachments/schriftelijke_vragen_voorselectie_vluchtelingen_oekraine_amstelveen_1.pdf",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-17",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-34",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@bassambi.yves/video/7203500807482821894",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hln.be/gent/buurtbewoners-verzetten-zich-tegen-komst-gents-nooddorp-600-oekraiense-vluchtelingen-das-gewoonweg-te-veel~ae499ca6/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dh4ky3/het_heeft_een_halve_eeuw_geduurd_maar_de_pvda/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-25",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-23",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@bundestagreels/video/7078026408869530885",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1fs2187/22jarige_afghaanse_asielzoeker_opgepakt_na/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@nederlandsepolitiek/video/7379658367167401248",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@lonclejo/video/7073428180849249542",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-33",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/15bp378/stemmen_in_2024/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-27",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-42",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-33",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-28",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.trouw.nl/binnenland/de-eerste-oekraiense-leerlingen-zitten-in-de-nederlandse-klas-veel-huiswerk-socialiseren-en-traumaverwerking~b04eb15b/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-41",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hln.be/buitenland/vn-wellicht-geen-grote-vluchtelingenstroom-meer-uit-oekraine~adaf6759/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-27",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://d66.nl/leudal/nieuws/vragen-over-stedenband-met-gemeente-in-oekraine/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/15bp378/stemmen_in_2024/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18c3i7t/oekraïne_militaire_steun_kan_ook_huizen_sector/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-21",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-17",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-44",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://d66.nl/wijchen/nieuws/welkom-in-wijchen/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-17",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-17",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://mobile-beta.demorgen.be/nieuws/hoe-kunt-u-de-oekrainers-steunen-geef-hen-de-boodschap-dat-de-rest-van-de-wereld-meekijkt~b35e56ff/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-61",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-21",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium4/comments/1gpl77h/het_aantal_plaatsen_waar_je_nog_veilig_kan/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/dernieres-depeches/afp/ukraine-le-flot-de-refugies-ralentit-quelque-peu-en-24h00-622c8b3d7b50a639dcf3a978",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://sittard-geleen.groenlinks.nl/nieuws/art-43-vragen-inzake-opvang-vluchtelingen-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-55",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-21",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/17oqj71/our_state_of_absolute_living/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ijru3/omvolkingspleidooi_op_radio_1/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@represent.jezelf/video/7151071659212967174",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hln.be/buitenland/tientallen-migranten-proberen-van-griekenland-naar-italie-te-varen~a4ac3b16/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lalibre.be/belgique/societe/2022/09/23/en-belgique-les-regles-normales-de-lasile-sappliqueront-aux-russes-fuyant-la-mobilisation-HYFOQHRHDRG3RBANLPDNS77XPI/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e5osfm/asielzoekers_leggen_uit_waarom_ze_naar_nederland/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e5osfm/asielzoekers_leggen_uit_waarom_ze_naar_nederland/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@jadeyorks/video/7071621053839133958",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/yygdu5/belgiums_asylum_system_creaks_at_the_seams_as/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@claredalymep/video/7073875438526909701",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/opvang-oekrainers-zit-op-het-tandvlees-permanente-verblijfplaatsen-lopen-stilaan-vol~b57fb68f/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nosstories/video/7203303130577014021",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-45",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16v3qjq/de_croo_wil_gebouwen_van_defensie_nmbs_en/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e5osfm/asielzoekers_leggen_uit_waarom_ze_naar_nederland/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/collectie/13892/artikel/2420050-israel-maakt-zich-klaar-voor-komst-duizenden-joodse-oekrainers",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@driesvanlangenhove/video/7074644422104812805",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@rechtszetting/video/7190346491788070150",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-37",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/17oqj71/our_state_of_absolute_living/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-28",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://nos.nl/artikel/2068501-vluchteling-klaagt-omroep-powned-aan.html",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-33",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-43",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@youngimpactnl/video/7076385690048646406",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-35",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16v3qjq/de_croo_wil_gebouwen_van_defensie_nmbs_en/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18c3i7t/oekraïne_militaire_steun_kan_ook_huizen_sector/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-23",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/duizenden-oekrainers-proberen-hun-land-te-ontvluchten-wat-nu-dit-is-een-ontmoeting-met-de-geschiedenis-die-we-niet-mogen-missen~bd45b4cb/?utm_source=link&utm_medium=app&utm_campaign=shared%20content&utm_content=free",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/15bp378/stemmen_in_2024/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dpxdpn/beperken_van_massaemigratie_en_mislukte/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-37",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g0oy8d/wie_zijn_de_veroorzakers_van_de_migratie_crisis/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.trouw.nl/binnenland/de-creativiteit-die-loskomt-is-fantastisch-nederland-kan-als-verenigingsland-zoveel-doen-voor-gevluchte-mensen~b00925a6/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.standaard.be/cnt/dmf20220823_93035088",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-46",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/regions/tournai-ath-mouscron/premiere-reunion-de-coordination-de-la-grape-de-tournai-pour-definir-une-position-commune-pour-l-accueil-des-refugies-ukrainiens-624bfba39978e23b8f3d595b",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lesoir.be/426427/article/2022-02-25/des-ukrainiens-se-mettent-labri-dans-des-stations-de-metro-de-kiev-photos",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-35",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/19f718h/staggering_disparity_between_treatment_of/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://m.standaard.be/cnt/dmf20230219_97973527",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/dernieres-depeches/afp/cinq-millions-de-personnes-ont-fui-l-ukraine-depuis-le-debut-de-l-invasion-russe-selon-l-onu-62597033d8ad5826488e8620",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/wijchen/wp-content/uploads/sites/142/2022/03/220324-PERSBERICHT-Gemeente-Wijchen-draait-op-volle-kracht-om-Oekraiense-vluchtelingen-te-kunnen-verwelkomen.pdf",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-57",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dpxdpn/beperken_van_massaemigratie_en_mislukte/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://m.standaard.be/cnt/dmf20230223_98188926",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-35",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.lesoir.be/430619/article/2022-03-17/guerre-en-ukraine-plus-de-trois-millions-de-refugies-dont-plus-de-100000-en-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1b2xe6s/hoe_groot_is_de_migratie_naar_belgië_en_hoeveel/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-46",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-50",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/12z75zr/we_cannot_afford_this_belgian_mp_condemns/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-32",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-21",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/de-grenzen-van-fatsoen-worden-in-koksijde-zo-ver-overschreden-dat-ze-niet-eens-meer-in-zicht-zijn~b7004122/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1h2hru7/meer_dan_helft_van_alle_bijstandsgerechtigden_is/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-54",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/regions/luxembourg/nous-manquons-de-produits-d-hygiene-et-de-denrees-alimentaires-623230c39978e2539833ce14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/vlaardingen/nieuws/tijdelijke-oekrainewijk-op-vergulde-hand-west-gaat-door/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.standaard.be/cnt/dmf20220724_94559852",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/12z75zr/we_cannot_afford_this_belgian_mp_condemns/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hartvannederland.nl/politiek/artikelen/bbb-oppert-oekrainers-terug-sturen-veilige-delen-land",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@het.team.volt/video/7341416909591678240",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16jbosv/hoe_onze_buurlanden_nipt_slagen_in_wat_belgiã/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-43",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-34",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://moustique.lalibre.be/actu/monde/2022/02/24/les-voisins-de-lukraine-se-preparent-a-accueillir-une-vague-de-refugies-228973",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-44",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/11mw8n7/the_exceptional_treatment_given_to_the_ukrainian/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.trouw.nl/binnenland/nederland-kreeg-vorig-jaar-35-535-asielverzoeken-hoogste-aantal-sinds-2015~b0009508/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/19f718h/staggering_disparity_between_treatment_of/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-25",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2053767-eu-landen-houden-vluchtelingen-liever-buiten-de-deur",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hln.be/buitenland/eu-landen-keuren-actieplan-voor-opgepikte-bootvluchtelingen-goed~adf15b30/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/17oqj71/our_state_of_absolute_living/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-42",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-29",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/tnmyow/first_flemish_emergency_village_for_ukrainian/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-53",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-50",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-23",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17o7m3y/migratie_in_belgië_is_het_niet_anders/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lesoir.be/427001/article/2022-02-28/guerre-en-ukraine-500000-refugies-ont-deja-franchi-la-frontiere",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g0oy8d/wie_zijn_de_veroorzakers_van_de_migratie_crisis/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@bundestagreels/video/7078028196645489926",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/19f718h/staggering_disparity_between_treatment_of/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/17oqj71/our_state_of_absolute_living/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://mobile.volkskrant.nl/nieuws-achtergrond/oma-op-de-achterbank-schildpad-in-een-plastic-bakje-in-ter-apel-arriveren-de-eerste-oekrainers~b862534c/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@blues.and.moose/video/7086178252464622854",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.n-va.be/nieuws/belgische-aanpak-oekraiense-vluchtelingen-blijft-inefficient-en-chaotisch",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/12z75zr/we_cannot_afford_this_belgian_mp_condemns/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-51",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/meningen/kritiek-op-het-manke-asielbeleid-mag-de-noodopvang-van-oekraiense-oorlogsvluchtelingen-niet-overschaduwen~b3e75ba0/?utm_campaign=shared_earned&utm_medium=social&utm_source=copylink",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dh4ky3/het_heeft_een_halve_eeuw_geduurd_maar_de_pvda/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.standaard.be/cnt/dmf20221116_98061718",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2506155-finland-ondanks-gesloten-grens-nog-altijd-illegale-migratie-uit-rusland",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-27",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@david_law_official/video/7370110975153835296",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.lalibre.be/international/europe/guerre-ukraine-russie/2022/06/16/guerre-en-ukraine-lonu-sattend-a-de-grands-nombres-de-refugies-en-cas-de-famines-I7PALQ2R5RENXI4EF5TCVEGPHM/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-37",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hartvannederland.nl/buitenlands-nieuws/oekraine/artikelen/honderden-extra-opvangplekken-voor-vluchtelingen-uit-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.openvld.be/tom_ongena_oekrainers_zo_snel_mogelijk_richting_werk_begeleiden",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-64",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-42",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/x4npmz/premie_voor_burgemeesters_2000_tot_3500_euro_per/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-33",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16v3qjq/de_croo_wil_gebouwen_van_defensie_nmbs_en/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-47",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-38",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-25",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-44",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.ad.nl/dordrecht/zo-gaat-het-nu-met-de-vluchtelingenopvang-in-onze-regio~a139b17e/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://groenlinks.nl/nieuws/noodopvang-leeuwarden",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/collectie/13888/artikel/2418686-vluchtelingenstroom-op-gang-vanuit-oekraine-buurlanden-bereiden-opvang-voor",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1gkasp5/spreidingswet/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g0oy8d/wie_zijn_de_veroorzakers_van_de_migratie_crisis/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dh4ky3/het_heeft_een_halve_eeuw_geduurd_maar_de_pvda/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.dhnet.be/dernieres-depeches/belga/la-croix-rouge-craint-une-flambee-des-cas-de-covid-19-en-ukraine-et-dans-les-etats-voisins-622616897b50a639dcc40821",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-37",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1h2hru7/meer_dan_helft_van_alle_bijstandsgerechtigden_is/-thread-15",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-41",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/meningen/jongeren-over-opvang-van-vluchtende-russen-in-belgie-en-de-eu-doen-maar-alleen-onder-strikte-voorwaarden~bd707152/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-44",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g45lr7/voorzitter_ec_von_der_leyen_omarmt_idee/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-43",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/regions/bruxelles/au-petit-chateau-les-oublies-de-la-crise-ukrainienne-sont-ici-62306436d8ad586d30daf923",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-32",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@eppgroup/video/7157335019726376198",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1h2hru7/meer_dan_helft_van_alle_bijstandsgerechtigden_is/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-10",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@goodnews.com/video/7237555501544869146",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1f7lxr8/migratie_is_nodig/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-23",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/19f718h/staggering_disparity_between_treatment_of/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17o7m3y/migratie_in_belgië_is_het_niet_anders/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18c3i7t/oekraïne_militaire_steun_kan_ook_huizen_sector/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e5osfm/asielzoekers_leggen_uit_waarom_ze_naar_nederland/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium4/comments/1gpl77h/het_aantal_plaatsen_waar_je_nog_veilig_kan/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-31",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2055787-wilders-roept-op-tot-verzet-tegen-asielzoekerscentrum-zeewolde",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1b2xe6s/hoe_groot_is_de_migratie_naar_belgië_en_hoeveel/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-44",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-25",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nosstories/video/7265226582153891104",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-61",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/15bp378/stemmen_in_2024/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-39",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14wahpi/azielzoekerscentra_in_biblebelt/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lesoir.be/453562/article/2022-07-11/lunion-europeenne-doit-se-preparer-des-vagues-migratoires-selon-frontex",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17arh9z/belgie_en_zweden_illegalen_moeten_weg/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g0oy8d/wie_zijn_de_veroorzakers_van_de_migratie_crisis/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-52",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tijd.be/algemeen/algemeen/hans-magnus-enzensberger/5327566.html",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1afkt9g/zo_veel_asielzoekers_moet_jouw_gemeente_opvangen/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-36",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1g8kx3t/opvangcentrum_voor_asielzoekers_zet_een_jaar_na/-thread-2",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16jbosv/hoe_onze_buurlanden_nipt_slagen_in_wat_belgiã/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@progressiefermelo/video/7424891164781727008",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-16",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-40",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@fillepasgentille/video/7069178929843571974",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-56",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-35",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1h2hru7/meer_dan_helft_van_alle_bijstandsgerechtigden_is/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://d66.nl/roermond/nieuws/statement-opvang-vluchtelingen-oekraine-in-roermond/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-27",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/181wjqu/heel_links_europa_heeft_migratie_te_lang_genegeerd/-thread-52",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18257tl/is_migratie_echt_zon_groot_ding/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1gusxoe/palestinians_top_the_list_of_asylum_seekers_in/-thread-19",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/yygdu5/belgiums_asylum_system_creaks_at_the_seams_as/-thread-6",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g0oy8d/wie_zijn_de_veroorzakers_van_de_migratie_crisis/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-45",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/-thread-1",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2525169-oekraiense-vluchtelingen-dagen-in-de-cel-bij-aankomst-per-vliegtuig",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/19cr9ew/uitzetting_afgewezen_asielzoekers_naar_marokko/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/-thread-34",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1etmehm/rechter_terecht_verblijfsvergunning_geweigerd_aan/-thread-45",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-13",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-41",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-49",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://europa.pvda.nl/nieuws/steun-oekraiense-vluchtelingen-mag-niet-verslappen/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/collectie/13898/artikel/2428625-staatssecretaris-bezoekt-zwaar-overbelast-aanmeldcentrum-ter-apel",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-20",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-47",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/velsen/search-tags/integratie-immigratie/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/198xi0u/most_common_immigrant_in_europe_ik_post_dit_graag/-thread-25",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-26",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qgtw0/bbb_wil_max_15k_asielzoekers_per_jaar/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-51",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/14qp47i/in_2022_vestigden_zich_402_duizend_immigranten_in/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/11oksvb/in_dak_van_allée_du_kaai_worden_gaatjes_geboord/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1bdl8vb/mensen_zoals_dries_zijn_een_reactie/-thread-41",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/-thread-43",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/1fd83f8/sending_busloads_of_migrants_to_brussels_is/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hbvl.be/cnt/dmf20221117_96979434",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/17nf54j/federale_regering_wil_ziekenhuizen_inschakelen/-thread-17",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-8",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@nosstories/video/7405659411697437985",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16v3qjq/de_croo_wil_gebouwen_van_defensie_nmbs_en/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ijru3/omvolkingspleidooi_op_radio_1/-thread-4",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/17g6m6s/is_immigratie_echt_zon_groot_probleem/-thread-11",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1cxs9bu/ook_uit_groter_onderzoek_blijkt_rijksten_betalen/-thread-30",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dpxdpn/beperken_van_massaemigratie_en_mislukte/-thread-7",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1bwgq84/van_der_burg_verwacht_volgend_jaar_minimaal_49800/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ieany/omvolking/-thread-22",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/xgjr89/nauwelijks_overlast_azcs_wat_ervaren_jullie/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1cuskx6/europese_enquête_73_procent_vindt_dat_ons_land_te/-thread-18",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16v3qjq/de_croo_wil_gebouwen_van_defensie_nmbs_en/-thread-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g8l5iz/geen_huizen_meer_voor_immigranten/-thread-3",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@vincentflibustier/video/7070068562781637894",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/11oksvb/in_dak_van_allée_du_kaai_worden_gaatjes_geboord/-thread-5",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g5nsh1/migratieexpert_jan_van_de_beek_adviseert_plek_in/-thread-9",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/19f718h/staggering_disparity_between_treatment_of/-thread-12",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/15bp378/stemmen_in_2024/-thread-23",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1e68ur3/5_jaar_gevangenis_en_tbs_voor_verkrachting_en/-thread-14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    }
+  ]
+}

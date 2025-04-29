@@ -123,3 +123,11 @@ class ModelResult(BaseModel):
 
 class ModelResults(BaseModel):
     results: List[ModelResult]
+
+
+class ModelStats(BaseModel):
+    model_name: str
+    accuracy: str
+    precision: str
+    recall: str
+    f1: str
