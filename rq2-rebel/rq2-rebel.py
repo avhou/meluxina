@@ -91,6 +91,21 @@ def read_sample() -> Sample:
         return sample
 
 
+def stats_sample(ground_truth_db: str):
+    sample = read_sample()
+    with sqlite3.connect(ground_truth_db) as conn:
+        print(f"training")
+        for disinformation, count in conn.execute(
+            "SELECT disinformation, count(*) FROM articles WHERE rowid IN ({}) GROUP BY disinformation".format(",".join(map(str, sample.training)))
+        ):
+            print(f"disinformation {disinformation} count {count}")
+        print(f"test")
+        for disinformation, count in conn.execute(
+            "SELECT disinformation, count(*) FROM articles WHERE rowid IN ({}) GROUP BY disinformation".format(",".join(map(str, sample.test)))
+        ):
+            print(f"disinformation {disinformation} count {count}")
+
+
 def generate_index(ground_truth_db: str, chunk_db: str, max_chunks: int | None = None):
     print(f"processing chunk db {chunk_db}")
 
@@ -320,6 +335,7 @@ if __name__ == "__main__":
         help="The top K triples that will be injected in the LLM",
     )
     parser.add_argument("--generate-index", action="store_true", help="Flag to generate the index")
+    parser.add_argument("--stats-sample", action="store_true", help="Flag to generate stats for the sample")
     parser.add_argument("--generate-sample", action="store_true", help="Flag to generate the sample")
     parser.add_argument("--generate-prompts", action="store_true", help="Flag to generate the prompts")
     args = parser.parse_args()
@@ -327,6 +343,10 @@ if __name__ == "__main__":
     if args.generate_sample:
         print(f"generating sample for {args.input_db} and input count {args.input_count}")
         generate_sample(args.ground_truth_db, args.input_db, args.input_count)
+
+    if args.stats_sample:
+        print(f"generating stats for sample for {args.input_db}")
+        stats_sample(args.ground_truth_db)
 
     if args.generate_index:
         print(f"generating index for {args.input_db} and input count {args.input_count}")
