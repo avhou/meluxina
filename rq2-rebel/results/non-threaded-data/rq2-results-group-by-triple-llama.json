@@ -1,0 +1,499 @@
+{
+  "results": [
+    {
+      "url": "https://groenlinks.nl/nieuws/noodopvang-leeuwarden",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lesoir.be/430906/article/2022-03-18/notre-empathie-envers-les-refugies-ukrainiens-revele-t-elle-un-biais-raciste",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/denemarken-gaat-asielcentra-opzetten-in-het-buitenland-vn-en-europese-unie-reageren-kritisch~be1894472/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2053483-vluchtelingen-ongehinderd-over-macedonische-grens.html",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1fs2187/22jarige_afghaanse_asielzoeker_opgepakt_na/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.lesoir.be/427001/article/2022-02-28/guerre-en-ukraine-500000-refugies-ont-deja-franchi-la-frontiere",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@david_law_official/video/7370110975153835296",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1d0ahov/undocumented_migrants_to_join_20_km_of_brussels/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://nos.nl/l/2515205",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nieuwsuur/video/7221248815947386118",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nordeclair.sudinfo.be/977794/article/2022-08-08/nombre-record-de-refugies-en-finlande-en-raison-de-la-guerre-en-ukraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/collectie/13888/artikel/2418686-vluchtelingenstroom-op-gang-vanuit-oekraine-buurlanden-bereiden-opvang-voor",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/16ijru3/omvolkingspleidooi_op_radio_1/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://nos.nl/artikel/2525169-oekraiense-vluchtelingen-dagen-in-de-cel-bij-aankomst-per-vliegtuig",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/opvang-oekrainers-zit-op-het-tandvlees-permanente-verblijfplaatsen-lopen-stilaan-vol~b57fb68f/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://moustique.lalibre.be/actu/monde/2022/03/07/pourquoi-les-ukrainiens-sont-ils-mieux-accueillis-que-les-autres-refugies-230139",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2414532-op-de-grens-tussen-polen-en-wit-rusland-heerst-nog-steeds-de-noodtoestand",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/immigrant-beter-opgeleid-dan-duitser~b5291cd1/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/dernieres-depeches/belga/la-croix-rouge-craint-une-flambee-des-cas-de-covid-19-en-ukraine-et-dans-les-etats-voisins-622616897b50a639dcc40821",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.standaard.be/cnt/dmf20221004_98417065",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.n-va.be/nieuws/belgische-aanpak-oekraiense-vluchtelingen-blijft-inefficient-en-chaotisch",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@vereenvoudigd/video/7267610806076886305",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/tom-van-grieken-pleit-op-familiedag-voor-vlaams-energiebedrijf-dat-moderne-kerncentrale-bouwt~ba3c6e5d/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@cutbeans/video/7076039128185425158",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@migrationtalks/video/7091537061706075398",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/meningen/jongeren-over-opvang-van-vluchtende-russen-in-belgie-en-de-eu-doen-maar-alleen-onder-strikte-voorwaarden~bd707152/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://m.standaard.be/cnt/dmf20230219_97973527",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nieuwsuur/video/7340201818577702176",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@denk_nl/video/7218248967618858246",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2064463-geen-aangiftes-na-hoorzitting-steenbergen.html",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1g45lr7/voorzitter_ec_von_der_leyen_omarmt_idee/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/11oksvb/in_dak_van_allée_du_kaai_worden_gaatjes_geboord/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/1g8kx3t/opvangcentrum_voor_asielzoekers_zet_een_jaar_na/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.lesoir.be/427684/article/2022-03-03/un-million-de-refugies-ont-fui-lukraine-en-une-semaine-selon-les-nations-unies",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hartvannederland.nl/buitenlands-nieuws/oekraine/artikelen/honderden-extra-opvangplekken-voor-vluchtelingen-uit-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.hln.be/nieuws/mahdi-tekent-voor-project-om-250-vluchtelingen-met-kwetsbaar-profiel-naar-belgie-te-laten-overvliegen~acd9ea37d/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2055787-wilders-roept-op-tot-verzet-tegen-asielzoekerscentrum-zeewolde",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://vught.d66.nl/2022/03/d66-vraagt-wat-vught-kan-doen-na-invasie-van-rusland-in-oekraine/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/x4npmz/premie_voor_burgemeesters_2000_tot_3500_euro_per/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1alodvy/linkse_mensen_waarom/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://amstelveen.sp.nl/sites/amstelveen.sp.nl/files/attachments/schriftelijke_vragen_voorselectie_vluchtelingen_oekraine_amstelveen_1.pdf",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/griekenland-geeft-vluchtelingen-boete-van-5-000-euro-omdat-ze-geen-pcr-test-hebben~b53348f4/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/velsen/search-tags/integratie-immigratie/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2419709-oorlog-in-oekraine-is-politieke-evenwichtsoefening-voor-poetin-vriend-orban",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/wijchen/wp-content/uploads/sites/142/2022/03/220324-PERSBERICHT-Gemeente-Wijchen-draait-op-volle-kracht-om-Oekraiense-vluchtelingen-te-kunnen-verwelkomen.pdf",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@newfemaleleaders/video/7163279237674323205",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@bundestagreels/video/7078028980649069829",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/deventer/nieuws/deventer-gaat-hulp-aan-oekraine-bieden/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.vlaamsbelang.org/nieuws/opvang-oekrainers-de-chaos-compleet",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://mobile.volkskrant.nl/nieuws-achtergrond/oma-op-de-achterbank-schildpad-in-een-plastic-bakje-in-ter-apel-arriveren-de-eerste-oekrainers~b862534c/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://mobile-beta.demorgen.be/politiek/britten-en-amerikanen-bereiden-zich-voor-op-humanitaire-tragedie-in-oekraine~b07f9ec6/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://rotterdam.groenlinks.nl/nieuws/groenlinks-wil-stadsgesprek-over-opvang-van-vluchtelingen-rotterdam",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1dpxdpn/beperken_van_massaemigratie_en_mislukte/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@cncd_11.11.11/video/7088635336502578437",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.trouw.nl/binnenland/de-creativiteit-die-loskomt-is-fantastisch-nederland-kan-als-verenigingsland-zoveel-doen-voor-gevluchte-mensen~b00925a6/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@tichecomedy/video/7344089259143335200",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://d66.nl/rhenen/nieuws/oekraine-wat-kan-rhenen-doen/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.partijvoordedieren.nl/bijdragen/bijdrage-teunissen-aan-debat-over-het-vreemdelingen-en-asielbeleid",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/regions/luxembourg/nous-manquons-de-produits-d-hygiene-et-de-denrees-alimentaires-623230c39978e2539833ce14",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1erz0i7/verdubbeling_overlastgevende_asielzoekers/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@waaw.post/video/7328107139359051041",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@stoeremannenpraat/video/7409206053528702241",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@shadowgamefilm/video/7214159035698777350",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2475779-eerste-60-bewoners-nemen-intrek-in-nieuwe-oekrainewijk-vlaardingen",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nosstories/video/7203303130577014021",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@miseajour/video/7069833864822148358",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/Belgium2/comments/179twot/vlamingen_die_vinden_dat_er_teveel_migratie_is/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@bundestagreels/video/7078028385418611973",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.hln.be/buitenland/tientallen-migranten-proberen-van-griekenland-naar-italie-te-varen~a4ac3b16/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.ad.nl/binnenland/bewoners-leegstaand-pand-overvallen-door-komst-oekraiense-vluchtelingen~a8467db6/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.dhnet.be/dernieres-depeches/afp/plus-de-100-millions-de-personnes-deracinees-dans-le-monde-selon-l-onu-628b26929978e2624bfc934b",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.hartvannederland.nl/buitenlands-nieuws/oekraine/artikelen/panel-ruim-de-helft-van-nederland-wil-vluchtende-russen-niet-met-open-armen-ontvangen",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.hartvannederland.nl/buitenlands-nieuws/oekraine/artikelen/soest-is-woest-over-plaatsing-200-langdurige-woningen-voor-oekrainers",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://d66.nl/roermond/nieuws/statement-opvang-vluchtelingen-oekraine-in-roermond/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.demorgen.be/nieuws/duizenden-oekrainers-proberen-hun-land-te-ontvluchten-wat-nu-dit-is-een-ontmoeting-met-de-geschiedenis-die-we-niet-mogen-missen~bd45b4cb/?utm_source=link&utm_medium=app&utm_campaign=shared%20content&utm_content=free",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.volkskrant.nl/nieuws-achtergrond/oma-op-de-achterbank-schildpad-in-een-plastic-bakje-in-ter-apel-arriveren-de-eerste-oekrainers~b862534c/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/569721-meer-vluchtelingen-in-de-opvang.html",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://mobile.volkskrant.nl/nieuws-achtergrond/duitse-journalisten-scheidsrechters-van-democratie~b6e29b95/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lalibre.be/international/europe/2022/04/26/ukraine-deja-53-millions-de-refugies-lonu-en-attend-3-millions-de-plus-DZBP6NZILBHGROFLVCQLSHE64E/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lalibre.be/international/europe/2022/05/04/plus-de-23000-mineurs-non-accompagnes-en-europe-en-2021-selon-eurostat-UHHVBUI6JRFHDHXNY5ECY27IGY/?fbclid=IwAR2FFN8grGnjpCdubi92ZFzT84HDUlNHV6nLjAFv0tHew0ppkOpBY4LpFAc",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/belgium/comments/11mw8n7/the_exceptional_treatment_given_to_the_ukrainian/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lalibre.be/belgique/societe/2022/09/23/en-belgique-les-regles-normales-de-lasile-sappliqueront-aux-russes-fuyant-la-mobilisation-HYFOQHRHDRG3RBANLPDNS77XPI/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://velsen.d66.nl/2022/03/01/d66velsen-stelt-vragen-over-voorbereiding-mogelijke-opvang-vluchtelingen-oekraine/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/496630-zaak-dolmatov-lijkt-geen-incident",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.n-va.be/nieuws/extra-maatregelen-voor-huisvesting-van-oekraiense-vluchtelingen",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://sittard-geleen.groenlinks.nl/nieuws/art-43-vragen-inzake-opvang-vluchtelingen-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://gouda.vvd.nl/nieuws/48639/vvd-gouda-steunt-statement-vluchtelingen-oekraine",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://moustique.lalibre.be/actu/belgique/2022/03/18/pres-de-2-000-refugies-ukrainiens-enregistres-au-centre-du-heysel-231653",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lesoir.be/430619/article/2022-03-17/guerre-en-ukraine-plus-de-trois-millions-de-refugies-dont-plus-de-100000-en-24",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://velsen.d66.nl/content/uploads/sites/107/2022/03/RV22.014-D66V-voorbereiding-mogelijke-opvang-Vluchtelingen-uit-Oekraine.pdf",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/1ea420t/nauwelijks_woningen_voor_alleenstaande/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://moustique.lalibre.be/actu/monde/2022/02/24/les-voisins-de-lukraine-se-preparent-a-accueillir-une-vague-de-refugies-228973",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.tiktok.com/@nadirwao8dn/video/7413091787620830496",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.lalibre.be/international/europe/2022/07/10/les-autorites-italiennes-evacuent-le-camp-de-lampedusa-en-raison-de-sa-surpopulation-7GURM73LOFDKHHUNVEQCGN4VCM/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2433141-asscher-adviseert-europese-commissie-over-oekraiense-vluchtelingen",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://nos.nl/artikel/2005573-teeven-wil-geen-250-syriers-extra",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 0
+    },
+    {
+      "url": "https://www.ad.nl/binnenland/hans-woont-nu-samen-met-oekraiense-masja-welcome-to-holland-you-are-safe-here~a4b78bf4/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://www.tiktok.com/@lonclejo/video/7073428180849249542",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": true}\"}",
+      "y": 1
+    },
+    {
+      "url": "https://old.reddit.com/r/nederlands/comments/18c3i7t/oekraïne_militaire_steun_kan_ook_huizen_sector/",
+      "result": "{\"role\": \"assistant\", \"content\": \"{\\\"contains_disinformation\\\": false}\"}",
+      "y": 1
+    }
+  ]
+}
