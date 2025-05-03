@@ -202,7 +202,7 @@ def analyze_metadata_distribution(db: str, source: str, output_dir: str):
     news_outlets_per_host = news_outlets_per_host.sort_values(by="count", ascending=False)
 
     with open(os.path.join(output_dir, f"{source}_news_outlets.md"), "w") as f:
-        f.write("| News outlet | Count | Disinformation count | Disinformation percentage |\n")
+        f.write("| News outlet | Count | Disinformation count | Disinformation % |\n")
         f.write("|-------------:|------:|---------------------:|--------------------------:|\n")
         for host, row in news_outlets_per_host.iterrows():
             f.write(f"| {host} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
