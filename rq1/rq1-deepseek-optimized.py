@@ -66,9 +66,7 @@ def create_model(model_input: ModelInput):
 
     tokenizer = AutoTokenizer.from_pretrained(model_input.model_name, trust_remote_code=True, use_fast=True)
 
-    model = AutoModelForCausalLM.from_pretrained(
-        model_input.model_name, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=True, attn_implementation="flash_attention_2"
-    )
+    model = AutoModelForCausalLM.from_pretrained(model_input.model_name, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=True)
 
     print(f"Done loading model at {datetime.now().strftime('%H:%M:%S')}", flush=True)
     return tokenizer, model
