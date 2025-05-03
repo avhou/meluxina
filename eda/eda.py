@@ -9,6 +9,7 @@ import math
 import re
 import statistics
 import numpy as np
+import json
 
 
 def exec(db: str, query: str):
@@ -151,6 +152,62 @@ def generate_time_distribution_sns(db: str, source: str, image_output_dir: str):
     )
 
 
+def analyze_metadata_distribution(db: str, source: str, output_dir: str):
+    with sqlite3.connect(db) as conn:
+        # Read metadata from the article table
+        df = pd.read_sql_query(f"SELECT metadata, disinformation FROM articles where source = '{source}' ", conn)
+
+    df_parsed = df["metadata"].apply(json.loads).apply(pd.Series)
+    df_parsed["disinformation"] = df["disinformation"].map({"y": 1, "n": 0}).fillna(0).astype(int)
+
+    # Group by source type
+    grouped = df_parsed.groupby("political_party").agg(count=("political_party", "size"), disinformation_count=("disinformation", "sum"))
+    grouped["count"] = grouped["count"].astype(int)
+    grouped["disinformation_count"] = grouped["disinformation_count"].astype(int)
+    grouped["percentage"] = (grouped["count"] / grouped["count"].sum() * 100).round(2)
+    grouped["disinfo_percentage"] = (grouped["disinformation_count"] / grouped["count"] * 100).round(2)
+
+    # Write total percentage table
+    with open(os.path.join(output_dir, f"{source}_metadata_count.md"), "w") as f:
+        f.write("| Source | Count | Percentage |\n")
+        f.write("|----------------:|------:|-----------:|\n")
+        for political_party, row in grouped.iterrows():
+            label = "News outlet" if political_party == 0 else "Political party"
+            f.write(f"| {label} | {int(row['count'])} | {row['percentage']:.2f} % |\n")
+
+    with open(os.path.join(output_dir, f"{source}_metadata_disinfo.md"), "w") as f:
+        f.write("| Source | Total count | Disinformation count | Disinformation percentage |\n")
+        f.write("|----------------:|------:|----------------:|---------------------:|\n")
+        for idx, row in grouped.iterrows():
+            label = "News outlet" if idx == 0 else "Political party"
+            f.write(f"| {label} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
+
+    # Process political parties per host with disinformation details
+    political_parties = df_parsed[df_parsed["political_party"] == 1]
+    political_parties_per_host = political_parties.groupby("host").agg(count=("host", "size"), disinformation_count=("disinformation", "sum"))
+    political_parties_per_host["disinfo_percentage"] = (political_parties_per_host["disinformation_count"] / political_parties_per_host["count"] * 100).round(2)
+    # Sort by count in descending order
+    political_parties_per_host = political_parties_per_host.sort_values(by="count", ascending=False)
+
+    with open(os.path.join(output_dir, f"{source}_political_party.md"), "w") as f:
+        f.write("| Political party | Count | Disinformation count | Disinformation percentage |\n")
+        f.write("|-----------------:|------:|---------------------:|--------------------------:|\n")
+        for host, row in political_parties_per_host.iterrows():
+            f.write(f"| {host} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
+
+    # Process news outlets per host with disinformation details
+    news_outlets = df_parsed[df_parsed["political_party"] == 0]
+    news_outlets_per_host = news_outlets.groupby("host").agg(count=("host", "size"), disinformation_count=("disinformation", "sum"))
+    news_outlets_per_host["disinfo_percentage"] = (news_outlets_per_host["disinformation_count"] / news_outlets_per_host["count"] * 100).round(2)
+    news_outlets_per_host = news_outlets_per_host.sort_values(by="count", ascending=False)
+
+    with open(os.path.join(output_dir, f"{source}_news_outlets.md"), "w") as f:
+        f.write("| News outlet | Count | Disinformation count | Disinformation percentage |\n")
+        f.write("|-------------:|------:|---------------------:|--------------------------:|\n")
+        for host, row in news_outlets_per_host.iterrows():
+            f.write(f"| {host} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
+
+
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     print(f"performing analysis in {non_threaded_db} / {threaded_db} for source {source}")
 
@@ -168,6 +225,7 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
 
     generate_lang_distribution(non_threaded_db, source, os.path.join(os.path.join(output_dir, "tables"), f"{source}_lang_distribution.md"))
     generate_word_count_distribution(non_threaded_db, source, os.path.join(os.path.join(output_dir, "tables"), f"{source}_word_count_distribution.md"))
+    analyze_metadata_distribution(non_threaded_db, source, os.path.join(output_dir, "tables"))
 
 
 if __name__ == "__main__":
