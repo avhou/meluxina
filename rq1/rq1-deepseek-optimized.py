@@ -115,23 +115,29 @@ def process_model(model_input: ModelInput, database: str):
                 text = re.sub(r"\s+", " ", row[0])
                 ground_truth = 1 if row[1] == "y" else 0
 
+                print(f"processing text {text[:100]}", flush=True)
+
                 # Tokenize only the user input (article text)
                 user_input_tokens = tokenizer(text, return_tensors="pt").input_ids.to(device)
 
                 # Combine the cached tokenized system prompt with the tokenized user input
                 input_prompt = torch.cat([cached_tokenized_prompts[prompt_type], user_input_tokens], dim=-1)
+                # Create the attention mask: 1 for actual tokens and 0 for padding tokens
+                attention_mask = (input_prompt != tokenizer.pad_token_id).float()
 
                 try:
                     # Generate the response
                     outputs = model.generate(
                         input_ids=input_prompt,
                         max_new_tokens=2500,
+                        attention_mask=attention_mask,
                         do_sample=False,
                         pad_token_id=tokenizer.eos_token_id,
                     )
 
                     # Decode the result
                     decoded_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
+                    print(f"result of LLM is {decoded_output}, ground truth is {ground_truth}, raw ground truth is {row[1]}", flush=True)
 
                     try:
                         string_representation = json.dumps(decoded_output)
