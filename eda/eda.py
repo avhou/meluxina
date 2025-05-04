@@ -10,6 +10,147 @@ import re
 import statistics
 import numpy as np
 import json
+from collections import Counter
+from wordcloud import WordCloud, STOPWORDS
+
+
+dutch_stopwords = set(
+    [
+        "de",
+        "en",
+        "een",
+        "het",
+        "van",
+        "aan",
+        "in",
+        "met",
+        "te",
+        "voor",
+        "als",
+        "op",
+        "is",
+        "was",
+        "heeft",
+        "waar",
+        "door",
+        "niet",
+        "er",
+        "maar",
+        "ook",
+        "ze",
+        "die",
+        "dat",
+        "om",
+        "zijn",
+        "dit",
+        "al",
+        "dan",
+        "bij",
+        "hij",
+        "zij",
+        "naar",
+        "nu",
+        "zich",
+        "nog",
+        "wel",
+        "hun",
+        "ons",
+        "mijn",
+        "zo",
+        "heel",
+        "ik",
+        "tot",
+        "omdat",
+    ]
+)
+
+french_stopwords = set(
+    [
+        "le",
+        "la",
+        "les",
+        "de",
+        "des",
+        "en",
+        "et",
+        "à",
+        "un",
+        "une",
+        "ce",
+        "que",
+        "qui",
+        "pour",
+        "dans",
+        "avec",
+        "sur",
+        "par",
+        "ne",
+        "pas",
+        "je",
+        "selon",
+        "il",
+        "se",
+        "du",
+    ]
+)
+
+keywords = list(
+    set(
+        [
+            "migrant",
+            "immigrant",
+            "emigrant",
+            "migratie",
+            "immigratie",
+            "vluchteling",
+            "oorlogsvluchteling",
+            "ontheemde",
+            "vluchtende bevolking",
+            "verspreide bevolking",
+            "herplaatste bevolking",
+            "asielzoeker",
+            "diaspora",
+            "buitenlander",
+            "expat",
+            "migrant",
+            "immigrant",
+            "émigrant",
+            "migration",
+            "immigration",
+            "réfugié",
+            "réfugiés de guerre",
+            "personnes déplacées",
+            "population fuyante",
+            "population dispersée",
+            "personne relocalisée",
+            "demandeur d'asile",
+            "diaspora",
+            "étranger",
+            "expatrié",
+            "migrant",
+            "immigrant",
+            "emigrant",
+            "migration",
+            "immigration",
+            "refugee",
+            "war refugees",
+            "displaced people",
+            "fleeing population",
+            "dispersed population",
+            "relocated population",
+            "asylum seeker",
+            "diaspora",
+            "expatriate",
+            "expat",
+            "oekraïne",
+            "rusland",
+            "oekraine",
+            "russie",
+            "ukraine",
+            "russia",
+        ]
+    )
+)
 
 
 def exec(db: str, query: str):
@@ -152,7 +293,7 @@ def generate_time_distribution_sns(db: str, source: str, image_output_dir: str):
     )
 
 
-def analyze_metadata_distribution(db: str, source: str, output_dir: str):
+def analyze_metadata_distribution_web(db: str, source: str, output_dir: str):
     with sqlite3.connect(db) as conn:
         # Read metadata from the article table
         df = pd.read_sql_query(f"SELECT metadata, disinformation FROM articles where source = '{source}' ", conn)
@@ -208,8 +349,46 @@ def analyze_metadata_distribution(db: str, source: str, output_dir: str):
             f.write(f"| {host} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
 
 
+def keyword_distribution(db: str, source: str, output_dir: str):
+    escaped_keywords = [re.escape(k) for k in keywords]
+    pattern = r"(?i)\b(?:" + "|".join(escaped_keywords) + r")"
+    frequencies = Counter()
+    with sqlite3.connect(db) as conn:
+        for (text,) in conn.execute(f"select text from articles where source = '{source}'"):
+            matches = re.findall(pattern, text)
+            # Normalize to lowercase for consistent counting
+            frequencies.update(match.lower() for match in matches)
+
+    with open(os.path.join(output_dir, f"{source}_keyword_distribution.md"), "w") as f:
+        f.write("| Keyword | Count |\n")
+        f.write("| :----- | -----: |\n")
+        for keyword, count in sorted(frequencies.items(), key=lambda x: x[1], reverse=True):
+            f.write(f"| {keyword} | {count} |\n")
+
+
+def generate_word_cloud(db: str, source: str, output_dir: str):
+    texts = []
+    stopwords = STOPWORDS.union(dutch_stopwords).union(french_stopwords)
+    with sqlite3.connect(db) as conn:
+        for (text,) in conn.execute(f"select text from articles where source = '{source}'"):
+            texts.append(re.sub(r"\s+", " ", text).strip())
+    combined_text = " ".join(texts).lower()
+    wordcloud = WordCloud(width=800, height=400, background_color="white", stopwords=stopwords).generate(combined_text)
+    wordcloud.to_file(os.path.join(output_dir, f"{source}_word_cloud.png"))
+    texts = []
+    with sqlite3.connect(db) as conn:
+        for (text,) in conn.execute(f"select translated_text from articles where source = '{source}'"):
+            texts.append(re.sub(r"\s+", " ", text).strip())
+    combined_text = " ".join(texts).lower()
+    wordcloud = WordCloud(width=800, height=400, background_color="white", stopwords=stopwords).generate(combined_text)
+    wordcloud.to_file(os.path.join(output_dir, f"{source}_translated_word_cloud.png"))
+
+
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     print(f"performing analysis in {non_threaded_db} / {threaded_db} for source {source}")
+
+    images = os.path.join(output_dir, "images")
+    tables = os.path.join(output_dir, "tables")
 
     count_non_threaded, percentage_non_threaded = get_count_and_percentage(non_threaded_db, source)
     count_threaded, percentage_threaded = get_count_and_percentage(threaded_db, source)
@@ -221,11 +400,14 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     print(f"non threaded daterange_min {daterange_min_non_threaded}, daterange_max {daterange_max_non_threaded}")
     print(f"threaded daterange_min {daterange_min_threaded}, daterange_max {daterange_max_threaded}")
 
-    generate_time_distribution_sns(non_threaded_db, source, os.path.join(output_dir, "images"))
+    generate_time_distribution_sns(non_threaded_db, source, images)
 
-    generate_lang_distribution(non_threaded_db, source, os.path.join(os.path.join(output_dir, "tables"), f"{source}_lang_distribution.md"))
-    generate_word_count_distribution(non_threaded_db, source, os.path.join(os.path.join(output_dir, "tables"), f"{source}_word_count_distribution.md"))
-    analyze_metadata_distribution(non_threaded_db, source, os.path.join(output_dir, "tables"))
+    generate_lang_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_lang_distribution.md"))
+    generate_word_count_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_word_count_distribution.md"))
+    if source == "web":
+        analyze_metadata_distribution_web(non_threaded_db, source, tables)
+    keyword_distribution(non_threaded_db, source, tables)
+    generate_word_cloud(non_threaded_db, source, images)
 
 
 if __name__ == "__main__":
