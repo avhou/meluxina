@@ -1,6 +1,6 @@
 import argparse
 import sqlite3
-from typing import Tuple
+from typing import Tuple, List
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -242,6 +242,25 @@ def get_word_count(s: str) -> int:
     return len(cleaned.split()) if cleaned else 0
 
 
+def get_stopword_count(s: str) -> int:
+    all_stopwords = set(dutch_stopwords)
+    all_stopwords.update(french_stopwords)
+    all_stopwords.update(STOPWORDS)
+    cleaned = re.sub(r"\s+", " ", s).strip()
+    if cleaned:
+        return sum([1 if word in all_stopwords else 0 for word in cleaned.split()])
+    return 0
+
+
+def get_token_count(s: str) -> List[int]:
+    cleaned = re.sub(r"\s+", " ", s).strip()
+    if cleaned:
+        return [
+            len(word) for word in cleaned.split() if word != "." and word != "?" and word != "!" and word != "," and word != "-" and word != "_" and word != "–"
+        ]
+    return []
+
+
 def generate_word_count_distribution(db: str, source: str, output_file: str):
     with sqlite3.connect(db) as conn, open(output_file, "w") as f:
         f.write("| word count metric | value  | \n")
@@ -384,6 +403,79 @@ def generate_word_cloud(db: str, source: str, output_dir: str):
     wordcloud.to_file(os.path.join(output_dir, f"{source}_translated_word_cloud.png"))
 
 
+def generate_token_distribution(db: str, source: str, output_file: str):
+    with sqlite3.connect(db) as conn, open(output_file, "w") as f:
+        f.write("| Word length metric | value  | \n")
+        f.write("|--------: | -----: |\n")
+
+        texts = []
+        for (text,) in conn.execute(f"select translated_text from articles where source = '{source}'"):
+            texts.append(text)
+
+        word_lengths = [token_length for text in texts for token_length in get_token_count(text)]
+        # Basic statistics
+        minimum = min(word_lengths)
+        maximum = max(word_lengths)
+        mean = statistics.mean(word_lengths)
+        median = statistics.median(word_lengths)
+
+        f.write(f"| min | {minimum} |\n")
+        f.write(f"| max | {maximum} |\n")
+        f.write(f"| mean | {mean:.2f} |\n")
+        f.write(f"| median | {median:.2f} |\n")
+
+
+def generate_stopword_ratio(db: str, source: str, output_dir: str):
+    with sqlite3.connect(db) as conn:
+        texts = []
+        translated_texts = []
+        for text, translated_text in conn.execute(f"select text, translated_text from articles where source = '{source}'"):
+            texts.append(text)
+            translated_texts.append(translated_text)
+
+        word_counts_texts = [get_word_count(text) for text in texts]
+        stopword_counts_texts = [get_stopword_count(text) for text in texts]
+        stopword_ratios_texts = []
+        for word_count, stopword_count in zip(word_counts_texts, stopword_counts_texts):
+            stopword_ratios_texts.append(stopword_count / word_count if word_count > 0 else 0)
+
+        word_counts_translated_texts = [get_word_count(text) for text in translated_texts]
+        stopword_counts_translated_texts = [get_stopword_count(text) for text in translated_texts]
+        stopword_ratios_translated_texts = []
+        for word_count, stopword_count in zip(word_counts_translated_texts, stopword_counts_translated_texts):
+            stopword_ratios_translated_texts.append(stopword_count / word_count if word_count > 0 else 0)
+
+        with open(os.path.join(output_dir, f"{source}_stopword_ratio_texts.md"), "w") as f:
+            f.write("| Stopword ratio metric | Value  | \n")
+            f.write("|--------: | -----: |\n")
+
+            # Basic statistics
+            minimum = min(stopword_ratios_texts)
+            maximum = max(stopword_ratios_texts)
+            mean = statistics.mean(stopword_ratios_texts)
+            median = statistics.median(stopword_ratios_texts)
+
+            f.write(f"| min | {minimum:.2f} |\n")
+            f.write(f"| max | {maximum:.2f} |\n")
+            f.write(f"| mean | {mean:.2f} |\n")
+            f.write(f"| median | {median:.2f} |\n")
+
+        with open(os.path.join(output_dir, f"{source}_stopword_ratio_translated_texts.md"), "w") as f:
+            f.write("| Stopword ratio metric | Value  | \n")
+            f.write("|--------: | -----: |\n")
+
+            # Basic statistics
+            minimum = min(stopword_ratios_translated_texts)
+            maximum = max(stopword_ratios_translated_texts)
+            mean = statistics.mean(stopword_ratios_translated_texts)
+            median = statistics.median(stopword_ratios_translated_texts)
+
+            f.write(f"| min | {minimum:.2f} |\n")
+            f.write(f"| max | {maximum:.2f} |\n")
+            f.write(f"| mean | {mean:.2f} |\n")
+            f.write(f"| median | {median:.2f} |\n")
+
+
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     print(f"performing analysis in {non_threaded_db} / {threaded_db} for source {source}")
 
@@ -408,6 +500,8 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
         analyze_metadata_distribution_web(non_threaded_db, source, tables)
     keyword_distribution(non_threaded_db, source, tables)
     generate_word_cloud(non_threaded_db, source, images)
+    generate_token_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_token_distribution.md"))
+    generate_stopword_ratio(non_threaded_db, source, tables)
 
 
 if __name__ == "__main__":
