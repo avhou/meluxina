@@ -47,7 +47,7 @@ Frustrations can in some cases lead to violence.
 People generalize this violence, exhibited by a few, to the entire group of refugees.  They perceive all refugees as violent and dangerous, and therefore as not wanted in their country.
 Answer with a simple true or false, true if you think the article contains disinformation, false if you think the article does not contain disinformation.
 Do not give any further explanation or justification. Keep your reasoning output to a minimum.  Be as succinct as possible.  The only relevant output is your final classification.  Generate your output in JSON format.  The output should conform to this JSON schema : {Output.model_json_schema()}.""",
-        }
+        },
     )
 ]
 
@@ -59,7 +59,7 @@ def create_model(model_input: ModelInput):
         "text-generation",
         model=model_input.model_name,
         model_kwargs={"torch_dtype": torch.bfloat16},
-        token = os.environ.get('HUGGINGFACEHUB_API_TOKEN'),
+        token=os.environ.get("HUGGINGFACEHUB_API_TOKEN"),
         device_map="auto",
     )
 
@@ -68,7 +68,6 @@ def create_model(model_input: ModelInput):
 
 
 def process_model(model_input: ModelInput, database: str):
-
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
@@ -95,8 +94,8 @@ def process_model(model_input: ModelInput, database: str):
         with sqlite3.connect(database) as conn:
             for row in conn.execute(f"select translated_text, disinformation, url from articles"):
                 text = row[0]
-                text = re.sub(r'\s+', ' ', text)
-                ground_truth = 1 if row[1] == 'y' else 0
+                text = re.sub(r"\s+", " ", text)
+                ground_truth = 1 if row[1] == "y" else 0
                 url = row[2]
 
                 existing_row_for_url = next((x for x in existing_row_results_for_prompt if x.url == url), None)
@@ -121,8 +120,7 @@ def process_model(model_input: ModelInput, database: str):
                         string_representation = str(result)
                     row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=string_representation))
                 except Exception as e:
-                    row_results_for_prompt.append(
-                        RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=f"an error occurred : {e}"))
+                    row_results_for_prompt.append(RowResult(url=url, invalid=True, y=ground_truth, y_hat=False, result=f"an error occurred : {e}"))
 
                 with open(progress_file, "w") as f:
                     f.write(ModelResult(model_input=model_input, row_results={prompt_type: row_results_for_prompt}).model_dump_json(indent=2))
@@ -134,16 +132,19 @@ def process_model(model_input: ModelInput, database: str):
 def check_result_validity(result):
     return False
 
+
 def get_y_hat(result) -> int:
     return -1
 
-def generate_messages(prompt: str, text:str):
+
+def generate_messages(prompt: str, text: str):
     # default pipeline kan hier mee om, non default pipeline echter niet
     data = [
         {"role": "system", "content": prompt},
         {"role": "user", "content": text},
     ]
     return data
+
 
 def rq1(database: str):
     for model in model_inputs:
@@ -152,6 +153,7 @@ def rq1(database: str):
         sanitized_model = sanitize_filename(model.model_name)
         with open(f"rq1_{sanitized_model}.json", "w") as f:
             f.write(model_result.model_dump_json(indent=2))
+
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:

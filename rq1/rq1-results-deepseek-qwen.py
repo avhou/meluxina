@@ -12,9 +12,7 @@ from models import *
 import re
 
 
-def process_results(
-    input_file: str, suffix: Optional[str] = None
-) -> (str, List[ModelStats]):
+def process_results(input_file: str, suffix: Optional[str] = None) -> (str, List[ModelStats]):
     print(f"processing input {input_file}")
     with open(input_file, "r") as f:
         content = f.read()
@@ -25,25 +23,18 @@ def process_results(
 
         model_stats = []
         for prompt_type, row_results in model_result.row_results.items():
-            print(
-                f"processing {len(row_results)} results for prompt type {prompt_type}"
-            )
+            print(f"processing {len(row_results)} results for prompt type {prompt_type}")
             sanitized_name = sanitize_filename(model_result.model_input.model_name)
 
             ys = [i.y for i in row_results]
             # print(f"y values: {ys}")
-            y_hats = [
-                get_y_hat(prompt_type, index, i.result)
-                for (index, i) in enumerate(row_results)
-            ]
+            y_hats = [get_y_hat(prompt_type, index, i.result, i.url) for (index, i) in enumerate(row_results)]
             # print(f"y_hat values: {y_hats}")
             y_hats_invalid = [i for i in y_hats if i == -1]
             # print(f"found {len(y_hats_invalid)} invalid y_hats")
 
             # voorlopig enkel met de valids verder gaan
-            valid_indices = [
-                index for index in range(len(y_hats)) if y_hats[index] != -1
-            ]
+            valid_indices = [index for index in range(len(y_hats)) if y_hats[index] != -1]
             print(f"prompt_type {prompt_type} has {len(valid_indices)} valid results")
 
             valid_model_result = ModelResult(
@@ -94,15 +85,11 @@ def process_results(
                     f1=f"{f1:.2f}",
                 )
             )
-        result_file_name = (
-            f"rq1_{sanitized_name}_results.md"
-            if suffix is None
-            else f"rq1_{sanitized_name}_{suffix}_results.md"
-        )
+        result_file_name = f"rq1_{sanitized_name}_results.md" if suffix is None else f"rq1_{sanitized_name}_{suffix}_results.md"
         return result_file_name, model_stats
 
 
-def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
+def get_y_hat(prompt_type: PromptType, index: int, result: str, url: str) -> int:
     try:
         result = json.loads(result)["content"]
         result = result.replace("\n", "")
@@ -119,12 +106,10 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
             if output is not None:
                 return 1 if output.contains_disinformation else 0
             else:
-                print(
-                    f"match found but not valid json for prompt_type {prompt_type} and index {index}"
-                )
+                print(f"match found but not valid json for prompt_type {prompt_type} and index {index}")
                 return -1
         else:
-            print(f"no match found for prompt_type {prompt_type} and index {index}")
+            print(f"no match found for prompt_type {prompt_type} and index {index} and url {url}")
             return -1
     except Exception as e:
         print(f"exception for prompt_type {prompt_type} and index {index}: {e}")
@@ -134,13 +119,9 @@ def get_y_hat(prompt_type: PromptType, index: int, result: str) -> int:
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         raise RuntimeError("usage : rq1-results-deepseek.py <deepseek-results.sqlite>")
-    (file, model_stats) = process_results(
-        sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None
-    )
+    (file, model_stats) = process_results(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
     with open(file, "w") as f:
         f.write(f"| Model | Accuracy | Precision | Recall | F1-score |\n")
         f.write(f"|:--|--:|--:|--:|--:|\n")
         for stat in model_stats:
-            f.write(
-                f"|{stat.model_name}|{stat.accuracy}|{stat.precision}|{stat.recall}|{stat.f1}|\n"
-            )
+            f.write(f"|{stat.model_name}|{stat.accuracy}|{stat.precision}|{stat.recall}|{stat.f1}|\n")
