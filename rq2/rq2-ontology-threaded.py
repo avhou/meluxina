@@ -39,7 +39,7 @@ def create_pipeline():
 
     pipeline = transformers.pipeline(
         "text-generation",
-        model="meta-llama/Llama-3.3-70B-Instruct",
+        model="microsoft/phi-4",
         model_kwargs={"torch_dtype": "auto"},
         device_map="auto",
     )
@@ -84,7 +84,9 @@ def generate_json_ontology(text: str, pipeline) -> str:
             f"done processing ontology (JSON) at {datetime.now().strftime('%H:%M:%S')}",
             flush=True,
         )
-        return outputs[0]["generated_text"][-1]["content"]
+        result = outputs[0]["generated_text"][-1]["content"]
+        print(f"LLM response : {result[:250]}")
+        return result
 
     except Exception as e:
         return f"exception: {e}"
