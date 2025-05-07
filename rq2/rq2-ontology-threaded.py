@@ -61,7 +61,7 @@ def generate_json_ontology(text: str, pipeline) -> str:
         messages = [
             {
                 "role": "system",
-                "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
+                "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
             You will be given a knowledge graph composed of RDF triples (subject, predicate, object).
             Each RDF triple will be on a new line, and be formatted as follows : subject ~ predicate ~ object.  
             An example of an RDF triple is: 
@@ -71,8 +71,8 @@ def generate_json_ontology(text: str, pipeline) -> str:
             It is your task to analyse the knowledge graph, merge similar or identical subjects or objects, simplify the knowledge graph as much as possible, renaming very similar concepts to keep only one singe concept,  and output an ontology as a new knowledge graph.
             The input triples are sorted by subject first, predicate second and object third, so it will be easy to spot identical subjects (and predicates).
             Try to minimize the number of triples in the output ontology, while keeping the most relevant information.
-            The output should conform to this JSON schema : {Output.model_json_schema()}.  
-            Only output the JSON-formatted ontology and do not include any explanations.
+            The output must conform to the same structure as the input : subject ~ predicate ~ object.
+            Only output the correctly formatted ontology and do not include any explanations.
             Be as succinct as possible and only include the most relevant information.
             """,
             },
