@@ -10,6 +10,7 @@ import torch
 import os
 import argparse
 import sqlite3
+import math
 
 
 print(
@@ -119,16 +120,16 @@ def rq2_ontology(db: str):
                 continue
             all_triples.extend(model_result.triples)
 
-    all_triples = [triple for triple in all_triples if triple.is_valid()]
+    all_triples = [triple.normalize() for triple in all_triples if triple.is_valid()]
     for group_index, group in grouper_with_index(
         sorted(all_triples, key=triple_comparator), 250
     ):
         print(
-            f"processing group {group_index + 1} of {db}, contains {len(group)} triples, total nr of triples is {len(all_triples)}",
+            f"processing group {group_index + 1} / {math.ceil(len(all_triples) / 250)} of {db}, contains {len(group)} triples, total nr of triples is {len(all_triples)}",
             flush=True,
         )
         output = generate_json_ontology("\n".join([str(g) for g in group]), pipeline)
-        with open(f"threaded_ontology_{group_index + 1}.json", "w") as f:
+        with open(f"threaded_ontology_{group_index + 1}.txt", "w") as f:
             f.write(remove_markdown(output))
 
 
