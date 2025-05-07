@@ -51,21 +51,24 @@ def create_pipeline():
 
 
 def generate_json_ontology(text: str, pipeline) -> str:
+    print(f"word count text {len(text.split(' '))}", flush=True)
     try:
-        print(f"processing ontology (JSON)", flush=True)
+        print(
+            f"start processing ontology (JSON) at {datetime.now().strftime('%H:%M:%S')}",
+            flush=True,
+        )
 
         messages = [
             {
                 "role": "system",
                 "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
-            You will be given a knowledge graph in JSON format composed by RDF triples (subject, predicate, object).
-            Each RDF triple will be on a new line.
-            The input will be formatted as : subject ~ predicate ~ object.  
-            An example triple could be: 
-            Marie Cury ~ is ~ physicist
-            This knowledge graph was created by merging the JSON-formatted knowledge graphs of multiple input texts.
-            Therefore, it may contain duplicate entitities under a different name or URI, but with the same meaning.
-            It is your task to analyse the knowledge graph, merge similar or identical entities, simplify the knowledge graph as much as possible, renaming very similar concepts to keep only one singe concept,  and output an ontology as a new knowledge graph in JSON format.
+            You will be given a knowledge graph composed of RDF triples (subject, predicate, object).
+            Each RDF triple will be on a new line, and be formatted as follows : subject ~ predicate ~ object.  
+            An example of an RDF triple is: 
+            Marie Cury ~ discovered ~ radioactivity.
+            This knowledge graph was created by merging the knowledge graphs of multiple input texts.
+            Therefore, it may contain duplicate subjects or objects under a different name or URI, but with the same meaning.
+            It is your task to analyse the knowledge graph, merge similar or identical subjects or objects, simplify the knowledge graph as much as possible, renaming very similar concepts to keep only one singe concept,  and output an ontology as a new knowledge graph.
             The input triples are sorted by subject first, predicate second and object third, so it will be easy to spot identical subjects (and predicates).
             Try to minimize the number of triples in the output ontology, while keeping the most relevant information.
             The output should conform to this JSON schema : {Output.model_json_schema()}.  
@@ -77,6 +80,10 @@ def generate_json_ontology(text: str, pipeline) -> str:
         ]
 
         outputs = pipeline(messages, max_new_tokens=4096)
+        print(
+            f"done processing ontology (JSON) at {datetime.now().strftime('%H:%M:%S')}",
+            flush=True,
+        )
         return outputs[0]["generated_text"][-1]["content"]
 
     except Exception as e:
@@ -94,10 +101,19 @@ def rq2_ontology(db: str):
     pipeline = create_pipeline()
     all_triples = []
     with sqlite3.connect(db) as conn:
-        for (triples,) in conn.execute(f"select chunk_triples from chunked_articles"):
+        for (
+            url,
+            chunk_number,
+            triples,
+        ) in conn.execute(
+            f"select url, chunk_number, chunk_triples from chunked_articles"
+        ):
+            print(f"{url} chunk {chunk_number} : {remove_markdown(triples)[-40:]}")
             model_result = Output.model_validate_json(remove_markdown(triples))
             if model_result is None:
-                print(f"Could not parse triples")
+                print(
+                    f"Could not parse triples for url {url} and chunk_number {chunk_number}"
+                )
                 continue
             all_triples.extend(model_result.triples)
 
@@ -109,36 +125,9 @@ def rq2_ontology(db: str):
             f"processing group {group_index + 1} of {db}, contains {len(group)} triples, total nr of triples is {len(all_triples)}",
             flush=True,
         )
-        # output = generate_json_ontology(
-        #     Output(triples=group).model_dump_json(indent=0), pipeline
-        # )
-        # with open(
-        #     f"{input_file.stem}_ontology_{group_index + 1}.json", "w"
-        # ) as f:
-        #     f.write(remove_markdown(output))
-
-    # for input_file in Path(input_folder).rglob("*_combined.json"):
-    #     print(f"processing input_file {input_file}")
-    #     with open(input_file, "r") as f:
-    #         content = f.read()
-    #         model_result = Output.model_validate_json(content)
-    #
-    #         if model_result is None:
-    #             print(f"Could not parse input file {input_file}")
-    #             continue
-    #
-    #         for group_index, group in grouper_with_index(model_result.triples, 250):
-    #             print(
-    #                 f"processing group {group_index + 1} of {input_file}, contains {len(group)} triples, total nr of triples is {len(model_result.triples)}",
-    #                 flush=True,
-    #             )
-    #             output = generate_json_ontology(
-    #                 Output(triples=group).model_dump_json(indent=0), pipeline
-    #             )
-    #             with open(
-    #                 f"{input_file.stem}_ontology_{group_index + 1}.json", "w"
-    #             ) as f:
-    #                 f.write(remove_markdown(output))
+        output = generate_json_ontology("\n".join([str(g) for g in group]), pipeline)
+        with open(f"threaded_ontology_{group_index + 1}.json", "w") as f:
+            f.write(remove_markdown(output))
 
 
 if __name__ == "__main__":
