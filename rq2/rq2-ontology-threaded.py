@@ -85,7 +85,7 @@ def generate_json_ontology(text: str, pipeline) -> str:
             flush=True,
         )
         result = outputs[0]["generated_text"][-1]["content"]
-        print(f"LLM response : {result[:250]}")
+        print(f"LLM response : {result}")
         return result
 
     except Exception as e:
