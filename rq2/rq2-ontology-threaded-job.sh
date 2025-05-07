@@ -26,5 +26,5 @@ export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-python rq2-ontology-threaded.py /project/home/p200769/data/combined_threaded_dataset_triples_250.sqlite
+python rq2-ontology-threaded.py --input-db /project/home/p200769/data/combined_threaded_dataset_triples_250.sqlite
 
