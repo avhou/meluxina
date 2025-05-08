@@ -1,6 +1,5 @@
 import argparse
 import sqlite3
-from typing import List
 from llama_index.core.node_parser import SentenceSplitter
 from flair.models import TextClassifier
 from flair.data import Sentence
@@ -151,7 +150,7 @@ if __name__ == "__main__":
         print(f"generating sentiment scores using vader for {args.input_db}")
         generate_vader(args.input_db, args.chunk_size, args.chunk_overlap)
     if args.generate_table:
-        print(f"generating table")
+        print("generating table")
         generate_table()
 
     print("done")
