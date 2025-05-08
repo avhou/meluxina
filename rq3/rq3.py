@@ -1,11 +1,13 @@
 import argparse
 import sqlite3
+from typing import List
 from llama_index.core.node_parser import SentenceSplitter
 from flair.models import TextClassifier
 from flair.data import Sentence
 import numpy as np
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
+from itertools import product
 
 from models import SentimentScore, SentimentScores
 
@@ -102,6 +104,22 @@ def generate_flair(db: str, chunk_size: int = 50, chunk_overlap: int = 5):
             f.write(sentiment_scores.model_dump_json())
 
 
+def read_scores(threaded: bool, model: str, chunk_size: int, chunk_overlap: int) -> SentimentScores:
+    with open(f"rq3-{model}-scores-{'' if not threaded else 'threaded-'}chunk-size-{chunk_size}-overlap-{chunk_overlap}.json") as f:
+        return SentimentScores.model_validate_json(f.read())
+
+
+def generate_table():
+    with open("rq3-sentiment-table.md", "w") as f:
+        f.write("| model | threaded | chunk_size | chunk_overlap | avg score no disinformation | avg score disinformation | \n")
+        f.write("| :---- | :------- | ---------: | ------------: | --------------------------: | -----------------------: | \n")
+        for model, threaded, (chunk_size, chunk_overlap) in product(["flair", "vader"], [False, True], zip([200, 100, 50], [20, 10, 5])):
+            scores = read_scores(threaded, model, chunk_size, chunk_overlap)
+            f.write(
+                f"| {model} | {'Yes' if threaded else 'No'} | {chunk_size} | {chunk_overlap} | {scores.avg_score_no_disinformation:.4f} | {scores.avg_score_disinformation:.4f} |\n"
+            )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RQ2")
 
@@ -123,6 +141,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--generate-flair", action="store_true", help="Flag to generate sentiment scores using flair")
     parser.add_argument("--generate-vader", action="store_true", help="Flag to generate sentiment scores using vader")
+    parser.add_argument("--generate-table", action="store_true", help="Flag to generate score table")
     args = parser.parse_args()
 
     if args.generate_flair:
@@ -131,5 +150,8 @@ if __name__ == "__main__":
     if args.generate_vader:
         print(f"generating sentiment scores using vader for {args.input_db}")
         generate_vader(args.input_db, args.chunk_size, args.chunk_overlap)
+    if args.generate_table:
+        print(f"generating table")
+        generate_table()
 
     print("done")
