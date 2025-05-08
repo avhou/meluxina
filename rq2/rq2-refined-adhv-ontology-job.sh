@@ -26,5 +26,5 @@ export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-python rq2_refine_adhv_ontology.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/condensed_llama_ontology.txt
-python rq2_refine_adhv_ontology.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/condensed_phi4_ontology.txt
+python rq2_refine_adhv_ontology.py /project/home/p200769/data/combined_threaded_dataset.sqlite /project/home/p200769/meluxina/rq2/condensed_llama_ontology.txt
+# python rq2_refine_adhv_ontology.py /project/home/p200769/data/combined_dataset.sqlite /project/home/p200769/meluxina/rq2/condensed_phi4_ontology.txt

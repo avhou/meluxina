@@ -9,9 +9,15 @@ import os
 import re
 
 
-print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
+print(
+    f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}",
+    flush=True,
+)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
-print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
+print(
+    f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}",
+    flush=True,
+)
 
 # deepseek is hier bijzonder slecht in.  blijft hangen op eerste ttl vraag
 # daarom uit de lijst gehaald
@@ -26,18 +32,31 @@ model_inputs = [
         model_name="meta-llama/Llama-3.3-70B-Instruct",
         model_params={},
     ),
-    ModelInput(
-        model_name="microsoft/phi-4",
-        model_params={},
-    ),
+    # ModelInput(
+    #     model_name="microsoft/phi-4",
+    #     model_params={},
+    # ),
 ]
 
-def process_model(model_input: ModelInput, database: str, condensed_ontology: str, triple_generation_model: str):
 
-    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+def process_model(
+    model_input: ModelInput,
+    database: str,
+    condensed_ontology: str,
+    triple_generation_model: str,
+):
+    device = (
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu"
+    )
     print(f"using device {device}", flush=True)
 
-    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    print(
+        f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True
+    )
 
     pipeline = transformers.pipeline(
         "text-generation",
@@ -46,13 +65,17 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
         device_map="auto",
     )
 
-    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    print(
+        f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True
+    )
 
     row_results = []
     existing_row_results = []
 
     sanitized_model = sanitize_filename(model_input.model_name)
-    progress_file = f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json"
+    progress_file = (
+        f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json"
+    )
 
     if os.path.exists(progress_file):
         with open(progress_file, "r") as f:
@@ -61,23 +84,33 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
                 model_result = ModelResult.model_validate_json(content)
                 existing_row_results = model_result.row_results
             except Exception as e:
-                print(f"could not parse existing file {progress_file}, error {e}", flush=True)
+                print(
+                    f"could not parse existing file {progress_file}, error {e}",
+                    flush=True,
+                )
                 existing_row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
-        for row in conn.execute(f"select translated_text, disinformation, url from articles"):
+        for row in conn.execute(
+            f"select translated_text, disinformation, url from articles"
+        ):
             text = row[0]
-            text = re.sub(r'\s+', ' ', text)
-            ground_truth = 1 if row[1] == 'y' else 0
+            text = re.sub(r"\s+", " ", text)
+            ground_truth = 1 if row[1] == "y" else 0
             url = row[2]
 
-            existing_row_for_url = next((x for x in existing_row_results if x.url == url), None)
+            existing_row_for_url = next(
+                (x for x in existing_row_results if x.url == url), None
+            )
             if existing_row_for_url is not None:
                 print(f"skipping url {url} as it is already processed", flush=True)
                 row_results.append(existing_row_for_url)
                 with open(progress_file, "w") as f:
-                    f.write(ModelResult(model_input=model_input,
-                                        row_results=row_results).model_dump_json(indent=2))
+                    f.write(
+                        ModelResult(
+                            model_input=model_input, row_results=row_results
+                        ).model_dump_json(indent=2)
+                    )
                 continue
 
             try:
@@ -100,11 +133,13 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
                 #
                 # outputs = pipeline(messages, max_new_tokens=4096)
                 # ttl = outputs[0]["generated_text"][-1]["content"]
-                ttl = ''
+                ttl = ""
 
                 print(f"processing text to JSON for {text[:100]}", flush=True)
                 messages = [
-                    {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
+                    {
+                        "role": "system",
+                        "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
                     You will receive two inputs: an article text and an ontology describing the most important concepts and relations of the domain we study.
                     The ontology will be summarized in subject ~ predicate ~ object triples.  
                     Each triple is separated by a newline character, and subject, predicate and object are separated by a tilde character.
@@ -117,23 +152,46 @@ def process_model(model_input: ModelInput, database: str, condensed_ontology: st
                     Be as succinct as possible and only include the most relevant information.
                     Try to minimize the number of triples in the output, while keeping the most relevant information.
                     Make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
-                    {"role": "user", "content": f"This is the ontology:\n{condensed_ontology}\nThis is the article text: {text}"},
+                    """,
+                    },
+                    {
+                        "role": "user",
+                        "content": f"This is the ontology:\n{condensed_ontology}\nThis is the article text: {text}",
+                    },
                 ]
 
                 outputs = pipeline(messages, max_new_tokens=4096)
                 json = outputs[0]["generated_text"][-1]["content"]
 
-                row_results.append(RowResult(url=url, valid=True, result_ttl=ttl, result_json=json, y=ground_truth))
+                row_results.append(
+                    RowResult(
+                        url=url,
+                        valid=True,
+                        result_ttl=ttl,
+                        result_json=json,
+                        y=ground_truth,
+                    )
+                )
 
             except Exception as e:
-                row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
+                row_results.append(
+                    RowResult(
+                        url=url,
+                        valid=False,
+                        result_ttl=f"got exception {e}",
+                        result_json=f"got exception {e}",
+                        y=ground_truth,
+                    )
+                )
 
             with open(progress_file, "w") as f:
-                f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
+                f.write(
+                    ModelResult(
+                        model_input=model_input, row_results=row_results
+                    ).model_dump_json(indent=2)
+                )
 
     return ModelResult(model_input=model_input, row_results=row_results)
-
 
 
 def rq2_refine(database: str, condensed_ontology: str):
@@ -142,13 +200,21 @@ def rq2_refine(database: str, condensed_ontology: str):
         condensed_ontology = f.read()
         for model in model_inputs:
             print(f"processing model {model.model_name}", flush=True)
-            model_result = process_model(model, database, condensed_ontology, triple_generation_model)
+            model_result = process_model(
+                model, database, condensed_ontology, triple_generation_model
+            )
             sanitized_model = sanitize_filename(model.model_name)
-            with open(f"rq2_refined_{sanitized_model}_generated_by_{triple_generation_model}.json", "w") as f:
+            with open(
+                f"rq2_threaded_refined_{sanitized_model}_generated_by_{triple_generation_model}.json",
+                "w",
+            ) as f:
                 f.write(model_result.model_dump_json(indent=2))
     print(f"Done.")
 
+
 if __name__ == "__main__":
     if len(sys.argv) <= 2:
-        raise RuntimeError("usage : rq2_refine_adhv_ontology.py <combined-db.sqlite> <condensed_ontology.txt>")
+        raise RuntimeError(
+            "usage : rq2_refine_adhv_ontology.py <combined-db.sqlite> <condensed_ontology.txt>"
+        )
     rq2_refine(sys.argv[1], sys.argv[2])
