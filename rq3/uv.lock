@@ -1675,6 +1675,7 @@ dependencies = [
     { name = "flair" },
     { name = "llama-index" },
     { name = "nltk" },
+    { name = "transformers" },
 ]
 
 [package.metadata]
@@ -1682,6 +1683,7 @@ requires-dist = [
     { name = "flair", specifier = ">=0.15.1" },
     { name = "llama-index", specifier = ">=0.12.34" },
     { name = "nltk", specifier = ">=3.9.1" },
+    { name = "transformers", specifier = ">=4.51.3" },
 ]
 
 [[package]]

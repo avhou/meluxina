@@ -8,4 +8,5 @@ dependencies = [
     "flair>=0.15.1",
     "llama-index>=0.12.34",
     "nltk>=3.9.1",
+    "transformers>=4.51.3",
 ]
