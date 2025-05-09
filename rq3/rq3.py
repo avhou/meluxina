@@ -8,13 +8,14 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 from itertools import product
 
-from models import SentimentScore, SentimentScores
+from models import SentimentScore, SentimentScores, PromptTemplate, PromptTemplates
 from transformers import AutoModelForSequenceClassification
 from transformers import TFAutoModelForSequenceClassification
 from transformers import AutoTokenizer
 from scipy.special import softmax
 import csv
 import urllib.request
+from collections import defaultdict
 
 
 def flair_scores(db: str, chunk_size: int, chunk_overlap: int) -> str:
@@ -42,6 +43,11 @@ def roberta_scores(db: str, chunk_size: int, chunk_overlap: int) -> str:
         if is_threaded
         else f"rq3-roberta-scores-chunk-size-{chunk_size}-overlap-{chunk_overlap}.json"
     )
+
+
+def prompt(db: str) -> str:
+    is_threaded = "threaded" in db
+    return "rq3-prompts-threaded.json" if is_threaded else "rq3-prompts.json"
 
 
 def generate_vader(db: str, chunk_size: int = 50, chunk_overlap: int = 5):
@@ -189,6 +195,35 @@ def generate_table():
             )
 
 
+def generate_prompts(db: str, chunk_size: int, chunk_overlap: int):
+    scores_flair = read_scores("threaded" in db, "flair", chunk_size, chunk_overlap)
+    scores_vader = read_scores("threaded" in db, "vader", chunk_size, chunk_overlap)
+    scores_roberta = read_scores("threaded" in db, "roberta", chunk_size, chunk_overlap)
+
+    url_to_score = defaultdict(list)
+    for score in scores_flair.scores:
+        url_to_score[score.url].append(score.score)
+    for score in scores_vader.scores:
+        url_to_score[score.url].append(score.score)
+    for score in scores_roberta.scores:
+        url_to_score[score.url].append(score.score)
+
+    templates = []
+    with sqlite3.connect(db) as conn:
+        for url, text, disinformation in conn.execute("select url, translated_text, disinformation from articles order by url"):
+            print(f"processing url {url}, disinformation {disinformation}")
+            templates.append(
+                PromptTemplate(
+                    url=url,
+                    article_text=text,
+                    ground_truth_disinformation=disinformation,
+                    scores=url_to_score[url],
+                )
+            )
+    with open(prompt(db), "w") as f:
+        f.write(PromptTemplates(templates=templates).model_dump_json())
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RQ2")
 
@@ -212,6 +247,7 @@ if __name__ == "__main__":
     parser.add_argument("--generate-vader", action="store_true", help="Flag to generate sentiment scores using vader")
     parser.add_argument("--generate-roberta", action="store_true", help="Flag to generate sentiment scores using roberta")
     parser.add_argument("--generate-table", action="store_true", help="Flag to generate score table")
+    parser.add_argument("--generate-prompts", action="store_true", help="Flag to generate prompts")
     args = parser.parse_args()
 
     if args.generate_flair:
@@ -226,5 +262,8 @@ if __name__ == "__main__":
     if args.generate_table:
         print("generating table")
         generate_table()
+    if args.generate_prompts:
+        print(f"generating prompts for {args.input_db}")
+        generate_prompts(args.input_db, args.chunk_size, args.chunk_overlap)
 
     print("done")
