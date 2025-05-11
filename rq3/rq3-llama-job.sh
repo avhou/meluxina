@@ -26,6 +26,5 @@ export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-python rq3-llama.py --prompts /project/home/p200769/data/prompts-rebel.json --group-by article
-python rq3-llama.py --prompts /project/home/p200769/data/prompts-rebel.json --group-by chunk
-python rq3-llama.py --prompts /project/home/p200769/data/prompts-rebel.json --group-by triple
+python rq3-llama.py --prompts /project/home/p200769/data/rq3-prompts.json
+python rq3-llama.py --prompts /project/home/p200769/data/rq3-prompts-threaded.json

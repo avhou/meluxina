@@ -8,7 +8,8 @@ print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}"
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
 print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
 
-MODEL_NAME = "meta-llama/Llama-3.3-70B-Instruct"
+# MODEL_NAME = "meta-llama/Llama-3.3-70B-Instruct"
+MODEL_NAME = "microsoft/phi-4"
 MODEL_PARAMS = {}
 
 
@@ -21,7 +22,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     process_prompts(
         args.prompts,
-        args.group_by,
         model_generator,
         "llama",
         f"""
@@ -36,7 +36,7 @@ The only relevant output is your final classification.
 Generate your output in JSON format.  
 The output should conform to this JSON schema : {ClassificationOutput.model_json_schema()}.
 """,
-        max_words=10_000,
+        max_words=args.max_words,
     )
 
     print("done", flush=True)

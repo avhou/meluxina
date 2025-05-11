@@ -1,0 +1,9 @@
+sentence-transformers
+sentencepiece
+transformers
+sacremoses
+llama_index
+accelerate
+scikit-learn
+pydantic
+unidecode

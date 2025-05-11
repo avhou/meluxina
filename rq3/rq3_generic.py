@@ -5,7 +5,7 @@ import argparse
 import torch
 from typing import List, Callable
 
-from models import Groupings, PromptTemplates, PromptTemplate, ModelResults, ModelResult
+from models import PromptTemplates, PromptTemplate, ModelResult, ModelResults
 from transformers import pipeline
 from datetime import datetime
 
@@ -25,12 +25,12 @@ def create_model(model_name: str, model_params: dict):
     return model
 
 
-def output_file(group_by: Groupings, model: str) -> str:
-    return f"rq2-results-group-by-{group_by}-{model}.json"
+def output_file(model: str, threaded: bool) -> str:
+    return f"rq3-results-group-by-{model}.json" if not threaded else f"rq3-results-group-by-{model}-threaded.json"
 
 
-def progress_file(group_by: Groupings, model: str) -> str:
-    return f"rq2-progress-group-by-{group_by}-{model}.json"
+def progress_file(model: str, threaded: bool) -> str:
+    return f"rq3-progress-group-by-{model}.json" if not threaded else f"rq3-progress-group-by-{model}-threaded.json"
 
 
 def generate_messages(prompt: str, text: str):
@@ -42,12 +42,12 @@ def generate_messages(prompt: str, text: str):
     return data
 
 
-def generate_prompt(prompt_template: PromptTemplate, group_by: Groupings, instructions: str, max_words_context: int) -> str:
+def generate_prompt(prompt_template: PromptTemplate, instructions: str) -> str:
     return f"""
 [Context]
 You are provided with the following context to assist you in your task:
 --- 
-{prompt_template.get_context(group_by, max_words_context)}
+{prompt_template.get_context()}
 ---
 
 [Instructions]
@@ -55,9 +55,9 @@ You are provided with the following context to assist you in your task:
 """
 
 
-def get_prompt_template(prompts: str, group_by: Groupings) -> List[PromptTemplate]:
+def get_prompt_template(prompts: str) -> List[PromptTemplate]:
     with open(prompts, "r") as f:
-        return PromptTemplates.model_validate_json(f.read()).get_templates(group_by)
+        return PromptTemplates.model_validate_json(f.read()).templates
 
 
 def read_results(file: str) -> ModelResults:
@@ -70,21 +70,22 @@ def write_results(file: str, results: ModelResults):
         return f.write(results.model_dump_json(indent=2))
 
 
-def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable[[], any], short_model_name: str, instructions: str, max_words: int = 5000):
-    print(f"processing prompts file {prompts}, group_by {group_by}", flush=True)
+def process_prompts(prompts: str, model_generator: Callable[[], any], short_model_name: str, instructions: str, max_words: int = 5000):
+    is_threaded = "threaded" in prompts
+    print(f"processing prompts file {prompts}, is_threaded {is_threaded}", flush=True)
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
-    prompt_templates = get_prompt_template(prompts, group_by)
+    prompt_templates = get_prompt_template(prompts)
     model = model_generator()
 
     row_results: List[ModelResult] = []
     existing_row_results: List[ModelResult] = []
-    if os.path.exists(progress_file(group_by, short_model_name)):
+    if os.path.exists(progress_file(short_model_name, is_threaded)):
         try:
-            existing_row_results = read_results(progress_file(group_by, short_model_name)).results
+            existing_row_results = read_results(progress_file(short_model_name, is_threaded)).results
         except Exception as e:
-            print(f"could not parse existing file {progress_file(group_by, short_model_name)}, error {e}", flush=True)
+            print(f"could not parse existing file {progress_file(short_model_name, is_threaded)}, error {e}", flush=True)
             existing_row_results = []
 
     for i, prompt_template in enumerate(prompt_templates):
@@ -96,12 +97,12 @@ def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable
         if existing_row_for_url is not None:
             print(f"skipping url {prompt_template.url} as it is already processed", flush=True)
             row_results.append(existing_row_for_url)
-            write_results(progress_file(group_by, short_model_name), ModelResults(results=row_results))
+            write_results(progress_file(short_model_name, is_threaded), ModelResults(results=row_results))
             continue
 
         # give context and article equal number of words for now
         messages = generate_messages(
-            generate_prompt(prompt_template, group_by, instructions, int(max_words / 2)),
+            generate_prompt(prompt_template, instructions),
             prompt_template.get_article_text(int(max_words / 2)),
         )
         print(messages, flush=True)
@@ -118,19 +119,13 @@ def process_prompts(prompts: str, group_by: Groupings, model_generator: Callable
         except Exception as e:
             row_results.append(ModelResult(url=prompt_template.url, result=f"an error occurrred {e}", y=y))
 
-        write_results(progress_file(group_by, short_model_name), ModelResults(results=row_results))
-    write_results(output_file(group_by, short_model_name), ModelResults(results=row_results))
+        write_results(progress_file(short_model_name, is_threaded), ModelResults(results=row_results))
+    write_results(output_file(short_model_name, is_threaded), ModelResults(results=row_results))
 
 
 def get_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="RQ2")
+    parser = argparse.ArgumentParser(description="RQ3")
 
     parser.add_argument("--prompts", type=str, required=True, help="Path to the prompts file")
-    parser.add_argument(
-        "--group-by",
-        type=str,
-        required=True,
-        choices=["article", "chunk", "triple"],
-        help="The grouping to use to create additional context",
-    )
+    parser.add_argument("--max-words", type=int, required=False, help="Max number of words to use", default=10_000)
     return parser
