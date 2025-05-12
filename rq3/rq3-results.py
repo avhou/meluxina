@@ -105,7 +105,7 @@ def generate_model_stats(model: str, results: List[ModelResult]) -> ModelStats:
 
 
 def write_model_stats(model_stats: List[ModelStats]):
-    with open("rq2-results-table.md", "w") as f:
+    with open("rq3-results-table.md", "w") as f:
         f.write(f"| Model | Accuracy | Precision | Recall | F1-score |\n")
         f.write(f"|:--|--:|--:|--:|--:|\n")
         for stat in model_stats:
