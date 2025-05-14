@@ -580,13 +580,38 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     generate_word_cloud(non_threaded_db, source, images)
     generate_token_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_token_distribution.md"))
     generate_stopword_ratio(non_threaded_db, source, tables)
+    if source == "reddit":
+        analyze_metadata_distribution_reddit(non_threaded_db, threaded_db, source, tables)
     generate_pie_charts(
         os.path.join(images, "web_proportion_articles.png"),
         [252, 88, 55],
         ["Web", "TikTok", "Reddit"],
     )
-    if source == "reddit":
-        analyze_metadata_distribution_reddit(non_threaded_db, threaded_db, source, tables)
+    generate_pie_charts(
+        os.path.join(images, "web_proportion_threads.png"),
+        [252, 88, 1519],
+        ["Web", "TikTok", "Reddit"],
+    )
+    generate_pie_charts(
+        os.path.join(images, "tiktok_proportion_articles.png"),
+        [88, 252, 55],
+        ["TikTok", "Web", "Reddit"],
+    )
+    generate_pie_charts(
+        os.path.join(images, "tiktok_proportion_threads.png"),
+        [88, 252, 1519],
+        ["TikTok", "Web", "Reddit"],
+    )
+    generate_pie_charts(
+        os.path.join(images, "reddit_proportion_articles.png"),
+        [55, 88, 252],
+        ["Reddit", "TikTok", "Web"],
+    )
+    generate_pie_charts(
+        os.path.join(images, "reddit_proportion_threads.png"),
+        [1519, 88, 252],
+        ["Reddit", "TikTok", "Web"],
+    )
 
 
 if __name__ == "__main__":
