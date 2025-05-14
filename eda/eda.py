@@ -17,6 +17,8 @@ from wordcloud import WordCloud, STOPWORDS
 dutch_stopwords = set(
     [
         "de",
+        "dus",
+        "der",
         "en",
         "een",
         "het",
@@ -61,6 +63,10 @@ dutch_stopwords = set(
         "ik",
         "tot",
         "omdat",
+        "daar",
+        "uit",
+        "hier",
+        "wat",
     ]
 )
 
@@ -91,6 +97,7 @@ french_stopwords = set(
         "il",
         "se",
         "du",
+        "est",
     ]
 )
 
@@ -178,7 +185,8 @@ def do_generate_time_distribution_sns(db: str, source: str, output_file: str, qu
         df = pd.read_sql_query(query, conn)
 
         # Clean up the timestamp and convert it to datetime
-        df["timestamp"] = pd.to_datetime(df["timestamp"].str.replace(r"\s[+\-]\d{2}$", ""), errors="coerce")
+        df["timestamp"] = pd.to_datetime(df["timestamp"].str.replace(r"\s[+\-]\d{2}$", ""), errors="coerce", utc=True)
+        df["timestamp"] = df["timestamp"].dt.tz_localize(None)
 
         # Create a 'month' column to group by
         df["month"] = df["timestamp"].dt.to_period("M")
@@ -263,7 +271,7 @@ def get_token_count(s: str) -> List[int]:
 
 def generate_word_count_distribution(db: str, source: str, output_file: str):
     with sqlite3.connect(db) as conn, open(output_file, "w") as f:
-        f.write("| word count metric | value  | \n")
+        f.write("| Word Count Metric | value  | \n")
         f.write("|--------: | -----: |\n")
 
         texts = []
@@ -368,6 +376,62 @@ def analyze_metadata_distribution_web(db: str, source: str, output_dir: str):
             f.write(f"| {host} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
 
 
+def analyze_metadata_distribution_reddit(non_threaded_db: str, threaded_db: str, source: str, output_dir: str):
+    with sqlite3.connect(non_threaded_db) as conn:
+        # Read metadata from the article table
+        df = pd.read_sql_query(f"SELECT metadata, disinformation FROM articles where source = '{source}' ", conn)
+
+    df_parsed = df["metadata"].apply(json.loads).apply(pd.Series)
+    df_parsed["disinformation"] = df["disinformation"].map({"y": 1, "n": 0}).fillna(0).astype(int)
+
+    # Group by source type
+    grouped = df_parsed.groupby("subreddit").agg(count=("subreddit", "size"), disinformation_count=("disinformation", "sum"))
+    grouped["count"] = grouped["count"].astype(int)
+    grouped["disinformation_count"] = grouped["disinformation_count"].astype(int)
+    grouped["percentage"] = (grouped["count"] / grouped["count"].sum() * 100).round(2)
+    grouped["disinfo_percentage"] = (grouped["disinformation_count"] / grouped["count"] * 100).round(2)
+
+    # Write total percentage table
+    with open(os.path.join(output_dir, f"{source}_non_threaded_metadata_count.md"), "w") as f:
+        f.write("| Source | Count | % |\n")
+        f.write("|----------------:|------:|-----------:|\n")
+        for subreddit, row in grouped.iterrows():
+            f.write(f"| {subreddit} | {int(row['count'])} | {row['percentage']:.2f} % |\n")
+
+    with open(os.path.join(output_dir, f"{source}_non_threaded_metadata_disinfo.md"), "w") as f:
+        f.write("| Source | Total count | Disinformation count | Disinformation % |\n")
+        f.write("|----------------:|------:|----------------:|---------------------:|\n")
+        for subreddit, row in grouped.iterrows():
+            f.write(f"| {subreddit} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
+
+    with sqlite3.connect(threaded_db) as conn:
+        # Read metadata from the article table
+        df = pd.read_sql_query(f"SELECT metadata, disinformation FROM articles where source = '{source}' ", conn)
+
+    df_parsed = df["metadata"].apply(json.loads).apply(pd.Series)
+    df_parsed["disinformation"] = df["disinformation"].map({"y": 1, "n": 0}).fillna(0).astype(int)
+
+    # Group by source type
+    grouped = df_parsed.groupby("subreddit").agg(count=("subreddit", "size"), disinformation_count=("disinformation", "sum"))
+    grouped["count"] = grouped["count"].astype(int)
+    grouped["disinformation_count"] = grouped["disinformation_count"].astype(int)
+    grouped["percentage"] = (grouped["count"] / grouped["count"].sum() * 100).round(2)
+    grouped["disinfo_percentage"] = (grouped["disinformation_count"] / grouped["count"] * 100).round(2)
+
+    # Write total percentage table
+    with open(os.path.join(output_dir, f"{source}_threaded_metadata_count.md"), "w") as f:
+        f.write("| Source | Count | % |\n")
+        f.write("|----------------:|------:|-----------:|\n")
+        for subreddit, row in grouped.iterrows():
+            f.write(f"| {subreddit} | {int(row['count'])} | {row['percentage']:.2f} % |\n")
+
+    with open(os.path.join(output_dir, f"{source}_threaded_metadata_disinfo.md"), "w") as f:
+        f.write("| Source | Total count | Disinformation count | Disinformation % |\n")
+        f.write("|----------------:|------:|----------------:|---------------------:|\n")
+        for subreddit, row in grouped.iterrows():
+            f.write(f"| {subreddit} | {int(row['count'])} | {int(row['disinformation_count'])} | {row['disinfo_percentage']:.2f} % |\n")
+
+
 def keyword_distribution(db: str, source: str, output_dir: str):
     escaped_keywords = [re.escape(k) for k in keywords]
     pattern = r"(?i)\b(?:" + "|".join(escaped_keywords) + r")"
@@ -406,7 +470,7 @@ def generate_word_cloud(db: str, source: str, output_dir: str):
 def generate_token_distribution(db: str, source: str, output_file: str):
     with sqlite3.connect(db) as conn, open(output_file, "w") as f:
         f.write("| Word length metric | value  | \n")
-        f.write("|--------: | -----: |\n")
+        f.write("|:-------- | -----: |\n")
 
         texts = []
         for (text,) in conn.execute(f"select translated_text from articles where source = '{source}'"):
@@ -447,7 +511,7 @@ def generate_stopword_ratio(db: str, source: str, output_dir: str):
 
         with open(os.path.join(output_dir, f"{source}_stopword_ratio_texts.md"), "w") as f:
             f.write("| Stopword ratio metric | Value  | \n")
-            f.write("|--------: | -----: |\n")
+            f.write("|:-------- | -----: |\n")
 
             # Basic statistics
             minimum = min(stopword_ratios_texts)
@@ -462,7 +526,7 @@ def generate_stopword_ratio(db: str, source: str, output_dir: str):
 
         with open(os.path.join(output_dir, f"{source}_stopword_ratio_translated_texts.md"), "w") as f:
             f.write("| Stopword ratio metric | Value  | \n")
-            f.write("|--------: | -----: |\n")
+            f.write("|:-------- | -----: |\n")
 
             # Basic statistics
             minimum = min(stopword_ratios_translated_texts)
@@ -521,6 +585,8 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
         [252, 88, 55],
         ["Web", "TikTok", "Reddit"],
     )
+    if source == "reddit":
+        analyze_metadata_distribution_reddit(non_threaded_db, threaded_db, source, tables)
 
 
 if __name__ == "__main__":
