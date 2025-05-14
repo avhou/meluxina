@@ -476,6 +476,20 @@ def generate_stopword_ratio(db: str, source: str, output_dir: str):
             f.write(f"| median | {median:.2f} |\n")
 
 
+def generate_pie_charts(output_file: str, counts: List[int], labels: List[str]):
+    explode = [0.1] + [0] * (len(counts) - 1)
+
+    # Create a pie chart
+    plt.figure(figsize=(6, 6))
+    plt.pie(counts, labels=labels, autopct="%1.1f%%", startangle=90, shadow=True, explode=explode)
+    plt.axis("equal")  # Ensures the pie is a circle
+    plt.tight_layout()
+
+    # Save the figure
+    plt.savefig(output_file)
+    plt.close()
+
+
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     print(f"performing analysis in {non_threaded_db} / {threaded_db} for source {source}")
 
@@ -502,6 +516,11 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
     generate_word_cloud(non_threaded_db, source, images)
     generate_token_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_token_distribution.md"))
     generate_stopword_ratio(non_threaded_db, source, tables)
+    generate_pie_charts(
+        os.path.join(images, "web_proportion_articles.png"),
+        [252, 88, 55],
+        ["Web", "TikTok", "Reddit"],
+    )
 
 
 if __name__ == "__main__":
