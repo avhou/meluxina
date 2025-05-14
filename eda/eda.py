@@ -545,7 +545,7 @@ def generate_pie_charts(output_file: str, counts: List[int], labels: List[str]):
 
     # Create a pie chart
     plt.figure(figsize=(6, 6))
-    plt.pie(counts, labels=labels, autopct="%1.1f%%", startangle=90, shadow=True, explode=explode)
+    plt.pie(counts, labels=labels, autopct="%1.2f%%", startangle=90, shadow=True, explode=explode)
     plt.axis("equal")  # Ensures the pie is a circle
     plt.tight_layout()
 
