@@ -13,6 +13,11 @@ import json
 from collections import Counter
 from wordcloud import WordCloud, STOPWORDS
 import spacy
+from spacy.cli import download
+from pathlib import Path
+from nltk.util import ngrams
+from collections import Counter
+from itertools import islice, chain
 
 
 dutch_stopwords = set(
@@ -555,21 +560,50 @@ def generate_pie_charts(output_file: str, counts: List[int], labels: List[str]):
     plt.close()
 
 
-def generate_ngrams(db: str, output_dir: str, source: str):
-    spacy_models = {"en": spacy.load("en_core_web_sm"), "fr": spacy.load("fr_core_news_sm"), "nl": spacy.load("nl_core_news_sm")}
-    custom_stopwords = {"en": set(STOPWORDS), "fr": set(french_stopwords), "nl": set(dutch_stopwords)}
+def load_spacy_model(name):
+    try:
+        return spacy.load(name)
+    except OSError:
+        print(f"Model {name} not found. Downloading...")
+        download(name)
+        return spacy.load(name)
 
+
+def generate_ngrams(db: str, output_dir: str, source: str):
+    print(f"generating ngrams for {db} and source {source}")
+    english_stopwords = set(STOPWORDS)
+    english_stopwords.update(["of", "the", "a", "to", "on", "tankts", "pa", "schepenen"])
+    spacy_models = {"en": load_spacy_model("en_core_web_sm"), "fr": load_spacy_model("fr_core_news_sm"), "nl": load_spacy_model("nl_core_news_sm")}
+    custom_stopwords = {"en": english_stopwords, "fr": set(french_stopwords), "nl": set(dutch_stopwords)}
+
+    token_lists = []
     with sqlite3.connect(db) as conn:
-        for text, language in conn.execute(f"select translated_text, language from articles where source = ?", (source,)).fetchone()[0]:
-            # Process with spaCy
-            if language != "nl" and language != "fr":
-                language = "en"
+        for (text,) in conn.execute(f"select translated_text from articles where source = ?", (source,)).fetchall():
+            language = "en"
             nlp = spacy_models[language]
             doc = nlp(text)
 
             # Tokenize, lowercase, filter punctuation/stopwords
-            tokens = [token.text.lower() for token in doc if not token.is_punct and token.text.lower() not in custom_stopwords[language]]
-            print(tokens)
+            tokens = [token.lemma_.lower() for token in doc if not token.is_punct and token.lemma_.lower() not in custom_stopwords[language]]
+            token_lists.append(tokens)
+
+    def flatten_ngrams(token_lists, n):
+        return list(chain.from_iterable(ngrams(tokens, n) for tokens in token_lists if len(tokens) >= n))
+
+    bigram_counts = Counter(flatten_ngrams(token_lists, 2))
+    trigram_counts = Counter(flatten_ngrams(token_lists, 3))
+
+    with open(os.path.join(output_dir, f"2_gram_{source}.md"), "w") as f:
+        f.write("| ngram | count | \n")
+        f.write("| ----- | ----: | \n")
+        for ngram, count in bigram_counts.most_common(10):
+            f.write(f"| {' '.join(ngram)} | {count} |\n")
+
+    with open(os.path.join(output_dir, f"3_gram_{source}.md"), "w") as f:
+        f.write("| ngram | count | \n")
+        f.write("| ----- | ----: | \n")
+        for ngram, count in trigram_counts.most_common(10):
+            f.write(f"| {' '.join(ngram)} | {count} |\n")
 
 
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
@@ -630,6 +664,7 @@ def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
         [1519, 88, 252],
         ["Reddit", "TikTok", "Web"],
     )
+    generate_ngrams(threaded_db, tables, source)
 
 
 if __name__ == "__main__":
