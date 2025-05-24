@@ -12,6 +12,7 @@ import numpy as np
 import json
 from collections import Counter
 from wordcloud import WordCloud, STOPWORDS
+import spacy
 
 
 dutch_stopwords = set(
@@ -552,6 +553,23 @@ def generate_pie_charts(output_file: str, counts: List[int], labels: List[str]):
     # Save the figure
     plt.savefig(output_file)
     plt.close()
+
+
+def generate_ngrams(db: str, output_dir: str, source: str):
+    spacy_models = {"en": spacy.load("en_core_web_sm"), "fr": spacy.load("fr_core_news_sm"), "nl": spacy.load("nl_core_news_sm")}
+    custom_stopwords = {"en": set(STOPWORDS), "fr": set(french_stopwords), "nl": set(dutch_stopwords)}
+
+    with sqlite3.connect(db) as conn:
+        for text, language in conn.execute(f"select translated_text, language from articles where source = ?", (source,)).fetchone()[0]:
+            # Process with spaCy
+            if language != "nl" and language != "fr":
+                language = "en"
+            nlp = spacy_models[language]
+            doc = nlp(text)
+
+            # Tokenize, lowercase, filter punctuation/stopwords
+            tokens = [token.text.lower() for token in doc if not token.is_punct and token.text.lower() not in custom_stopwords[language]]
+            print(tokens)
 
 
 def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
