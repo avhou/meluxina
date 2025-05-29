@@ -65,8 +65,27 @@ def process_model(model_input: ModelInput, database: str):
     )
 
     row_results = []
+    existing_row_results = []
+    sanitized_model = sanitize_filename(model_input.model_name)
+    progress_file = f"rq2_threaded_{sanitized_model}.json"
+
+    if os.path.exists(progress_file):
+        with open(progress_file, "r") as f:
+            try:
+                content = f.read()
+                model_result = ModelResult.model_validate_json(content)
+                existing_row_results = model_result.row_results
+            except Exception as e:
+                print(
+                    f"could not parse existing file {progress_file}, error {e}",
+                    flush=True,
+                )
+                existing_row_results = []
+
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
+        total = conn.execute("select count(*) from articles").fetchone()[0]
+        r = 0
         for row in conn.execute(
             f"select translated_text, disinformation, url from articles"
         ):
@@ -74,6 +93,21 @@ def process_model(model_input: ModelInput, database: str):
             text = re.sub(r"\s+", " ", text)
             ground_truth = 1 if row[1] == "y" else 0
             url = row[2]
+            r = r + 1
+
+            existing_row_for_url = next(
+                (x for x in existing_row_results if x.url == url), None
+            )
+            if existing_row_for_url is not None:
+                print(f"skipping url {url} as it is already processed", flush=True)
+                row_results.append(existing_row_for_url)
+                with open(progress_file, "w") as f:
+                    f.write(
+                        ModelResult(
+                            model_input=model_input, row_results=row_results
+                        ).model_dump_json(indent=2)
+                    )
+                continue
 
             try:
                 # print(f"processing text to TTL for {text[:100]}", flush=True)
@@ -91,7 +125,10 @@ def process_model(model_input: ModelInput, database: str):
                 # outputs = pipeline(messages, max_new_tokens=2048)
                 # ttl = outputs[0]["generated_text"][-1]["content"]
 
-                print(f"processing text to JSON for {text[:100]}", flush=True)
+                print(
+                    f"row {r}/{total}, start at {datetime.now().strftime('%H:%M:%S')}, processing text to JSON for {text[:100]}",
+                    flush=True,
+                )
                 messages = [
                     {
                         "role": "system",
@@ -110,6 +147,10 @@ def process_model(model_input: ModelInput, database: str):
 
                 outputs = pipeline(messages, max_new_tokens=2048)
                 json = outputs[0]["generated_text"][-1]["content"]
+                print(
+                    f"""Generated triples at {datetime.now().strftime("%H:%M:%S")}""",
+                    flush=True,
+                )
 
                 row_results.append(
                     RowResult(
@@ -133,7 +174,7 @@ def process_model(model_input: ModelInput, database: str):
                 )
 
             sanitized_model = sanitize_filename(model_input.model_name)
-            with open(f"rq2_threaded_{sanitized_model}.json", "w") as f:
+            with open(progress_file, "w") as f:
                 f.write(
                     ModelResult(
                         model_input=model_input, row_results=row_results
