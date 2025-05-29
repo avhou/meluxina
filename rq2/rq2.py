@@ -9,9 +9,15 @@ import os
 import re
 
 
-print(f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}", flush=True)
+print(
+    f"found HUGGINGFACE_HUB_CACHE : {os.environ.get('HUGGINGFACE_HUB_CACHE')}",
+    flush=True,
+)
 print(f"found HF_HOME : {os.environ.get('HF_HOME')}", flush=True)
-print(f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}", flush=True)
+print(
+    f"found HUGGINGFACEHUB_API_TOKEN : {os.environ.get('HUGGINGFACEHUB_API_TOKEN')}",
+    flush=True,
+)
 
 # deepseek is hier bijzonder slecht in.  blijft hangen op eerste ttl vraag
 # daarom uit de lijst gehaald
@@ -32,12 +38,20 @@ model_inputs = [
     # ),
 ]
 
-def process_model(model_input: ModelInput, database: str):
 
-    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+def process_model(model_input: ModelInput, database: str):
+    device = (
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu"
+    )
     print(f"using device {device}", flush=True)
 
-    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    print(
+        f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True
+    )
 
     pipeline = transformers.pipeline(
         "text-generation",
@@ -46,37 +60,42 @@ def process_model(model_input: ModelInput, database: str):
         device_map="auto",
     )
 
-    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
+    print(
+        f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True
+    )
 
     row_results = []
     print(f"processing model {model_input.model_name}", flush=True)
     with sqlite3.connect(database) as conn:
-        for row in conn.execute(f"select translated_text, disinformation, url from articles"):
+        for row in conn.execute(
+            f"select translated_text, disinformation, url from articles"
+        ):
             text = row[0]
-            text = re.sub(r'\s+', ' ', text)
-            ground_truth = 1 if row[1] == 'y' else 0
+            text = re.sub(r"\s+", " ", text)
+            ground_truth = 1 if row[1] == "y" else 0
             url = row[2]
 
-
             try:
-                print(f"processing text to TTL for {text[:100]}", flush=True)
-                messages = [
-                    {"role": "system", "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
-                    Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships, 
-                    and output a knowledge graph in Turtle (TTL) format composed by RDF triples (subject, predicate, object). 
-                    Only output the TTL-formatted knowledge graph and do not include any explanations.  
-                    Be as succinct as possible and only include the most relevant information.
-                    However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
-                    {"role": "user", "content": text},
-                ]
-
-                outputs = pipeline(messages, max_new_tokens=2048)
-                ttl = outputs[0]["generated_text"][-1]["content"]
+                # print(f"processing text to TTL for {text[:100]}", flush=True)
+                # messages = [
+                #     {"role": "system", "content": """You are an expert AI system that specializes in named entity recognition and knowledge graph extraction.
+                #     Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships,
+                #     and output a knowledge graph in Turtle (TTL) format composed by RDF triples (subject, predicate, object).
+                #     Only output the TTL-formatted knowledge graph and do not include any explanations.
+                #     Be as succinct as possible and only include the most relevant information.
+                #     However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
+                #     """},
+                #     {"role": "user", "content": text},
+                # ]
+                #
+                # outputs = pipeline(messages, max_new_tokens=2048)
+                # ttl = outputs[0]["generated_text"][-1]["content"]
 
                 print(f"processing text to JSON for {text[:100]}", flush=True)
                 messages = [
-                    {"role": "system", "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
+                    {
+                        "role": "system",
+                        "content": f"""You are an expert AI system that specializes in named entity recognition and knowledge graph extraction. 
                     Your task is to analyse any provided input text, identify and extract the relevant entities and their attributes and relationships, 
                     and output a knowledge graph.  
                     You will output triples (subject, predicate, object) in JSON format.   
@@ -84,24 +103,44 @@ def process_model(model_input: ModelInput, database: str):
                     Only output the JSON-formatted knowledge graph and do not include any explanations.  
                     Be as succinct as possible and only include the most relevant information.
                     However, make sure to list just one concept per subject, predicate or object.  If a subject, predicate or object contains multiple concepts, split them into separate triples.
-                    """},
+                    """,
+                    },
                     {"role": "user", "content": text},
                 ]
 
                 outputs = pipeline(messages, max_new_tokens=2048)
                 json = outputs[0]["generated_text"][-1]["content"]
 
-                row_results.append(RowResult(url=url, valid=True, result_ttl=ttl, result_json=json, y=ground_truth))
+                row_results.append(
+                    RowResult(
+                        url=url,
+                        valid=True,
+                        result_ttl="",
+                        result_json=json,
+                        y=ground_truth,
+                    )
+                )
 
             except Exception as e:
-                row_results.append(RowResult(url=url, valid=False, result_ttl=f"got exception {e}", result_json=f"got exception {e}", y=ground_truth))
+                row_results.append(
+                    RowResult(
+                        url=url,
+                        valid=False,
+                        result_ttl=f"got exception {e}",
+                        result_json=f"got exception {e}",
+                        y=ground_truth,
+                    )
+                )
 
             sanitized_model = sanitize_filename(model_input.model_name)
-            with open(f"rq2_{sanitized_model}.json", "w") as f:
-                f.write(ModelResult(model_input=model_input, row_results=row_results).model_dump_json(indent=2))
+            with open(f"rq2_threaded_{sanitized_model}.json", "w") as f:
+                f.write(
+                    ModelResult(
+                        model_input=model_input, row_results=row_results
+                    ).model_dump_json(indent=2)
+                )
 
     return ModelResult(model_input=model_input, row_results=row_results)
-
 
 
 def rq2(database: str):
@@ -109,9 +148,10 @@ def rq2(database: str):
         print(f"processing model {model.model_name}", flush=True)
         model_result = process_model(model, database)
         sanitized_model = sanitize_filename(model.model_name)
-        with open(f"rq2_{sanitized_model}.json", "w") as f:
+        with open(f"rq2_threaded_{sanitized_model}.json", "w") as f:
             f.write(model_result.model_dump_json(indent=2))
     print(f"Done.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:

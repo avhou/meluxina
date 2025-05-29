@@ -8,7 +8,7 @@
 
 module load Python
 
-python -c  'import sys; print(sys.version)'
+python -c 'import sys; print(sys.version)'
 
 python -m venv venv
 
@@ -26,4 +26,4 @@ export CUDA_CACHE_MAXSIZE=4294967296
 export HUGGINGFACEHUB_API_TOKEN=$TOKEN
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-python rq2.py /project/home/p200769/data/combined_dataset.sqlite
+python rq2.py /project/home/p200769/data/combined_threaded_dataset.sqlite
