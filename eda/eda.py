@@ -572,7 +572,7 @@ def load_spacy_model(name):
 def generate_ngrams(db: str, output_dir: str, source: str):
     print(f"generating ngrams for {db} and source {source}")
     english_stopwords = set(STOPWORDS)
-    english_stopwords.update(["of", "the", "a", "to", "on", "tankts", "pa", "schepenen"])
+    english_stopwords.update(["of", "the", "a", "to", "on", "tankts", "pa", "schepenen", "𝘴𝘤𝘩𝘦𝘱𝘦𝘯𝘦𝘯"])
     spacy_models = {"en": load_spacy_model("en_core_web_sm"), "fr": load_spacy_model("fr_core_news_sm"), "nl": load_spacy_model("nl_core_news_sm")}
     custom_stopwords = {"en": english_stopwords, "fr": set(french_stopwords), "nl": set(dutch_stopwords)}
 
@@ -594,13 +594,13 @@ def generate_ngrams(db: str, output_dir: str, source: str):
     trigram_counts = Counter(flatten_ngrams(token_lists, 3))
 
     with open(os.path.join(output_dir, f"2_gram_{source}.md"), "w") as f:
-        f.write("| ngram | count | \n")
+        f.write("| bigram | count | \n")
         f.write("| ----- | ----: | \n")
         for ngram, count in bigram_counts.most_common(10):
             f.write(f"| {' '.join(ngram)} | {count} |\n")
 
     with open(os.path.join(output_dir, f"3_gram_{source}.md"), "w") as f:
-        f.write("| ngram | count | \n")
+        f.write("| trigram | count | \n")
         f.write("| ----- | ----: | \n")
         for ngram, count in trigram_counts.most_common(10):
             f.write(f"| {' '.join(ngram)} | {count} |\n")
