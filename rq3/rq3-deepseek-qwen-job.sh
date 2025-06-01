@@ -1,6 +1,6 @@
 #!/bin/bash -l
 ## This file is called `rq2-deepseek-qwen-job.sh`
-#SBATCH --time=07:00:00
+#SBATCH --time=08:00:00
 #SBATCH --account=p200769
 #SBATCH --partition=gpu
 #SBATCH --qos=default
