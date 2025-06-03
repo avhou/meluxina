@@ -78,9 +78,7 @@ model_inputs = [
 
 
 def create_model(model_input: ModelInput):
-    print(
-        f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True
-    )
+    print(f"""Starting model load at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
 
     model = pipeline(
         "text-generation",
@@ -90,9 +88,7 @@ def create_model(model_input: ModelInput):
         device_map="auto",
     )
 
-    print(
-        f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True
-    )
+    print(f"""Done loading model at {datetime.now().strftime("%H:%M:%S")}""", flush=True)
     return model
 
 
@@ -103,13 +99,7 @@ def process_model(
     fallback_triple_map: Dict[str, List[Triple]],
     triple_generation_model: str,
 ):
-    device = (
-        "cuda"
-        if torch.cuda.is_available()
-        else "mps"
-        if torch.backends.mps.is_available()
-        else "cpu"
-    )
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"using device {device}", flush=True)
 
     llm_model = model_input.model_creation(model_input)
@@ -130,9 +120,7 @@ def process_model(
                 try:
                     content = f.read()
                     model_result = ModelResult.model_validate_json(content)
-                    existing_row_results_for_prompt = model_result.row_results[
-                        prompt_type
-                    ]
+                    existing_row_results_for_prompt = model_result.row_results[prompt_type]
                 except Exception as e:
                     print(
                         f"could not parse existing file {progress_file}, error {e}",
@@ -141,18 +129,14 @@ def process_model(
                     existing_row_results_for_prompt = []
 
         with sqlite3.connect(database) as conn:
-            for row in conn.execute(
-                f"select translated_text, disinformation, url from articles"
-            ):
+            for row in conn.execute(f"select translated_text, disinformation, url from articles"):
                 text = row[0]
                 text = re.sub(r"\s+", " ", text)
                 ground_truth = 1 if row[1] == "y" else 0
                 url = row[2]
                 triples_for_url = triple_map.get(url, fallback_triple_map.get(url, []))
 
-                existing_row_for_url = next(
-                    (x for x in existing_row_results_for_prompt if x.url == url), None
-                )
+                existing_row_for_url = next((x for x in existing_row_results_for_prompt if x.url == url), None)
                 if existing_row_for_url is not None:
                     print(f"skipping url {url} as it is already processed", flush=True)
                     row_results_for_prompt.append(existing_row_for_url)
@@ -167,9 +151,7 @@ def process_model(
 
                 print(f"processing url {url}", flush=True)
 
-                input_prompt = model_input.prompt_generation(
-                    prompt, "\n".join([f"{t}" for t in triples_for_url])
-                )
+                input_prompt = model_input.prompt_generation(prompt, "\n".join([f"{t}" for t in triples_for_url]))
                 try:
                     outputs = llm_model(input_prompt, max_new_tokens=3500)
                     result = outputs[0]["generated_text"][-1]
@@ -245,12 +227,10 @@ def rq1(database: str, triple_file: str, fallback_triple_file: Optional[str] = N
             f"processing model {model.model_name} and triple file {triple_file}",
             flush=True,
         )
-        model_result = process_model(
-            model, database, triple_map, fallback_triple_map, triple_generation_model
-        )
+        model_result = process_model(model, database, triple_map, fallback_triple_map, triple_generation_model)
         sanitized_model = sanitize_filename(model.model_name)
         with open(
-            f"rq1_triples_{sanitized_model}_generated_by_{triple_generation_model}.json",
+            f"rq1_threaded_triples_{sanitized_model}_generated_by_{triple_generation_model}.json",
             "w",
         ) as f:
             f.write(model_result.model_dump_json(indent=2))
