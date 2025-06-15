@@ -18,6 +18,7 @@ from pathlib import Path
 from nltk.util import ngrams
 from collections import Counter
 from itertools import islice, chain
+from pydantic import BaseModel
 
 
 dutch_stopwords = set(
@@ -238,6 +239,83 @@ def do_generate_time_distribution_sns(db: str, source: str, output_file: str, qu
         return math.ceil(monthly_counts.values.max() / 10.0) * 10
 
 
+class SentimentScore(BaseModel):
+    url: str
+    score: float
+
+
+class SentimentScores(BaseModel):
+    scores: List[SentimentScore]
+    avg_score_disinformation: float
+    avg_score_no_disinformation: float
+
+
+def read_sentiment_scores(model: str, sentiment_scores_folder: str) -> List[dict]:
+    with open(os.path.join(sentiment_scores_folder, f"rq3-{model.lower()}-scores-chunk-size-200-overlap-20.json"), "r") as f:
+        parsed = SentimentScores.model_validate_json(f.read())
+        return [{"url": s.url, "score": s.score, "model": model} for s in parsed.scores]
+
+
+def do_generate_sentiment_time_distribution_sns(db: str, source: str, output_file: str, query: str, title: str, sentiment_scores_folder: str):
+    with sqlite3.connect(db) as conn:
+        df = pd.read_sql_query(query, conn)
+        # Clean up the timestamp and convert it to datetime
+        df["timestamp"] = pd.to_datetime(df["timestamp"].str.replace(r"\s[+\-]\d{2}$", ""), errors="coerce", utc=True)
+        df["timestamp"] = df["timestamp"].dt.tz_localize(None)
+
+        # Create a 'month' column to group by
+        df["month"] = df["timestamp"].dt.to_period("M")
+
+        # Convert to DataFrame
+        score_rows = (
+            read_sentiment_scores("VADER", sentiment_scores_folder)
+            + read_sentiment_scores("Flair", sentiment_scores_folder)
+            + read_sentiment_scores("RoBERTa", sentiment_scores_folder)
+        )
+        scores_df = pd.DataFrame(score_rows)
+
+        # Merge with timestamp info
+        merged_df = pd.merge(scores_df, df[["url", "timestamp", "month"]], on="url", how="inner")
+
+        # Group by month and model
+        grouped = merged_df.groupby(["month", "model"]).agg(score=("score", "mean")).reset_index()
+
+        # Ensure full month range and all models are present
+        all_months = pd.date_range(start="2022-01-01", end="2024-11-01", freq="MS").to_period("M")
+        all_models = ["VADER", "Flair", "RoBERTa"]
+        full_index = pd.MultiIndex.from_product([all_months, all_models], names=["month", "model"])
+        grouped = grouped.set_index(["month", "model"]).reindex(full_index).reset_index()
+
+        # Smooth with rolling average
+        grouped["score_smooth"] = (
+            grouped.sort_values("month").groupby("model")["score"].transform(lambda x: x.rolling(window=3, min_periods=1, center=True).mean())
+        )
+
+        # For plotting
+        grouped["month_dt"] = grouped["month"].dt.to_timestamp()
+
+        # Plotting
+        plt.figure(figsize=(12, 6))
+        sns.lineplot(data=grouped, x="month_dt", y="score_smooth", hue="model", linewidth=2.5)
+
+        # Format x-axis to match article count plot
+        all_months_dt = all_months.to_timestamp()
+        plt.xticks(ticks=all_months_dt, labels=[dt.strftime("%Y-%m-%d") for dt in all_months_dt], rotation=45, fontsize=9)
+        plt.xlim(all_months_dt.min(), all_months_dt.max())
+
+        # Y-axis
+        plt.ylim(-1, 1)
+        plt.ylabel("Average Sentiment Score", fontsize=12)
+
+        # Title and legend
+        plt.title(title, fontsize=16)
+        plt.xlabel("Month", fontsize=12)
+        plt.legend(title="Model")
+        plt.tight_layout()
+        plt.savefig(output_file)
+        plt.close()
+
+
 def generate_lang_distribution(db: str, source: str, output_file: str):
     total = exec(db, f"""select count(*) from articles where source = '{source}'""")
     with sqlite3.connect(db) as conn, open(output_file, "w") as f:
@@ -323,6 +401,25 @@ def generate_time_distribution_sns(db: str, source: str, image_output_dir: str):
         f"""SELECT timestamp FROM articles WHERE source = '{source}' and disinformation = 'y' ORDER BY timestamp ASC""",
         f"Disinformation Article Count Over Time ({source})",
         max_count,
+    )
+
+
+def generate_sentiment_time_distribution_sns(db: str, source: str, image_output_dir: str, sentiment_scores_folder: str):
+    do_generate_sentiment_time_distribution_sns(
+        db,
+        source,
+        os.path.join(image_output_dir, f"{source}_sentiment_time_distribution.png"),
+        f"""SELECT timestamp, url FROM articles WHERE source = '{source}' ORDER BY timestamp ASC""",
+        f"Sentiment Score Over Time ({source})",
+        sentiment_scores_folder,
+    )
+    do_generate_sentiment_time_distribution_sns(
+        db,
+        source,
+        os.path.join(image_output_dir, f"{source}_disinformation_sentiment_time_distribution.png"),
+        f"""SELECT timestamp, url FROM articles WHERE source = '{source}' and disinformation = 'y' ORDER BY timestamp ASC""",
+        f"Disinformation Sentiment Score Over Time ({source})",
+        sentiment_scores_folder,
     )
 
 
@@ -606,65 +703,66 @@ def generate_ngrams(db: str, output_dir: str, source: str):
             f.write(f"| {' '.join(ngram)} | {count} |\n")
 
 
-def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str):
+def eda(non_threaded_db: str, threaded_db: str, output_dir: str, source: str, sentiment_scores_folder: str):
     print(f"performing analysis in {non_threaded_db} / {threaded_db} for source {source}")
 
     images = os.path.join(output_dir, "images")
     tables = os.path.join(output_dir, "tables")
 
-    count_non_threaded, percentage_non_threaded = get_count_and_percentage(non_threaded_db, source)
-    count_threaded, percentage_threaded = get_count_and_percentage(threaded_db, source)
-    print(f"non threaded count {count_non_threaded}, percentage {percentage_non_threaded * 100:.2f}")
-    print(f"threaded count {count_threaded}, percentage {percentage_threaded * 100:.2f}")
+    # count_non_threaded, percentage_non_threaded = get_count_and_percentage(non_threaded_db, source)
+    # count_threaded, percentage_threaded = get_count_and_percentage(threaded_db, source)
+    # print(f"non threaded count {count_non_threaded}, percentage {percentage_non_threaded * 100:.2f}")
+    # print(f"threaded count {count_threaded}, percentage {percentage_threaded * 100:.2f}")
+    #
+    # daterange_min_non_threaded, daterange_max_non_threaded = get_date_range(non_threaded_db, source)
+    # daterange_min_threaded, daterange_max_threaded = get_date_range(threaded_db, source)
+    # print(f"non threaded daterange_min {daterange_min_non_threaded}, daterange_max {daterange_max_non_threaded}")
+    # print(f"threaded daterange_min {daterange_min_threaded}, daterange_max {daterange_max_threaded}")
+    #
+    # generate_time_distribution_sns(non_threaded_db, source, images)
+    generate_sentiment_time_distribution_sns(non_threaded_db, source, images, sentiment_scores_folder)
 
-    daterange_min_non_threaded, daterange_max_non_threaded = get_date_range(non_threaded_db, source)
-    daterange_min_threaded, daterange_max_threaded = get_date_range(threaded_db, source)
-    print(f"non threaded daterange_min {daterange_min_non_threaded}, daterange_max {daterange_max_non_threaded}")
-    print(f"threaded daterange_min {daterange_min_threaded}, daterange_max {daterange_max_threaded}")
-
-    generate_time_distribution_sns(non_threaded_db, source, images)
-
-    generate_lang_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_lang_distribution.md"))
-    generate_word_count_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_word_count_distribution.md"))
-    if source == "web":
-        analyze_metadata_distribution_web(non_threaded_db, source, tables)
-    keyword_distribution(non_threaded_db, source, tables)
-    generate_word_cloud(non_threaded_db, source, images)
-    generate_token_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_token_distribution.md"))
-    generate_stopword_ratio(non_threaded_db, source, tables)
-    if source == "reddit":
-        analyze_metadata_distribution_reddit(non_threaded_db, threaded_db, source, tables)
-    generate_pie_charts(
-        os.path.join(images, "web_proportion_articles.png"),
-        [252, 88, 55],
-        ["Web", "TikTok", "Reddit"],
-    )
-    generate_pie_charts(
-        os.path.join(images, "web_proportion_threads.png"),
-        [252, 88, 1519],
-        ["Web", "TikTok", "Reddit"],
-    )
-    generate_pie_charts(
-        os.path.join(images, "tiktok_proportion_articles.png"),
-        [88, 252, 55],
-        ["TikTok", "Web", "Reddit"],
-    )
-    generate_pie_charts(
-        os.path.join(images, "tiktok_proportion_threads.png"),
-        [88, 252, 1519],
-        ["TikTok", "Web", "Reddit"],
-    )
-    generate_pie_charts(
-        os.path.join(images, "reddit_proportion_articles.png"),
-        [55, 88, 252],
-        ["Reddit", "TikTok", "Web"],
-    )
-    generate_pie_charts(
-        os.path.join(images, "reddit_proportion_threads.png"),
-        [1519, 88, 252],
-        ["Reddit", "TikTok", "Web"],
-    )
-    generate_ngrams(threaded_db, tables, source)
+    # generate_lang_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_lang_distribution.md"))
+    # generate_word_count_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_word_count_distribution.md"))
+    # if source == "web":
+    #     analyze_metadata_distribution_web(non_threaded_db, source, tables)
+    # keyword_distribution(non_threaded_db, source, tables)
+    # generate_word_cloud(non_threaded_db, source, images)
+    # generate_token_distribution(non_threaded_db, source, os.path.join(tables, f"{source}_token_distribution.md"))
+    # generate_stopword_ratio(non_threaded_db, source, tables)
+    # if source == "reddit":
+    #     analyze_metadata_distribution_reddit(non_threaded_db, threaded_db, source, tables)
+    # generate_pie_charts(
+    #     os.path.join(images, "web_proportion_articles.png"),
+    #     [252, 88, 55],
+    #     ["Web", "TikTok", "Reddit"],
+    # )
+    # generate_pie_charts(
+    #     os.path.join(images, "web_proportion_threads.png"),
+    #     [252, 88, 1519],
+    #     ["Web", "TikTok", "Reddit"],
+    # )
+    # generate_pie_charts(
+    #     os.path.join(images, "tiktok_proportion_articles.png"),
+    #     [88, 252, 55],
+    #     ["TikTok", "Web", "Reddit"],
+    # )
+    # generate_pie_charts(
+    #     os.path.join(images, "tiktok_proportion_threads.png"),
+    #     [88, 252, 1519],
+    #     ["TikTok", "Web", "Reddit"],
+    # )
+    # generate_pie_charts(
+    #     os.path.join(images, "reddit_proportion_articles.png"),
+    #     [55, 88, 252],
+    #     ["Reddit", "TikTok", "Web"],
+    # )
+    # generate_pie_charts(
+    #     os.path.join(images, "reddit_proportion_threads.png"),
+    #     [1519, 88, 252],
+    #     ["Reddit", "TikTok", "Web"],
+    # )
+    # generate_ngrams(threaded_db, tables, source)
 
 
 if __name__ == "__main__":
@@ -694,8 +792,14 @@ if __name__ == "__main__":
         required=True,
         help="Path to the image output directory",
     )
+    parser.add_argument(
+        "--sentiment-scores-dir",
+        type=str,
+        required=True,
+        help="Path to the sentiment scores",
+    )
     args = parser.parse_args()
 
-    eda(args.non_threaded_db, args.threaded_db, args.output_dir, args.source)
+    eda(args.non_threaded_db, args.threaded_db, args.output_dir, args.source, args.sentiment_scores_dir)
 
     print("done")
